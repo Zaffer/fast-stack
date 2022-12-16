@@ -1,0 +1,35 @@
+version: "3"
+services:
+
+
+  _api:
+    container_name: api
+    build:
+      context: ./services/_api
+      dockerfile: qrs.api.dockerfile
+      network: host
+      args:
+        - ENVIRONMENT=${ENVIRONMENT-dev}
+    env_file:
+      - ./services/_api/.env
+    ports:
+      - 8000:8000
+    volumes:
+      - ./services/_api/src:/app
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
+    # command: sh -c "while true; do sleep 1; done"
+
+
+  _web:
+    container_name: web
+    build:
+      context: ./services/_web
+      dockerfile: qrs.web.3.dockerfile
+      network: host
+    ports:
+      - 8100:8100
+    volumes:
+      - ./services/_web/app:/home/node/app
+    # command: "ionic serve --external"
+    # command: sh -c "while true; do sleep 1; done"
+

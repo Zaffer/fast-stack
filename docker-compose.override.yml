@@ -1,0 +1,66 @@
+version: "3"
+services:
+
+  _api:
+    depends_on:
+      - local-db
+      - cloudsql-proxy
+
+  _web_:
+    depends_on:
+      - _api
+
+  local-db:
+    container_name: local-db
+    image: postgres:13-alpine
+    # build:
+    #   context: ./services/database
+    #   dockerfile: db.dockerfile
+    ports:
+      - 5433:5432
+    volumes:
+      - local-db-data:/var/lib/postgresql/data/pgdata
+      # - ./services/database/sql:/docker-entrypoint-initdb.d/
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: postgres -c log_statement=all
+
+  cloudsql-proxy: # access your cloud sql database from your local machine
+    container_name: cloudsql-proxy
+    image: gcr.io/cloudsql-docker/gce-proxy:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ./services/database/keys:/config
+    restart: always
+    command: /cloud_sql_proxy --dir=/cloudsql -instances=your-gcp:europe-west1:quick-desk-sql-instance=tcp:0.0.0.0:5432 -credential_file=/config/google-creds.json
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    # environment:
+      # - REDIS_PASSWORD=ubuntu
+      # - REDIS_REPLICATION_MODE=master
+    ports:
+      - 6379:6379
+    volumes:
+      - redis-data:/var/lib/redis
+      - ./services/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server
+
+  
+  redisinsight: # redis db visualization dashboard
+    container_name: redisinsight
+    image: redislabs/redisinsight
+    ports:
+      - 8001:8001
+    volumes:
+      - redisinsight:/db
+
+
+volumes:
+  local-db-data:
+  redis-data:
+  redisinsight:
