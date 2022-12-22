@@ -56,9 +56,9 @@ COPY --from=builder /venv /venv
 COPY ./src .
 
 # use a non-root user
-RUN addgroup --system live && adduser --system --ingroup live wire
-RUN chown -R wire:live /app
-USER wire
+RUN addgroup --system school && adduser --system --ingroup school fish
+RUN chown -R fish:school /app
+USER fish
 
 # start the worker
 CMD uvicorn app.main:app --workers 1 --host 0.0.0.0 --port ${PORT-8080} --log-level info

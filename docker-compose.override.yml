@@ -71,7 +71,6 @@ services:
     # restart: unless-stopped
 
 
-  
   redisinsight: # redis db visualization dashboard
     container_name: redisinsight
     image: redislabs/redisinsight
