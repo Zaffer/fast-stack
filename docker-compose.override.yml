@@ -3,39 +3,47 @@ services:
 
   _api:
     depends_on:
-      - local-db
+      - db-local
       - cloudsql-proxy
 
-  _web_:
+  _web:
     depends_on:
       - _api
 
-  local-db:
-    container_name: local-db
+  db-local:
+    container_name: db-local
     image: postgres:14-alpine
     build:
-      context: ./services/_api/db
+      context: ./services/_db
     ports:
       - 5432:5432
-    volumes:
-      - local-db-data:/var/lib/postgresql/data/pgdata
-      - ./services/_api/db/sql:/docker-entrypoint-initdb.d/
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_DB=_db
+    volumes:
+      - db-local-data:/var/lib/postgresql/data/pgdata
+      # - ./services/_db/sql:/docker-entrypoint-initdb.d/
     command: postgres -c log_statement=all
 
 
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
-    # build:
-    #   context: ./services/database
-    #   dockerfile: db.dockerfile
+    depends_on:
+      - db-local
     ports:
-      - 5432:5432
-
+      - ${PGADMIN_PORT:-5050}:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-postgres}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-postgres}
+      - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
+      # - PGADMIN_LISTEN_ADDRESS=
+      # - PGADMIN_LISTEN_PORT=5432
+      # - PGADMIN_SERVER_JSON_FILE
+    volumes:
+       - pgadmin-data:/var/lib/pgadmin
 
 
   cloudsql-proxy: # access your cloud sql database from your local machine
@@ -60,6 +68,8 @@ services:
       - redis-data:/var/lib/redis
       - ./services/redis/redis.conf:/usr/local/etc/redis/redis.conf
     command: redis-server
+    # restart: unless-stopped
+
 
   
   redisinsight: # redis db visualization dashboard
@@ -72,6 +82,7 @@ services:
 
 
 volumes:
-  local-db-data:
+  db-local-data:
+  pgadmin-data:
   redis-data:
   redisinsight-data:

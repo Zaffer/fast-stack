@@ -10,8 +10,8 @@ services:
       network: host
       args:
         - ENVIRONMENT=${ENVIRONMENT-dev}
-    env_file:
-      - ./services/_api/.env
+    # env_file:
+    #   - ./services/_api/.env
     ports:
       - 8000:8000
     volumes:

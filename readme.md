@@ -6,18 +6,59 @@ FastAPI
 Angular
 PostgreSQL
 
-Docker Containers of everything
-Google Cloud Platform integration
+SQLModel for database ORM and API schemas
 Material Design for admin panel
 Ionic for web and mobile app
-SQLModel for database ORM and API schemas
+
+Docker Containers of everything
+Google Cloud Platform for hosting
+Auth0 for authentication and SSO
+
 
 TODO:
 - full pnp for yarn (currently Anuglar has issues with Yarn pnp)
 - containerise Angular pgAdmin4
 
-====================
 
+Duplicate _api, _web, or _app for each new service you want to build
+
+
+## Services
+
+### API
+service: "_api"
+FastAPI
+SQLModel 
+
+### DATABASE
+service: "_db"
+PostgreSQL
+Pgadmin4
+
+### WEBSITE
+service: "_web"
+Angular
+Firebase
+Material Design
+
+### APPLICATION
+service: "_app"
+Angular
+Firebase
+Ionic
+
+
+## Poetry
+Needed in your local environment (not container only) for Python IDE can support  
+
+
+### Docker Compose
+
+### VSCode Settings
+
+
+
+==============================
 
 ![Continuous Integration and Delivery](https://github.com/qr-space/quickdesk-api/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
 
@@ -118,6 +159,7 @@ poetry shell
 poetry install
 ```
 
+
 12. VSCode Settings
 > paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
 ```
@@ -157,6 +199,26 @@ poetry install
 ```
 > start new terminal that must automatically load into the poetry virtual environment
 
+
+# SERVICES SETUP
+
+## pgAmdin
+This is a GUI for postgresql. It is not required but it is very useful for development.
+
+go to http://localhost:5050
+
+> create server
+```
+name: db-local
+
+host: db-local
+
+port: 5432
+
+username: postgres
+
+password: postgres
+```
 
 
 
@@ -292,19 +354,19 @@ for an ionic, start with:
 
 # LOCAL PORTS:
 
-┌──────────────────────────────────┬──────┐
-│ SERVICE                          │ PORT │
-├──────────────────────────────────┼──────┤
-│ QuickDesk                        │ 5000 │
-├──────────────────────────────────┼──────┤
-│ QR Space API                     │ 8000 │
-├──────────────────────────────────┼──────┤
-│ MFA API                          │ 8081 │
-├──────────────────────────────────┼──────┤
-│ QuickDash                        │ 5003 │
-├──────────────────────────────────┼──────┤
-│ QuickDesk 3                      │ 8100 │
-└──────────────────────────────────┴──────┘
+┌───────────────────────────┬──────┐
+│ SERVICE                   │ PORT │
+├───────────────────────────┼──────┤
+│ db-local                  │ 5432 │
+├───────────────────────────┼──────┤
+│ pgAmdin                   │ 8000 │
+├───────────────────────────┼──────┤
+│                   │ 8081 │
+├───────────────────────────┼──────┤
+│                  │ 5003 │
+├───────────────────────────┼──────┤
+│                │ 8100 │
+└───────────────────────────┴──────┘
 
 
 
