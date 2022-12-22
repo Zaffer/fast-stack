@@ -3,10 +3,10 @@ services:
 
 
   _api:
-    container_name: api
+    container_name: api_service
     build:
       context: ./services/_api
-      dockerfile: qrs.api.dockerfile
+      dockerfile: api.fa.dockerfile
       network: host
       args:
         - ENVIRONMENT=${ENVIRONMENT-dev}
@@ -21,10 +21,10 @@ services:
 
 
   _web:
-    container_name: web
+    container_name: web_service
     build:
       context: ./services/_web
-      dockerfile: qrs.web.3.dockerfile
+      dockerfile: web.ngfb.dockerfile
       network: host
     ports:
       - 8100:8100

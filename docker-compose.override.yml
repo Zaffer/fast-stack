@@ -12,26 +12,37 @@ services:
 
   local-db:
     container_name: local-db
-    image: postgres:13-alpine
-    # build:
-    #   context: ./services/database
-    #   dockerfile: db.dockerfile
+    image: postgres:14-alpine
+    build:
+      context: ./services/_api/db
     ports:
-      - 5433:5432
+      - 5432:5432
     volumes:
       - local-db-data:/var/lib/postgresql/data/pgdata
-      # - ./services/database/sql:/docker-entrypoint-initdb.d/
+      - ./services/_api/db/sql:/docker-entrypoint-initdb.d/
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     command: postgres -c log_statement=all
 
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    # build:
+    #   context: ./services/database
+    #   dockerfile: db.dockerfile
+    ports:
+      - 5432:5432
+
+
+
   cloudsql-proxy: # access your cloud sql database from your local machine
     container_name: cloudsql-proxy
     image: gcr.io/cloudsql-docker/gce-proxy:latest
     ports:
-      - 5432:5432
+      - 5433:5432
     volumes:
       - ./services/database/keys:/config
     restart: always
@@ -57,10 +68,10 @@ services:
     ports:
       - 8001:8001
     volumes:
-      - redisinsight:/db
+      - redisinsight-data:/db
 
 
 volumes:
   local-db-data:
   redis-data:
-  redisinsight:
+  redisinsight-data:
