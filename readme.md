@@ -1,6 +1,27 @@
+# Introduction
+
+FAP Stack
+---------
+FastAPI
+Angular
+PostgreSQL
+
+Docker Containers of everything
+Google Cloud Platform integration
+Material Design for admin panel
+Ionic for web and mobile app
+SQLModel for database ORM and API schemas
+
+TODO:
+- full pnp for yarn (currently Anuglar has issues with Yarn pnp)
+- containerise Angular pgAdmin4
+
+====================
+
+
 ![Continuous Integration and Delivery](https://github.com/qr-space/quickdesk-api/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
 
-# SETUP
+# ENVIROMENT SETUP
 
 1. Linux
     > WSL2
@@ -75,7 +96,6 @@
 
 9. Node
 
-
 	nvm:
 		https://github.com/nvm-sh/nvm
 		`nvm install 16`
@@ -90,15 +110,7 @@
         npm install -g @ionic/cli
 
 
-
-# ENVIRONMENT
-
-## Ubuntu
-```
-sudo apt-get update && sudo apt-get upgrade
-```
-
-## Virtual Environment
+11. Virtual Environment
 > create poetry venv and install packages (then open venv in terminal to use linting)
 ```
 cd services/frontend/src
@@ -106,6 +118,7 @@ poetry shell
 poetry install
 ```
 
+12. VSCode Settings
 > paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
 ```
 {
@@ -137,23 +150,13 @@ poetry install
         "**/.yarn": true,
         "**/.pnp.*": true
     },
-    "prettier.prettierPath": "./services/md_web/app/.yarn/sdks/prettier/index.js",
-    "typescript.tsdk": "./services/md_web/app/.yarn/sdks/typescript/lib",
+    "prettier.prettierPath": "./services/mc_portal/app/.yarn/sdks/prettier/index.js",
+    "typescript.tsdk": "./services/mc_portal/app/.yarn/sdks/typescript/lib",
     "typescript.enablePromptUseWorkspaceTsdk": true
 }
 ```
 > start new terminal that must automatically load into the poetry virtual environment
 
-
-## Secrets
-Secrets folder required from supervisor, not on Github.
-Needs to be downloaded, unzipped and placed in root directory.
-
-## Docker Service Start
-```
-sudo service docker start 
-```
-> or start docker desktop application on your system
 
 
 
@@ -216,7 +219,7 @@ docker exec -u root api bash -c "alembic upgrade head"
 ## Alembic
 > Migrations
 ```
-cd services/database/
+cd ./database/
 ```
 
 ```
@@ -231,6 +234,10 @@ alembic upgrade head
 ```
 ```
 alembic downgrade -1
+```
+```
+docker cp ./sql/A_data.sql local-db:/docker-entrypoint-initdb.d/A_data.sql &&
+docker exec -u postgres local-db psql postgres postgres -f docker-entrypoint-initdb.d/A_data.sql
 ```
 
 
@@ -308,16 +315,20 @@ if the container is running different .env file to the one in your local volume,
 
 
 
-# NEW ANGULAR PROJECT SETUP
+# INSTALL ANGULAR
 
-``
+cd into the app folder
 
-`ionic start app`
-
-`cd app`
-
-`yarn set version berry`
+`yarn set version stable`
 
 `yarn install`
 
-add ".yarn" to gitignore
+`yarn add -D @types/node`
+
+`yarn build`
+
+`yarn start`
+
+`yarn dlx @yarnpkg/sdks vscode`
+
+add  paths to your app's .yarn file in workspace root .vscode/settings.json

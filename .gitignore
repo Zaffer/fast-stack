@@ -1,12 +1,7 @@
-database.ini
-api_keys.ini
-secrets/
-keys/
-example/
-*creds.json
-
-*.env
-envs/
+.env
+env/
+.venv
+venv/
 
 .vscode/
 
@@ -14,15 +9,22 @@ __pycache__/
 *.pyc
 .pytest_cache
 
-.env
-env/
-.venv
-venv/
-
 .coverage
 htmlcov/
 
 *.Identifier
 
-# Angular
-.yarn/
+# Yarn
+# Ignoring .yarn/unplugged might however prevent Zero-Installs from working (to prevent this, set enableScripts to false).
+**/.yarn/*
+***/.yarn/releases/** binary
+***/.yarn/plugins/** binary
+!***/.yarn/releases
+!***/.yarn/patches
+!***/.yarn/plugins
+!***/.yarn/releases
+!***/.yarn/sdks
+!***/.yarn/versions
+
+# Firebase
+.firebase
