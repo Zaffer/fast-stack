@@ -1,11 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 # from fastapi.staticfiles import StaticFiles
 
 from loguru import logger
 
 from app.core.config import settings
 from app.api.v0 import v0_router
+
 # from app.api.v1 import v1_router
 
 

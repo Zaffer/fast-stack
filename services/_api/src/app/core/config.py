@@ -49,13 +49,15 @@ settings = Settings()
 
 
 class Secrets(GoogleCloudSecretSettings):
+    project_id = os.getenv('GOOGLE_CLOUD_PROJECT')
+
     # GCS_MY_KEY_RESOURCE_NAME=projects/<id>/secrets/<resource-name>/versions/latest
 
     AUTH0_DOMAIN: str | None = Field(
-        cloud_key=f"projects/1234567890/secrets/{'AUTH0_DOMAIN'}/versions/latest"
+        cloud_key=f"projects/{project_id}/secrets/{'AUTH0_DOMAIN'}/versions/latest"
     )
     AUTH0_API_AUDIENCE: str | None = Field(
-        cloud_key=f"projects/1234567890/secrets/{'AUTH0_API_AUDIENCE'}/versions/latest"
+        cloud_key=f"projects/{project_id}/secrets/{'AUTH0_API_AUDIENCE'}/versions/latest"
     )
     # AUTH0_CLIENT_ID: str | None
     # AUTH0_CLIENT_SECRET: str | None

@@ -1,15 +1,10 @@
-import os  # NEW
 from logging.config import fileConfig
 
-from dotenv import load_dotenv  # NEW
-
 # from sqlalchemy import engine_from_config
+from sqlmodel import SQLModel, engine_from_config
 from sqlalchemy import pool
-from sqlmodel import SQLModel, engine_from_config  # NEW
 
 from alembic import context
-
-load_dotenv()  # NEW
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -24,14 +19,11 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
+# target_metadata = None
 
-import sys  # NEW
+from app.models import *
 
-sys.path.append("../src/")  # NEW
-
-from app.models import *  # NEW
-
-target_metadata = SQLModel.metadata  # NEW
+target_metadata = SQLModel.metadata
 
 
 # other values from the config, defined by the needs of env.py,
@@ -39,14 +31,29 @@ target_metadata = SQLModel.metadata  # NEW
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
-alembic_url = os.getenv(
-    "ALEMBIC_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
-)
-configuration = config.get_section(config.config_ini_section)
-configuration["sqlalchemy.url"] = alembic_url
+import os
+from google.cloud import secretmanager
+
+client = secretmanager.SecretManagerServiceClient()
+
+environment = os.getenv("ENVIRONMENT", "dev")
+alembic_url = "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
+
+if environment == "proxy":
+    response = client.access_secret_version(
+        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest"
+    )
+    alembic_url = response.payload.data.decode("UTF-8")
+if environment == "prod":
+    response = client.access_secret_version(
+        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROD'}/versions/latest"
+    )
+    alembic_url = response.payload.data.decode("UTF-8")
+
+config.set_section_option("alembic", "sqlalchemy.url", alembic_url)
 
 
-def run_migrations_offline():
+def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
 
     This configures the context with just a URL
@@ -58,8 +65,9 @@ def run_migrations_offline():
     script output.
 
     """
+    url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=configuration["sqlalchemy.url"],
+        url=url,
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -69,7 +77,7 @@ def run_migrations_offline():
         context.run_migrations()
 
 
-def run_migrations_online():
+def run_migrations_online() -> None:
     """Run migrations in 'online' mode.
 
     In this scenario we need to create an Engine
@@ -77,7 +85,7 @@ def run_migrations_online():
 
     """
     connectable = engine_from_config(
-        configuration, # NEW
+        config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )

@@ -5,8 +5,10 @@ set -e
 # run in your python virtual environment
 # make sure docker compose is running
 
-export ENVIRONMENT=dev
+export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
 
-docker compose up -d lw_api
+docker compose down
 
-services/_api/scripts/migrate-database.sh
+docker compose up -d api
+
+services/_api/scripts/up-db.sh

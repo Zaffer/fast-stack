@@ -1,14 +1,14 @@
 version: "3"
 services:
 
-  _api:
+  api:
     depends_on:
       - db-local
       - cloudsql-proxy
 
   _web:
     depends_on:
-      - _api
+      - api
 
   db-local:
     container_name: db-local

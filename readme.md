@@ -18,6 +18,7 @@ Auth0 for authentication and SSO
 TODO:
 - full pnp for yarn (currently Anuglar has issues with Yarn pnp)
 - containerise Angular pgAdmin4
+- Add Grafana as service to visualise your data
 
 
 Duplicate _api, _web, or _app for each new service you want to build
@@ -125,7 +126,8 @@ Needed in your local environment (not container only) for Python IDE can support
     > Create Service Account Key of signed in user for ADC
     `gcloud auth application-default login`
     `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
-    > Remember to revoke when you stop longer need access
+
+    > Remember to revoke when you no longer need access
     `gcloud auth application-default revoke`
 
 
@@ -164,37 +166,35 @@ poetry install
 > paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
 ```
 {
-    "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{{{{{{{{{{{{{your-venv-xyz-py3.10}}}}}}}}}}}}}}}}}/bin/python",
-    "python.terminal.activateEnvironment": true,
-    "python.analysis.extraPaths": [
-        "./services/fa_api/src",
-        "./services/md_web/src"
-    ],
-    "python.formatting.provider": "black",
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": [
-        "--max-line-length=119",
-        "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
-    ],
-    "python.linting.flake8CategorySeverity.E": "Hint",
-    "python.linting.flake8CategorySeverity.W": "Warning",
-    "python.linting.flake8CategorySeverity.F": "Information",
-    "isort.args": [
-        "--profile=black"
-    ],
-    "jupyter.jupyterServerType": "local",
-    "[typescript]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "vscode.typescript-language-features",
-    },
-    "search.exclude": {
-        "**/.yarn": true,
-        "**/.pnp.*": true
-    },
-    "prettier.prettierPath": "./services/mc_portal/app/.yarn/sdks/prettier/index.js",
-    "typescript.tsdk": "./services/mc_portal/app/.yarn/sdks/typescript/lib",
-    "typescript.enablePromptUseWorkspaceTsdk": true
+  "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{quickdesk-api-t4Xs1vGN-py3.10}}}}}/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.analysis.extraPaths": [
+    "./services/_api/src"
+  ],
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "information"},
+  "python.formatting.provider": "black",
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Args": [
+    "--max-line-length=119",
+    "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
+  ],
+  "python.linting.flake8CategorySeverity.E": "Hint",
+  "python.linting.flake8CategorySeverity.W": "Warning",
+  "python.linting.flake8CategorySeverity.F": "Information",
+  "isort.args": ["--profile=black"],
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "prettier.prettierPath": "./services/_web/app/.yarn/sdks/prettier/index.js",
+  "typescript.tsdk": "./services/_web/app/.yarn/sdks/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
 }
 ```
 > start new terminal that must automatically load into the poetry virtual environment
@@ -241,11 +241,20 @@ sh scripts/develop-prod.sh
 ```
 
 
-## Run Tests
+## Test
 > modify the script to choose options like turning off --build
 ```
 sh scripts/test.sh
 ```
+
+
+## Quality
+```
+docker-compose exec web flake8 .
+docker-compose exec web black . --check
+docker-compose exec web isort . --check-only
+```
+
 
 ## Deploy
 > deploy to staging environment
@@ -328,18 +337,25 @@ jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://12
 > Select remote server as kernel
 
 
-## Quality
+## GCloud
+>Google Cloud Platform SDK commands 
+
 ```
-docker-compose exec web flake8 .
-docker-compose exec web black . --check
-docker-compose exec web isort . --check-only
+gcloud config configurations list
+gcloud config configurations create <my-config>
+gcloud config configurations activate <config>
+
+gcloud projects list
+gcloud config set project <project-name>
+
+gcloud config list
 ```
 
 
 ## Poetry
-> Upldate dependancy version in pyproject.toml
+> Update dependancy version in pyproject.toml
 ```bash
-poetry add black@latest --dev
+poetry add black@latest --group dev
 ```
 
 ## FRONTEND
@@ -349,25 +365,6 @@ poetry add black@latest --dev
 ## Ionic:
 for an ionic, start with:
 `ionic start`
-
-
-
-# LOCAL PORTS:
-
-┌───────────────────────────┬──────┐
-│ SERVICE                   │ PORT │
-├───────────────────────────┼──────┤
-│ db-local                  │ 5432 │
-├───────────────────────────┼──────┤
-│ pgAmdin                   │ 8000 │
-├───────────────────────────┼──────┤
-│                   │ 8081 │
-├───────────────────────────┼──────┤
-│                  │ 5003 │
-├───────────────────────────┼──────┤
-│                │ 8100 │
-└───────────────────────────┴──────┘
-
 
 
 
