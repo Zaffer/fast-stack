@@ -44,11 +44,6 @@ if environment == "proxy":
         name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest"
     )
     alembic_url = response.payload.data.decode("UTF-8")
-if environment == "prod":
-    response = client.access_secret_version(
-        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROD'}/versions/latest"
-    )
-    alembic_url = response.payload.data.decode("UTF-8")
 
 config.set_section_option("alembic", "sqlalchemy.url", alembic_url)
 

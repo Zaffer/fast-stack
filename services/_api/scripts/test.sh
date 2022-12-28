@@ -1,19 +1,20 @@
 #! /usr/bin/env sh
-
 set -e
 
-# Run the test on the built container
+## START SCRIPT FOR TESTING ##
 
-docker compose down
-docker volume prune -f
+export ENVIRONMENT=test
 
-export ENVIRONMENT=dev
-scripts/qrs/set-secrets.sh
+services/_api/scripts/start.sh
 
-# docker compose up -d --build
-docker compose up -d
+echo "TESTING SCRIPT HAS BEEN RUN"
 
-scripts/qrs/db-upgrade.sh
+# docker exec api python -m pytest --show-capture=no -p no:cacheprovider
+# docker exec api python -m pytest --show-capture=no -p no:cacheprovider /app/app/tests/ # run specific tests
 
-docker exec web python -m pytest --show-capture=no -p no:cacheprovider
-# docker exec api python -m pytest --show-capture=no -p no:cacheprovider /app/app/tests/
+# # - name: Flake8
+# run: docker exec fastapi-tdd python -m flake8 .
+# # - name: Black
+# run: docker exec fastapi-tdd python -m black . --check
+# # - name: isort
+# run: docker exec fastapi-tdd python -m isort . --check-only

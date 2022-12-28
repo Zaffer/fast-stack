@@ -11,13 +11,13 @@ services:
       args:
         - ENVIRONMENT=${ENVIRONMENT-dev}
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS-/tmp/keys/application_default_credentials.json}
       - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
     ports:
       - 8000:8000
     volumes:
       - ./services/_api/src:/app
-      - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
+      - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS}
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
     # command: sh -c "while true; do sleep 1; done"
 

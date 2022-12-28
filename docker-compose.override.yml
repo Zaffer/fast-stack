@@ -4,7 +4,7 @@ services:
   api:
     depends_on:
       - db-local
-      - cloudsql-proxy
+      # - cloudsql-proxy
 
   _web:
     depends_on:
@@ -24,7 +24,7 @@ services:
       - POSTGRES_DB=_db
     volumes:
       - db-local-data:/var/lib/postgresql/data/pgdata
-      # - ./services/_db/sql:/docker-entrypoint-initdb.d/
+      - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/
     command: postgres -c log_statement=all
 
 

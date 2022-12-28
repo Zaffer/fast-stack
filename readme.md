@@ -31,23 +31,23 @@ service: "_api"
 FastAPI
 SQLModel 
 
-### DATABASE
-service: "_db"
-PostgreSQL
-Pgadmin4
-
-### WEBSITE
+### WEB
 service: "_web"
 Angular
 Firebase
 Material Design
 
-### APPLICATION
+### APP
 service: "_app"
 Angular
 Firebase
 Ionic
 
+
+## Tools
+
+
+### VSCode Settings
 
 ## Poetry
 Needed in your local environment (not container only) for Python IDE can support  
@@ -55,8 +55,22 @@ Needed in your local environment (not container only) for Python IDE can support
 
 ### Docker Compose
 
-### VSCode Settings
 
+## Alembic
+Alembic is a lightweight database migration tool for usage with the SQLAlchemy Database Toolkit for Python. It provides a full suite of revision control and scripting facilities out of the box, as well as more advanced features.
+
+For a new project you need to delete the sql files in db/sql.
+Genereate new SQL using Alembic replaces the old SQL files.
+On local database start these files will automatically be run because they are mounted into /docker-entrypoint-initdb.d/
+For production database you need to run the db-up.sh script to manaully upgrade the live database useing alembic.
+
+
+### Github Actions
+IMPORATANT NOTE: Github Actions secrets is only free from public repos, if you need a private or organisation repo you need to update the workflow to not use secrets.
+To do this you remove the references to secrets and replace those environment variables with your Google Cloud Project's WIF provider and service account.
+
+Workload Identity Federation (WIF) is a feature of Google Cloud Platform that allows you to access Google Cloud resources from on-premises or other cloud environments. With WIF, you can access Google Cloud resources from AWS, Azure, or any identity provider that supports OpenID Connect (OIDC).
+> more info: https://cloud.google.com/iam/docs/workload-identity-federation
 
 
 ==============================
