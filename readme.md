@@ -234,6 +234,27 @@ username: postgres
 password: postgres
 ```
 
+## _web
+
+cd into the app folder
+
+`yarn set version stable`
+
+`yarn install`
+
+
+> the following is get pnp working once Angular supports it again.
+
+`yarn add -D @types/node`
+
+`yarn build`
+
+`yarn start`
+
+`yarn dlx @yarnpkg/sdks vscode`
+
+add paths to your app's .yarn file in workspace root .vscode/settings.json
+
 
 
 # SCRIPTS
@@ -387,21 +408,3 @@ for an ionic, start with:
 if the container is running different .env file to the one in your local volume, then rebuild the container for local
 
 
-
-# INSTALL ANGULAR
-
-cd into the app folder
-
-`yarn set version stable`
-
-`yarn install`
-
-`yarn add -D @types/node`
-
-`yarn build`
-
-`yarn start`
-
-`yarn dlx @yarnpkg/sdks vscode`
-
-add  paths to your app's .yarn file in workspace root .vscode/settings.json
