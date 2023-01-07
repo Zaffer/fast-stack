@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://kit.fontawesome.com/251291a83b.js" crossorigin="anonymous"></script>
+
+    {% block styles %}
+      {{ bootstrap.load_css() }}
+    {% endblock styles %}
+
+    <title>
+      {% block title %}
+        {{ brand }}
+      {% endblock title %}
+    </title>
+  {% endblock head %}
+</head>
+
+<body>
+  <header class="navbar sticky-top shadow">
+    {% block navigation %}
+      {% include "components/navigation.html" %}
+    {% endblock navigation %}
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock content %}
+  </main>
+
+  <footer>
+    {% block messages %}
+      {% include "components/messages.html" %}
+    {% endblock messages %}
+
+    {% block scripts %}
+      {{ bootstrap.load_js() }}
+    {% endblock scripts %}
+  </footer>
+</body>
+
+</html

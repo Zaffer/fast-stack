@@ -1,0 +1,10 @@
+{% if session %}
+<br>
+<h5>{{session.userinfo.nickname}}</h5>
+<img src="{{session.userinfo.picture}}" width="50px">
+<p><a href="/logout">Logout</a></p>
+{% else %}
+<br>
+<h5>Welcome Guest</h5>
+<p><a href="/login">Login</a></p>
+{% endif %}

@@ -1,0 +1,31 @@
+<!-- flash messages-->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, msg in messages %}
+{% if category == 'message' or category == 'info' %}
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+  <strong>Info: </strong> {{ msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% if category == 'danger' %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Danger: </strong> {{ msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% if category == 'warning' %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Warning: </strong> {{ msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% if category == 'success' %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success: </strong> {{ msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}

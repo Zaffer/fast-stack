@@ -1,0 +1,54 @@
+<a class="navbar-brand" href="#">
+  <img src="{{ url_for('static', filename = logo) }}" width="200px">
+</a>
+
+<div class="justify-content-end flex-grow-1">
+</div>
+<a class="nav-link" href="/home">
+  <i class="fa-solid fa-house fa-xl"></i>
+</a>
+<a class="nav-link" href="/dash1">
+  <i class="fa-solid fa-gas-pump fa-xl"></i>
+</a>
+<a class="nav-link" href="/dash2">
+  <i class="fa-solid fa-clipboard-list fa-xl"></i>
+</a>
+
+
+
+<button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navBarMenu">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="navBarMenu" role="dialog">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title">{{ brand }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/home">Dashboards</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+          Reports
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Save Report</a></li>
+          <li><a class="dropdown-item" href="#">Request Report</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Remove Report</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        {% include "components/auth.html" %}
+      </li>
+    </ul>
+  </div>
+</div>

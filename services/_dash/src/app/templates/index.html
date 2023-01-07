@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+{% block app_content %}
+
+{% if session %}
+<h1>Welcome {{session.userinfo.name}}</h1>
+<p><a href="/logout">Logout</a></p>
+<div><pre>{{pretty}}</pre></div>
+{% else %}
+<h1>Welcome Guest</h1>
+<p><a href="/login">Login</a></p>
+{% endif %}
+
+{% endblock app_content %}
+{% endblock content %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock scripts %}

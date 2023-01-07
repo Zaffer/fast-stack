@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+{% block app_content %}
+
+<div style="width: 100%; height: 92vh;">
+    <iframe style="width: 100%; height: 100%;" src={{ dash_url }}></iframe>
+</div>
+
+{% endblock app_content %}
+{% endblock content %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock scripts %}
