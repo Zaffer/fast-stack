@@ -10,7 +10,7 @@ import { BypassSecurityPipe } from 'src/app/core/pipes/bypass-security.pipe';
   imports: [BypassSecurityPipe]
 })
 export class IframeComponent implements OnInit {
-  @Input() dashUrl!: string;
+  @Input() frameUrl!: string;
 
   constructor() { }
 

@@ -8,6 +8,11 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent,
     // canActivate: [AuthGuard],
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./features/settings/settings.module').then(m => m.SettingsModule)
+    // canActivate: [AuthGuard],
   }
 ];
 

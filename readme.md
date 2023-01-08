@@ -236,21 +236,20 @@ password: postgres
 
 ## _web
 
+if creating a new service with angular cli directly, then remeber to choose yarn as the package manager.
+`ng config cli.packageManager yarn`
+
+
 cd into the app folder
-
 `yarn set version stable`
-
 `yarn install`
 
 
 > the following is get pnp working once Angular supports it again.
 
 `yarn add -D @types/node`
-
 `yarn build`
-
 `yarn start`
-
 `yarn dlx @yarnpkg/sdks vscode`
 
 add paths to your app's .yarn file in workspace root .vscode/settings.json
@@ -393,8 +392,16 @@ gcloud config list
 poetry add black@latest --group dev
 ```
 
-## FRONTEND
-    ng config cli.packageManager yarn
+## Angular CLI
+> Create new service
+```bash
+ng generate service services/<service-name>
+```
+
+> Create new component, then remove dry-run if happy to create
+```bash
+ng g c feature -m features.module --dry-run
+```
 
 
 ## Ionic:

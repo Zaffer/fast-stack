@@ -36,7 +36,7 @@ import { FeaturesModule } from './features.module';
     AuthModule.forRoot({
       ...environment.auth,
       httpInterceptor: {
-        allowedList: [`${environment._API_AUTH_BASE_PATH}`],
+        allowedList: [`${environment._API_BASE_PATH_AUTH}`],
       },
     }),
     BrowserAnimationsModule,

@@ -1,7 +1,14 @@
 version: "3"
 services:
 
+  # # a plotly dash service that runs ontop of flask, for doing charts with just python
+  # dash:
+  #   # 8888 ports for kernel in jupytor notebooks
+  #   ports:
+  #     - 8888:8888
 
+
+  # fastapi service for rapidly create robuse apis
   # api:
   #   container_name: api_service
   #   build:
@@ -22,6 +29,7 @@ services:
   #   # command: sh -c "while true; do sleep 1; done"
 
 
+  # Angular service framework
   web:
     container_name: web_container
     build:
@@ -29,9 +37,24 @@ services:
       dockerfile: web.ngfb.dockerfile
       network: host
     ports:
-      - 4200:4200
+      - 4201:4200
     volumes:
       - ./services/_web/app:/home/node/app
+    command: "yarn start --host 0.0.0.0"
+    # command: sh -c "while true; do sleep 1; done"
+
+
+  # Angular service that is designed to be a microservice to embed via iframe into other frameworks
+  web_srv:
+    container_name: web_srv_container
+    build:
+      context: ./services/_web_srv
+      dockerfile: web.srv.dockerfile
+      network: host
+    ports:
+      - 4202:4200
+    volumes:
+      - ./services/_web_srv/app:/home/node/app
     command: "yarn start --host 0.0.0.0"
     # command: sh -c "while true; do sleep 1; done"
 
