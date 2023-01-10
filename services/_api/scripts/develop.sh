@@ -6,3 +6,5 @@ set -e
 export ENVIRONMENT=dev
 
 services/_api/scripts/start.sh
+
+# services/_api/scripts/db-up.sh

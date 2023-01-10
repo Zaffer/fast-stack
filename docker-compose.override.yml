@@ -1,10 +1,10 @@
 version: "3"
 services:
 
-  # api:
-  #   depends_on:
-  #     - db-local
-  #     # - cloudsql-proxy
+  api:
+    depends_on:
+      - db-local
+      # - cloudsql-proxy
 
   # _web:
   #   depends_on:
@@ -13,14 +13,12 @@ services:
   db-local:
     container_name: db-local
     image: postgres:14-alpine
-    build:
-      context: ./services/_db
     ports:
       - 5432:5432
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
-      - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=_db
     volumes:
       - db-local-data:/var/lib/postgresql/data/pgdata
@@ -28,20 +26,17 @@ services:
     command: postgres -c log_statement=all
 
 
-  pgadmin:
+  pgadmin: # postgres database graphical interface dashboard
     container_name: pgadmin
     image: dpage/pgadmin4
     depends_on:
       - db-local
     ports:
-      - ${PGADMIN_PORT:-5050}:80
+      - 5050:80
     environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL:-postgres}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD:-postgres}
+      - PGADMIN_DEFAULT_EMAIL=postgres@postgres.com
+      - PGADMIN_DEFAULT_PASSWORD=grespost
       - PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION=True
-      # - PGADMIN_LISTEN_ADDRESS=
-      # - PGADMIN_LISTEN_PORT=5432
-      # - PGADMIN_SERVER_JSON_FILE
     volumes:
        - pgadmin-data:/var/lib/pgadmin
 

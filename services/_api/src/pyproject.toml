@@ -20,6 +20,7 @@ google-cloud-secret-manager = "^2.12.6"
 flake8 = "^6.0.0"
 isort = "^5.10.1"
 black = "^22.10.0"
+psycopg2-binary = "^2.9.5"
 alembic = "^1.9.1"
 
 [build-system]

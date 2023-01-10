@@ -8,29 +8,29 @@ services:
   #     - 8888:8888
 
 
-  # fastapi service for rapidly create robuse apis
-  # api:
-  #   container_name: api_service
-  #   build:
-  #     context: ./services/_api
-  #     dockerfile: api.fa.dockerfile
-  #     network: host
-  #     args:
-  #       - ENVIRONMENT=${ENVIRONMENT-dev}
-  #   environment:
-  #     - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS-/tmp/keys/application_default_credentials.json}
-  #     - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
-  #   ports:
-  #     - 8000:8000
-  #   volumes:
-  #     - ./services/_api/src:/app
-  #     - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS}
-  #   command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
-  #   # command: sh -c "while true; do sleep 1; done"
+ 
+  api: # fastapi service for rapidly create robuse apis
+    container_name: api_container
+    build:
+      context: ./services/_api
+      dockerfile: api.fa.dockerfile
+      network: host
+      args:
+        - ENVIRONMENT=${ENVIRONMENT-dev}
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
+    ports:
+      - 8000:8000
+    volumes:
+      - ./services/_api/src:/app
+      - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
+    # command: sh -c "while true; do sleep 1; done"
 
 
-  # Angular service framework
-  web:
+
+  web: # Angular service framework
     container_name: web_container
     build:
       context: ./services/_web
@@ -44,8 +44,7 @@ services:
     # command: sh -c "while true; do sleep 1; done"
 
 
-  # Angular service that is designed to be a microservice to embed via iframe into other frameworks
-  web_srv:
+  web_srv: # Angular service that is designed to be a microservice to embed via iframe into other frameworks
     container_name: web_srv_container
     build:
       context: ./services/_web_srv

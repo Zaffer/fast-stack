@@ -9,8 +9,8 @@ set -e
 export GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
 export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
 
-docker compose down
+# docker compose down
 
-docker compose up -d api
+docker compose up api
 
 echo '🍩'

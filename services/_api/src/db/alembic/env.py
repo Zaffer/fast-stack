@@ -37,7 +37,7 @@ from google.cloud import secretmanager
 client = secretmanager.SecretManagerServiceClient()
 
 environment = os.getenv("ENVIRONMENT", "dev")
-alembic_url = "postgresql+psycopg2://postgres:postgres@localhost:5432/postgres"
+alembic_url = "postgresql+psycopg2://postgres:postgres@db-local:5432/_db"
 
 if environment == "proxy":
     response = client.access_secret_version(
