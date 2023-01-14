@@ -219,18 +219,20 @@ poetry install
 ## pgAmdin
 This is a GUI for postgresql. It is not required but it is very useful for development.
 
-go to http://localhost:5050
+`
+docker compose up pgadmin
+`
 
-> create server
+http://localhost:5050
+postgres@postgres.com
+grespost
+
+> add the local server
 ```
 name: db-local
-
 host: db-local
-
 port: 5432
-
 username: postgres
-
 password: postgres
 ```
 

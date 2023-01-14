@@ -19,7 +19,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=_db
     volumes:
       - db-local-data:/var/lib/postgresql/data/pgdata
       - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/

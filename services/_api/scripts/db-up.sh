@@ -3,9 +3,19 @@ set -e
 
 ## UPGRADE THE DATABASE TO LATEST REVISION ##
 
-# # checks for active db connection before alembic upgrade
-timeout 90s bash -c "until docker exec db-local pg_isready ; do echo '⌛'; sleep 5 ; done"; echo -e \\a
+# checks for active db connection before alembic upgrade
+timeout 30s bash -c "until docker exec db-local pg_isready ; do echo '⌛'; sleep 3 ; done"; echo -e \\a
 
+# create the database if not exists
+if docker exec -u postgres db-local psql postgres postgres -c "CREATE DATABASE _db;"; then
+    echo "created database because did not exist"
+
+    # if the database was created, then wait for the db to be ready
+    timeout 30s bash -c "until docker exec db-local psql _db postgres -c '' ; do echo '⌛'; sleep 3 ; done"; echo -e \\a
+    echo "created database ready for connections"
+fi
+
+# execute the alembic up grade inside the container
 docker exec -u fish -w /app/db api_container alembic upgrade head
 
 # # manually add sql into the container to execute

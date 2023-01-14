@@ -36,16 +36,19 @@ from google.cloud import secretmanager
 
 client = secretmanager.SecretManagerServiceClient()
 
-environment = os.getenv("ENVIRONMENT", "dev")
-alembic_url = "postgresql+psycopg2://postgres:postgres@db-local:5432/_db"
+ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")
+POSTGRES_DB = os.getenv("POSTGRES_DB", "db")
+ALEMBIC_URL = f"postgresql+psycopg2://postgres:postgres@db-local:5432/{POSTGRES_DB}"
 
-if environment == "proxy":
+if ENVIRONMENT == "proxy":
+    ALEMBIC_URL = f"postgresql+psycopg2://postgres:postgres@cloudsql-proxy:5433/{POSTGRES_DB}"
+if ENVIRONMENT == "prod":
     response = client.access_secret_version(
-        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest"
+        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROD'}/versions/latest"
     )
-    alembic_url = response.payload.data.decode("UTF-8")
+    ALEMBIC_URL = response.payload.data.decode("UTF-8") # type: ignore
 
-config.set_section_option("alembic", "sqlalchemy.url", alembic_url)
+config.set_section_option("alembic", "sqlalchemy.url", ALEMBIC_URL)
 
 
 def run_migrations_offline() -> None:

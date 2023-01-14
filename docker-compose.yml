@@ -19,7 +19,8 @@ services:
         - ENVIRONMENT=${ENVIRONMENT-dev}
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_name}
+      - POSTGRES_DB=${POSTGRES_DB:-db}
     ports:
       - 8000:8000
     volumes:
