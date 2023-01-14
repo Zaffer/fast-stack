@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     TITLE: str = "Your Site API"
     DESCRIPTION: str = """Your Site API ⚡"""
     VERSION: str = "1.5.0"
-    TERMS_OF_SERVICE: str = "https://www.Your Site.co.za/termsandconditions.html"
-    CONTACT: dict = {"url": "https://www.Your Site.co.za/#contact"}
+    TERMS_OF_SERVICE: str = "https://www.YourSite.co.za/termsandconditions.html"
+    CONTACT: dict = {"url": "https://www.YourSite.co.za/#contact"}
     LICENSE_INFO: dict = {
         "name": "All rights reserved.",
         "url": "https://www.Your Site.co.za/privacypolicy.html",
