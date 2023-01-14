@@ -1,14 +1,6 @@
 version: "3"
 services:
 
-  # # a plotly dash service that runs ontop of flask, for doing charts with just python
-  # dash:
-  #   # 8888 ports for kernel in jupytor notebooks
-  #   ports:
-  #     - 8888:8888
-
-
- 
   api: # fastapi service for rapidly create robuse apis
     container_name: api_container
     build:
@@ -58,3 +50,9 @@ services:
     command: "yarn start --host 0.0.0.0"
     # command: sh -c "while true; do sleep 1; done"
 
+
+  # # a plotly dash service that runs ontop of flask, for doing charts with just python
+  # dash:
+  #   # 8888 ports for kernel in jupytor notebooks
+  #   ports:
+  #     - 8888:8888

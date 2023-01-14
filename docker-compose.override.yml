@@ -1,14 +1,6 @@
 version: "3"
 services:
 
-  api:
-    depends_on:
-      - db-local
-      # - cloudsql-proxy
-
-  # _web:
-  #   depends_on:
-  #     - api
 
   db-local:
     container_name: db-local
@@ -25,6 +17,17 @@ services:
     command: postgres -c log_statement=all
 
 
+  cloudsql-proxy: # access your cloud sql database from your local machine
+    container_name: cloudsql-proxy
+    image: gcr.io/cloudsql-docker/gce-proxy:latest
+    ports:
+      - 5433:5432
+    volumes:
+      - ./services/database/keys:/config
+    restart: always
+    command: /cloud_sql_proxy --dir=/cloudsql -instances=your-gcp:europe-west1:quick-desk-sql-instance=tcp:0.0.0.0:5432 -credential_file=/config/google-creds.json
+
+
   pgadmin: # postgres database graphical interface dashboard
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -37,16 +40,6 @@ services:
     volumes:
        - pgadmin-data:/var/lib/pgadmin
 
-
-  cloudsql-proxy: # access your cloud sql database from your local machine
-    container_name: cloudsql-proxy
-    image: gcr.io/cloudsql-docker/gce-proxy:latest
-    ports:
-      - 5433:5432
-    volumes:
-      - ./services/database/keys:/config
-    restart: always
-    command: /cloud_sql_proxy --dir=/cloudsql -instances=your-gcp:europe-west1:quick-desk-sql-instance=tcp:0.0.0.0:5432 -credential_file=/config/google-creds.json
 
   redis:
     container_name: redis
@@ -70,6 +63,15 @@ services:
       - 8001:8001
     volumes:
       - redisinsight-data:/db
+
+  api:
+    depends_on:
+      - db-local
+      # - cloudsql-proxy
+
+  # web:
+  #   depends_on:
+  #     - api
 
 
 volumes:
