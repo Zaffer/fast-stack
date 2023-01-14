@@ -1,12 +1,10 @@
 #! /usr/bin/env sh
 set -e
 
-## START THE CONTAINERS & UP DATABASE ##
-# run in your python virtual environment
+## START THE CONTAINERS ##
 # make sure docker is running
-# be sure to set the ENVIROMENT variable
+# be sure to set the ENVIROMENT variable, else default is dev
 
-export GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
 export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
 
 # docker compose down
