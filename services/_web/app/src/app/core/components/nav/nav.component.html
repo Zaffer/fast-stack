@@ -1,17 +1,75 @@
 <!-- <mat-toolbar color="primary" class="mat-elevation-z3" style="background-color: #ffffff;"> -->
-  <mat-toolbar color="primary" class="mat-elevation-z3">
+<mat-toolbar color="primary" class="mat-elevation-z3">
   <button mat-icon-button (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <img src="assets/logo.png" height="100%">
+  <img src="assets/logo.png" height="100%" />
 
-  <span style="flex:auto;"></span>
+  <span style="flex: auto"></span>
   <button mat-icon-button (click)="toggleTheme()">
-    <mat-icon>{{ getTheme() === "dark" ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    <mat-icon>{{
+      getTheme() === "dark" ? "dark_mode" : "light_mode"
+    }}</mat-icon>
   </button>
-  <app-avatar [matMenu]="profile_menu"></app-avatar>
-  <mat-menu #profile_menu>
+  <button mat-icon-button [matMenuTriggerFor]="appsMenu">
+    <mat-icon fontIcon="apps"></mat-icon>
+  </button>
+  <mat-menu #appsMenu>
+    <div>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App 1</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App 2</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App 3</span>
+      </button>
+    </div>
+    <div>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App A</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App B</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>App C</span>
+      </button>
+    </div>
+    <div>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>One</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>Two</span>
+      </button>
+      <button class="app">
+        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <br />
+        <span>Three</span>
+      </button>
+    </div>
+  </mat-menu>
+  <app-avatar [matMenu]="profileMenu"></app-avatar>
+  <mat-menu #profileMenu>
     <app-profile></app-profile>
     <mat-divider></mat-divider>
     <app-auth-button></app-auth-button>
@@ -19,13 +77,19 @@
 </mat-toolbar>
 
 <mat-sidenav-container class="mat-app-background">
-  <mat-sidenav #drawer fixedInViewport fixedTopGap="64" class="mat-elevation-z2" role="navigation" mode="side"
-    [opened]="(isHandset$ | async) === false">
+  <mat-sidenav
+    #drawer
+    fixedInViewport
+    fixedTopGap="64"
+    class="mat-elevation-z2"
+    role="navigation"
+    mode="side"
+    [opened]="(isHandset$ | async) === false"
+  >
     <app-menu></app-menu>
   </mat-sidenav>
   <mat-sidenav-content role="main">
-
-    <div *ngIf="loaderService.isLoading | async " class="loader-container">
+    <div *ngIf="loaderService.isLoading | async" class="loader-container">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
 
