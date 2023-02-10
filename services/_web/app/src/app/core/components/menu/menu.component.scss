@@ -2,3 +2,17 @@
   margin-left: 16px;
   margin-right: 16px;
 }
+
+#menu {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-nav-list {
+    flex-grow: 1;
+}
+
+#side-nav-lock {
+  transform: rotate(90deg);
+}
