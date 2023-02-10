@@ -1,0 +1,12 @@
+<mat-nav-list role="navigation">
+  <mat-accordion displayMode="flat">
+    <mat-list-item
+      *ngFor="let nav of mainNavs"
+      [activated]="router.url === nav.link"
+      [routerLink]="nav.link"
+    >
+      <mat-icon matListItemIcon>{{ nav.icon }}</mat-icon>
+      <span matListItemTitle>{{ nav.name }} </span>
+    </mat-list-item>
+  </mat-accordion>
+</mat-nav-list>

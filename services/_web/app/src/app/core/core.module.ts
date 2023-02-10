@@ -12,11 +12,13 @@ import { AuthButtonComponent } from './components/auth-button/auth-button.compon
 import { ProfileComponent } from './components/profile/profile.component';
 import { AvatarComponent } from './components/avatar/avatar.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { MenuMainComponent } from './components/menu-main/menu-main.component';
 
 @NgModule({
   declarations: [
     NavComponent,
     MenuComponent,
+    MenuMainComponent,
     AuthButtonComponent,
     ProfileComponent,
     AvatarComponent,

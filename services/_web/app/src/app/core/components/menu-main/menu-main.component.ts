@@ -18,20 +18,20 @@ interface NavGroup {
 }
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss'],
+  selector: 'app-menu-main',
+  templateUrl: './menu-main.component.html',
+  styleUrls: ['./menu-main.component.scss'],
   animations: [animateSideNav, animateText]
 })
-export class MenuComponent implements OnInit {
+export class MenuMainComponent implements OnInit {
   public isSideNavOpen: boolean = false;
   public isLinkTextShown: boolean = false;
 
-  public navs: NavGroup[] = [
-    { icon: 'home', name: 'Home', link: '/' },
-    { icon: 'auto_awesome_mosaic', name: 'Dashboards', link: '/dashboard' },
-    { icon: 'auto_awesome_mosaic', name: 'Dashboards and others', link: '/dashboard' },
-    { icon: 'auto_awesome_mosaic', name: 'Dashboards and many more other things', link: '/dashboard' }
+  public mainNavs: NavGroup[] = [
+    { icon: 'settings', name: 'Settings', link: '/' },
+    { icon: 'lock', name: 'Security', link: '/dashboard' },
+    { icon: 'dashboard', name: 'Overall Dashboard', link: '/dashboard' },
+    { icon: 'report-problem', name: 'Problems and many more other things', link: '/dashboard' }
   ];
 
   constructor(public router: Router, private sideNavService: SideNavService) { }

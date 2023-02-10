@@ -1,6 +1,6 @@
 <!-- <mat-toolbar color="primary" class="mat-elevation-z3" style="background-color: #ffffff;"> -->
 <mat-toolbar color="primary" class="mat-elevation-z3">
-  <button mat-icon-button (click)="drawer.toggle()">
+  <button mat-icon-button (click)="mainDrawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
@@ -18,51 +18,51 @@
   <mat-menu #appsMenu>
     <div>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App 1</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App 2</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App 3</span>
       </button>
     </div>
     <div>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App A</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App B</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>App C</span>
       </button>
     </div>
     <div>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>One</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>Two</span>
       </button>
       <button class="app">
-        <mat-icon fontIcon="apps" style="margin: auto;"></mat-icon>
+        <mat-icon fontIcon="apps" style="margin: auto"></mat-icon>
         <br />
         <span>Three</span>
       </button>
@@ -76,23 +76,30 @@
   </mat-menu>
 </mat-toolbar>
 
-<mat-sidenav-container class="mat-app-background">
-  <mat-sidenav
-    #drawer
-    fixedInViewport
-    fixedTopGap="64"
-    class="mat-elevation-z2"
-    role="navigation"
-    mode="side"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <app-menu></app-menu>
+<mat-sidenav-container>
+  <mat-sidenav #mainDrawer>
+    <app-menu-main></app-menu-main>
   </mat-sidenav>
-  <mat-sidenav-content role="main">
-    <div *ngIf="loaderService.isLoading | async" class="loader-container">
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-    </div>
+  <mat-sidenav-content role="mainMain">
+    <mat-sidenav-container class="mat-app-background">
+      <mat-sidenav
+        #drawer
+        fixedInViewport
+        fixedTopGap="64"
+        class="mat-elevation-z2"
+        role="navigation"
+        mode="side"
+        [opened]="(isHandset$ | async) === false"
+      >
+        <app-menu></app-menu>
+      </mat-sidenav>
+      <mat-sidenav-content role="main">
+        <div *ngIf="loaderService.isLoading | async" class="loader-container">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
 
-    <router-outlet></router-outlet>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </mat-sidenav-content>
 </mat-sidenav-container>
