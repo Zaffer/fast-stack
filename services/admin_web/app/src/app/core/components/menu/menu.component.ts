@@ -28,8 +28,8 @@ export class MenuComponent implements OnInit {
   public isLinkTextShown: boolean = false;
 
   public navs: NavGroup[] = [
-    { icon: 'home', name: 'Home', link: '/' },
-    { icon: 'auto_awesome_mosaic', name: 'Dashboards', link: '/dashboard' }
+    { icon: 'query_stats', name: 'Activity', link: '/activity' },
+    { icon: 'manage_accounts', name: 'Access Control', link: '/access' }
   ];
 
   constructor(public router: Router, private sideNavService: SideNavService) { }

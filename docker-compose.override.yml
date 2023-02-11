@@ -1,7 +1,6 @@
 version: "3"
 services:
 
-
   db-local:
     container_name: db-local
     image: postgres:14-alpine

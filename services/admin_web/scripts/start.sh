@@ -2,8 +2,8 @@
 
 set -e
 
-# ng serve the web app
+## Starts and serves web app
 
-docker compose up web_srv
-# docker compose up web_srv --build
+docker compose up admin_web
+# docker compose up admin_web --build
 

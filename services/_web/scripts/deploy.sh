@@ -9,6 +9,6 @@ md_web --build
 
 md_web yarn ng build --configuration production --aot
 
-md_web firebase use smartviewportal
+md_web firebase use your-firebase-project
 
 md_web firebase deploy

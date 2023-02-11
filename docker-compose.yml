@@ -22,7 +22,6 @@ services:
     # command: sh -c "while true; do sleep 1; done"
 
 
-
   web: # Angular service framework
     container_name: web_container
     build:
@@ -50,6 +49,19 @@ services:
     command: "yarn start --host 0.0.0.0"
     # command: sh -c "while true; do sleep 1; done"
 
+  
+  admin_web: # Angular service for administration and settings management
+    container_name: admin_web_container
+    build:
+      context: ./services/admin_web
+      dockerfile: admin.web.dockerfile
+      network: host
+    ports:
+      - 4203:4200
+    volumes:
+      - ./services/admin_web/app:/home/node/app
+    command: "yarn start --host 0.0.0.0"
+    
 
   # # a plotly dash service that runs ontop of flask, for doing charts with just python
   # dash:

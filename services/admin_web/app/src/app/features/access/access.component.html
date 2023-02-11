@@ -1,0 +1,30 @@
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>account_circle</mat-icon>
+      &nbsp;Users
+    </ng-template>
+    <app-users></app-users>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>group</mat-icon>
+      &nbsp;Groups
+    </ng-template>
+    <app-groups></app-groups>
+  </mat-tab>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon>admin_panel_settings</mat-icon>
+      &nbsp;Roles
+    </ng-template>
+    <app-roles></app-roles>
+  </mat-tab>
+  <mat-tab
+    ><ng-template mat-tab-label>
+      <mat-icon>key</mat-icon>
+      &nbsp;Permissions
+    </ng-template>
+    <app-permissions></app-permissions>
+  </mat-tab>
+</mat-tab-group>
