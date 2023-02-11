@@ -22,7 +22,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
-import { FeaturesModule } from './features.module';
+import { FeaturesModule } from './features/features.module';
 
 
 

@@ -80,26 +80,10 @@
   <mat-sidenav #mainDrawer>
     <app-menu-main></app-menu-main>
   </mat-sidenav>
-  <mat-sidenav-content role="mainMain">
-    <mat-sidenav-container class="mat-app-background">
-      <mat-sidenav
-        #drawer
-        fixedInViewport
-        fixedTopGap="64"
-        class="mat-elevation-z2"
-        role="navigation"
-        mode="side"
-        [opened]="(isHandset$ | async) === false"
-      >
-        <app-menu></app-menu>
-      </mat-sidenav>
-      <mat-sidenav-content role="main">
-        <div *ngIf="loaderService.isLoading | async" class="loader-container">
-          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-        </div>
-
-        <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
+  <mat-sidenav-content role="main">
+    <div *ngIf="loaderService.isLoading | async" class="loader-container">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
