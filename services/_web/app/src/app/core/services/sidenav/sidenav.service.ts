@@ -20,5 +20,4 @@ export class SideNavService {
   public toggle() {
     return this.isSideNavOpen.next(!this.isSideNavOpen);
   }
-
 }

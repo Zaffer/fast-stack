@@ -4,6 +4,7 @@
       *ngFor="let nav of mainNavs"
       [activated]="router.url === nav.link"
       [routerLink]="nav.link"
+      (click)="drawerRef.close()"
     >
       <mat-icon matListItemIcon>{{ nav.icon }}</mat-icon>
       <span matListItemTitle>{{ nav.name }} </span>
