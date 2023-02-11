@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UsersComponent {
 
-  public webSrvUrl = environment._WEB_SRV_BASE_PATH + ''
+  public usersUrl = 'http://localhost:4203/access'
 
   // // example using a pipe with content from api
   // managUrl = this.companyId$.pipe(
