@@ -1,0 +1,33 @@
+<!-- <mat-toolbar color="primary" class="mat-elevation-z3" style="background-color: #ffffff;"> -->
+  <!-- <mat-toolbar color="primary" class="mat-elevation-z3"> -->
+  <!-- <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <img src="assets/logo.png" height="100%">
+
+  <span style="flex:auto;"></span>
+  <button mat-icon-button (click)="toggleTheme()">
+    <mat-icon>{{ getTheme() === "dark" ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  </button>
+  <app-avatar [matMenu]="profile_menu"></app-avatar>
+  <mat-menu #profile_menu>
+    <app-profile></app-profile>
+    <mat-divider></mat-divider>
+    <app-auth-button></app-auth-button>
+  </mat-menu> -->
+<!-- </mat-toolbar> -->
+
+<mat-sidenav-container class="mat-app-background">
+  <mat-sidenav #drawer fixedInViewport class="mat-elevation-z2" role="navigation" mode="side" opened="true">
+    <app-menu></app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content role="main">
+
+    <div *ngIf="loaderService.isLoading | async " class="loader-container">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

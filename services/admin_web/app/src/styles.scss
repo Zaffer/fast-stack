@@ -1,0 +1,57 @@
+// Custom Theming for Angular Material https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Define a dark theme
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$deep-orange-palette),
+      accent: mat.define-palette(mat.$light-blue-palette),
+    ),
+    // Only include `typography` and `density` in the default dark theme.
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// Define a light theme
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$light-blue-palette),
+      accent: mat.define-palette(mat.$pink-palette),
+    ),
+  )
+);
+
+// // Apply the dark theme by default
+@include mat.core-theme($dark-theme);
+// // Include all theme styles for the components.
+@include mat.all-component-themes($dark-theme);
+@include mat.all-component-typographies($dark-theme);
+
+.color-scheme-light {
+  @include mat.all-component-colors($light-theme);
+  // @include mat.all-component-typographies($light-theme);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// .green-snackbar {
+//   background: #4BB543;
+//   color: white;
+// }
+
+// .red-snackbar {
+// background: #B33A3A;
+// color: white;
+// }
