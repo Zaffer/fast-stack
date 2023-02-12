@@ -1,1 +1,83 @@
-<p>activity works!</p>
+<mat-grid-list cols="2" rowHeight="2:1" gutterSize="10">
+  <mat-grid-tile>
+    <mat-grid-tile-header> tile header </mat-grid-tile-header>
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>bolt</mat-icon>
+        <mat-card-title> Card Title </mat-card-title>
+        <mat-card-subtitle> Card Subtitle </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <plotly-plot
+          [data]="graph.data"
+          [layout]="graph.layout"
+          [useResizeHandler]="true"
+          [style]="{ position: 'relative', width: '100%', height: '100%' }"
+        >
+        </plotly-plot>
+      </mat-card-content>
+      <mat-card-actions>
+        <button>button</button>
+      </mat-card-actions>
+      <mat-card-footer>
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+    <mat-grid-tile-footer> tile header </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-grid-tile-header> tile header </mat-grid-tile-header>
+    <mat-card appearance="raised">
+      <mat-card-header>
+        <mat-card-title> Card Title </mat-card-title>
+        <mat-card-subtitle> Card Subtitle </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <plotly-plot
+          [data]="graph.data"
+          [layout]="graph.layout"
+          [useResizeHandler]="true"
+          [style]="{ position: 'relative', width: '100%', height: '100%' }"
+        >
+        </plotly-plot>
+      </mat-card-content>
+      <mat-card-actions align="end">
+        <button>button</button>
+      </mat-card-actions>
+    </mat-card>
+    <mat-grid-tile-footer> tile footer </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-grid-tile-header> tile header </mat-grid-tile-header>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Card Title </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <plotly-plot
+          [data]="graph.data"
+          [layout]="graph.layout"
+          [useResizeHandler]="true"
+          [style]="{ position: 'relative', width: '100%', height: '100%' }"
+        >
+        </plotly-plot>
+      </mat-card-content>
+    </mat-card>
+    <mat-grid-tile-footer> tile footer </mat-grid-tile-footer>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-grid-tile-header> tile header </mat-grid-tile-header>
+    <mat-card>
+      <mat-card-content>
+        <plotly-plot
+          [data]="graph.data"
+          [layout]="graph.layout"
+          [useResizeHandler]="true"
+          [style]="{ position: 'relative', width: '100%', height: '100%' }"
+        >
+        </plotly-plot>
+      </mat-card-content>
+    </mat-card>
+    <mat-grid-tile-footer> tile footer </mat-grid-tile-footer>
+  </mat-grid-tile>
+</mat-grid-list>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MaterialModule } from 'src/app/material.module';
+import { MaterialModule } from 'src/app/shared/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { NavComponent } from './components/nav/nav.component';
 import { MenuComponent } from './components/menu/menu.component';

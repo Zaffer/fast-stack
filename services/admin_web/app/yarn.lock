@@ -3312,6 +3312,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/plotly.js-dist-min@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@types/plotly.js-dist-min@npm:2.3.1"
+  dependencies:
+    "@types/plotly.js": "*"
+  checksum: 12f6a5d0aa405f6becbae77fd57774fd2f1137609b89e498f04ebaec22310afb57c440b2072e467d3e46d23e56c409a0077a2e66c612e601647b4c089668b181
+  languageName: node
+  linkType: hard
+
+"@types/plotly.js@npm:*":
+  version: 2.12.13
+  resolution: "@types/plotly.js@npm:2.12.13"
+  checksum: 6e21127f39edc175579a35a5bf5eff87b8d3cc6369969f12da4a88b0d2db0b611076ac4feb54ee38d7f433d52436dbb7db454473af5dee41bf4a48270b73746e
+  languageName: node
+  linkType: hard
+
 "@types/qs@npm:*":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
@@ -3701,6 +3717,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"angular-plotly.js@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "angular-plotly.js@npm:4.0.4"
+  dependencies:
+    tslib: ^2.0.0
+  peerDependencies:
+    "@angular/common": ">10.0.9"
+    "@angular/core": ">10.0.9"
+  checksum: 759af9442dc911df58452818f50685bd4ea4e5d6dd7d649a4ce6f3a3e72288282bc5174f60e71be34d59246859cc9e3e953e111c173afb8bd7362b0457d1485f
+  languageName: node
+  linkType: hard
+
 "ansi-colors@npm:4.1.3":
   version: 4.1.3
   resolution: "ansi-colors@npm:4.1.3"
@@ -3781,12 +3809,15 @@ __metadata:
     "@auth0/auth0-angular": ^2.0.1
     "@types/jasmine": ^4.3.1
     "@types/node": ^18.13.0
+    "@types/plotly.js-dist-min": ^2.3.1
+    angular-plotly.js: ^4.0.4
     jasmine-core: ^4.5.0
     karma: ~6.4.0
     karma-chrome-launcher: ~3.1.0
     karma-coverage: ~2.2.0
     karma-jasmine: ~5.1.0
     karma-jasmine-html-reporter: ~2.0.0
+    plotly.js-dist-min: ^2.18.1
     prettier: ^2.8.4
     rxjs: ^7.8.0
     ts-node: ^10.9.1
@@ -7541,6 +7572,13 @@ __metadata:
   dependencies:
     find-up: ^4.0.0
   checksum: 9863e3f35132bf99ae1636d31ff1e1e3501251d480336edb1c211133c8d58906bed80f154a1d723652df1fda91e01c7442c2eeaf9dc83157c7ae89087e43c8d6
+  languageName: node
+  linkType: hard
+
+"plotly.js-dist-min@npm:^2.18.1":
+  version: 2.18.1
+  resolution: "plotly.js-dist-min@npm:2.18.1"
+  checksum: 9d93297a700a7c1a416769bbd7539f3d039ad950cb77ea4d2aa49500341eedb201b46ab11f5290315c7caa7e111e09b1c78cc0e33025e2f48a410e5f33c0f440
   languageName: node
   linkType: hard
 
