@@ -8,23 +8,27 @@ import { AuthModule, AuthHttpInterceptor } from '@auth0/auth0-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-// import {
-//   ApiModule,
-//   Configuration,
-//   ConfigurationParameters,
-// } from './core/api/qrspace';
-// import {
-//   ApiModule as LivewireApiModule,
-//   Configuration as LivewireConfig,
-//   ConfigurationParameters as LivewireConfigParams,
-// } from './core/api/livewire';
-
 import { environment } from 'src/environments/environment';
 import { CoreModule } from './core/core.module';
 import { FeaturesModule } from './features/features.module';
 
+import {
+  ApiModule as BackendApiModule,
+  Configuration as BackendConfig,
+  ConfigurationParameters as BackendConfigParams,
+} from './core/api/backend';
 
+export function backednConfigFactory(): BackendConfig {
+  const params: BackendConfigParams = {
+    basePath: environment.BACKEND_BASE_PATH,
+    withCredentials: true,
+    credentials: {
+      // APIKeyQuery: environment.apiKeys.APIKeyQuery,
+      // Auth0ImplicitBearer: environment.auth.clientId
+    }
+  };
+  return new BackendConfig(params);
+}
 
 @NgModule({
   declarations: [
@@ -33,13 +37,15 @@ import { FeaturesModule } from './features/features.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
     AuthModule.forRoot({
       ...environment.auth,
       httpInterceptor: {
-        allowedList: [`${environment._API_AUTH_BASE_PATH}`],
+        allowedList: [`${environment.BACKEND_BASE_PATH}`],
       },
     }),
-    BrowserAnimationsModule,
+    BackendApiModule.forRoot(backednConfigFactory),
     CoreModule,
     FeaturesModule
   ],

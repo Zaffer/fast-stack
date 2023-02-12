@@ -23,3 +23,11 @@ class Pie(BaseModel):
     labels: List[Any]
     type: str
     name: str | None
+
+
+class Scatter(BaseModel):
+    x: List[Any]
+    y: List[Any]
+    type: str
+    mode: str
+    marker: dict | None

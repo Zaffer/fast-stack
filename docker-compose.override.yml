@@ -12,7 +12,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - db-local-data:/var/lib/postgresql/data/pgdata
-      - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/
+      # - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/
     command: postgres -c log_statement=all
 
 

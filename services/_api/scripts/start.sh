@@ -6,7 +6,7 @@ set -e
 # be sure to set the ENVIROMENT variable, else default is dev
 
 export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
-export POSTGRES_DB=_db
+# export POSTGRES_DB=db
 
 # docker compose down
 

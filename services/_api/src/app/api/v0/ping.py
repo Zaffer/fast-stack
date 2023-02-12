@@ -14,29 +14,33 @@ router = APIRouter()
 
 @router.get(
     "/ping",
-    response_model=List[plots.Line],
+    response_model=List[plots.Scatter],
     # dependencies=[Depends(auth0.implicit_scheme)],
 )
 def ping() -> Any:
-
     logger.info(f"ping: {settings.ENVIRONMENT} + {settings.PROXY}")
-    data = plots.Line(
-        x=[55, 69, 62, 99, 60],
-        y=[55, 69, 62, 99, 60],
-        type="line"
-    )
-    return [data.dict()]
-    # {
-    #     "ping": "pong",
-    #     "enviroment": settings.ENVIRONMENT,
-    #     "proxy": settings.PROXY,
-    #     "data": [
-    #         {
-    #             "x": [55, 69, 62, 99, 60],
-    #             "y": [55, 69, 62, 99, 60]
-    #         }
-    #     ],
-    # }
+
+    # data = plots.Line(
+    #     x=[55, 69, 62, 99, 60],
+    #     y=[55, 69, 62, 99, 60],
+    #     type="line"
+    # )
+    # return [data.dict()]
+    data = {
+        "ping": "ok",
+        "enviroment": settings.ENVIRONMENT,
+        "proxy": settings.PROXY,
+        "data": [
+            {
+                "x": [1, 2, 3],
+                "y": [5, 5, 5],
+                "type": "scatter",
+                "mode": "lines+points",
+                "marker": {"color": "red"},
+            },
+        ],
+    }
+    return data["data"]
 
 
 @router.get(
@@ -57,9 +61,9 @@ async def redis() -> Any:
     # return {"token": token}
 
     # try:
-    resp = await itoc.call_protected()
+    # resp = await itoc.call_protected()
     # except await Exception as e:
     #     logger.info(f"redis endpoint error: {e}")
     #     return {"error": e}
 
-    return {"response": resp}
+    return {"response": "resp"}

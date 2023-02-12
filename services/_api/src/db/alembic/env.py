@@ -37,11 +37,14 @@ from google.cloud import secretmanager
 client = secretmanager.SecretManagerServiceClient()
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")
-POSTGRES_DB = os.getenv("POSTGRES_DB", "db")
-ALEMBIC_URL = f"postgresql+psycopg2://postgres:postgres@db-local:5432/{POSTGRES_DB}"
+# POSTGRES_DB = os.getenv("POSTGRES_DB", "db")
+ALEMBIC_URL = f"postgresql+psycopg2://postgres:postgres@db-local:5432/db"
 
 if ENVIRONMENT == "proxy":
-    ALEMBIC_URL = f"postgresql+psycopg2://postgres:postgres@cloudsql-proxy:5433/{POSTGRES_DB}"
+    response = client.access_secret_version(
+        name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest"
+    )
+    ALEMBIC_URL = response.payload.data.decode("UTF-8") # type: ignore
 if ENVIRONMENT == "prod":
     response = client.access_secret_version(
         name=f"projects/{os.getenv('GOOGLE_CLOUD_PROJECT')}/secrets/{'POSTGRES_URL_PROD'}/versions/latest"

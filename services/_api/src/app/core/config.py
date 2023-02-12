@@ -12,7 +12,9 @@ ORIGINS = [
     "http://localhost",
     "http://localhost:8080",
     "http://localhost:8100",
-    "http://localhost:4200",
+    "http://localhost:4201",
+    "http://localhost:4202",
+    "http://localhost:4203",
     "https://your-live-site-goes-here.web.app",
 ]
 
