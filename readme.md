@@ -1,9 +1,10 @@
 # Introduction
 
-FAP Stack
+FAAP Stack
 ---------
 FastAPI
 Angular
+Auth0
 PostgreSQL
 
 SQLModel for database ORM and API schemas
@@ -50,7 +51,7 @@ Ionic
 ### VSCode Settings
 
 ## Poetry
-Needed in your local environment (not container only) for Python IDE can support  
+Needed in your local environment (not container only) so Python IDE can support  
 
 
 ### Docker Compose
@@ -82,13 +83,12 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1. Linux
     > WSL2
     https://learn.microsoft.com/en-us/windows/wsl/install-manual
-    https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/
 
     > or linux
     https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview
 
 
-2. Python version 3.10
+2. Python version 3.11
     https://www.python.org/
     
     > Pyenv (optional)
@@ -96,22 +96,11 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     https://realpython.com/intro-to-pyenv/
 
 
-3. Docker Engine (recomended Docker Desktop)
-    > Linux
-    https://docs.docker.com/engine/install/ubuntu/
-
-    > or WSL2
-    https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-containers
-
-    > add Docker compose v2 (comes with docker desktop)
-    https://docs.docker.com/compose/cli-command/
+3. Docker Desktop
+    https://www.docker.com/products/docker-desktop/
 
 
-4. PGAdmin4
-    https://www.pgadmin.org/download/
-
-
-5. Visual Studio Code
+4. Visual Studio Code & Extensions
     https://code.visualstudio.com/download
 
     Suggested visual studio code extensions:
@@ -122,14 +111,13 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     > ZipFS
 
 
-6.  Poetry
-    > Make sure to use master or version above 1.1
+5.  Poetry
     https://python-poetry.org/
-    `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -`
+    > after install, add to PATH:
+    `export PATH="$HOME/.local/bin:$PATH"`
 
 
-7. GCloud (if applicable)
-    > Install GCloud SDK/CLI
+6. GCloud CLI
     https://cloud.google.com/sdk/docs/install
     (`gcloud init --no-launch-browser` if open in browser error)
     
@@ -141,100 +129,85 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     `gcloud auth application-default login`
     `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
 
-    > Remember to revoke when you no longer need access
-    `gcloud auth application-default revoke`
+    > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
 
 
-8. Github
+7. Github
     > Save credentials
     `git config --global user.name "YOUR USERNAME"`
     `git config --global user.email "YOUR EMAIL"`
 
 
-9. Node
+8. Node
+	> nvm:
+	https://github.com/nvm-sh/nvm
+  `nvm install --lts`
 
-	nvm:
-		https://github.com/nvm-sh/nvm
-		`nvm install 16`
-	yarn:
-		https://yarnpkg.com/getting-started/install
-
-
-10. Global CLI's:
-    Angular:
-        npm install -g @angular/cli
-        npm install -g firebase-tools
-        npm install -g @ionic/cli
+	> yarn:
+	https://yarnpkg.com/getting-started/install
 
 
-11. Virtual Environment
-> create poetry venv and install packages (then open venv in terminal to use linting)
-```
-cd services/frontend/src
-poetry shell
-poetry install
-```
+9. Global CLI's:
+    > Angular:
+    `npm install -g @angular/cli`
+    `npm install -g firebase-tools`
+    `npm install -g @ionic/cli`
 
 
-12. VSCode Settings
-> paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
-```
-{
-  "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{quickdesk-api-t4Xs1vGN-py3.10}}}}}/bin/python",
-  "python.terminal.activateEnvironment": true,
-  "python.analysis.extraPaths": [
-    "./services/_api/src"
-  ],
-  "python.analysis.typeCheckingMode": "basic",
-  "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "information"},
-  "python.formatting.provider": "black",
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": [
-    "--max-line-length=119",
-    "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
-  ],
-  "python.linting.flake8CategorySeverity.E": "Hint",
-  "python.linting.flake8CategorySeverity.W": "Warning",
-  "python.linting.flake8CategorySeverity.F": "Information",
-  "isort.args": ["--profile=black"],
-  "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "prettier.prettierPath": "./services/_web/app/.yarn/sdks/prettier/index.js",
-  "typescript.tsdk": "./services/_web/app/.yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-}
-```
-> start new terminal that must automatically load into the poetry virtual environment
+10. Virtual Environment
+    > create poetry venv and install packages (then open venv in terminal to use linting)
+    ```
+      cd services/frontend/src
+      poetry shell
+      poetry install
+    ```
 
 
-# SERVICES SETUP
+11. VSCode Settings
+    > paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
+    ```
+    {
+      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{quickdesk-api-t4Xs1vGN-py3.10}}}}}/bin/python",
+      "python.terminal.activateEnvironment": true,
+      "python.analysis.extraPaths": [
+        "./services/_api/src"
+      ],
+      "python.analysis.typeCheckingMode": "basic",
+      "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "information"},
+      "python.formatting.provider": "black",
+      "python.linting.enabled": true,
+      "python.linting.flake8Enabled": true,
+      "python.linting.flake8Args": [
+        "--max-line-length=119",
+        "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
+      ],
+      "python.linting.flake8CategorySeverity.E": "Hint",
+      "python.linting.flake8CategorySeverity.W": "Warning",
+      "python.linting.flake8CategorySeverity.F": "Information",
+      "isort.args": ["--profile=black"],
+      "search.exclude": {
+        "**/.yarn": true,
+        "**/.pnp.*": true
+      },
+      "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "prettier.prettierPath": "./services/_web/app/.yarn/sdks/prettier/index.js",
+      "typescript.tsdk": "./services/_web/app/.yarn/sdks/typescript/lib",
+      "typescript.enablePromptUseWorkspaceTsdk": true,
+    }
+    ```
+    > start new terminal that must automatically load into the poetry virtual environment
 
-## pgAmdin
-This is a GUI for postgresql. It is not required but it is very useful for development.
 
-`
-docker compose up pgadmin
-`
+# PRODUCTION SERVICES
 
-http://localhost:5050
-postgres@postgres.com
-grespost
+## _api
 
-> add the local server
-```
-name: db-local
-host: db-local
-port: 5432
-username: postgres
-password: postgres
-```
+## _dash
+
+## _web_srv
 
 ## _web
 
@@ -256,6 +229,28 @@ cd into the app folder
 
 add paths to your app's .yarn file in workspace root .vscode/settings.json
 
+
+# DEVELOPMENT SERVICES
+
+## pgAmdin
+This is a GUI for postgresql. It is not required but it is very useful for development.
+
+`
+docker compose up pgadmin
+`
+
+http://localhost:5050
+postgres@postgres.com
+grespost
+
+> add the local server
+```
+name: db-local
+host: db-local
+port: 5432
+username: postgres
+password: postgres
+```
 
 
 # SCRIPTS
