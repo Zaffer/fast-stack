@@ -24,6 +24,16 @@ TODO:
 Duplicate _api, _web, or _app for each new service you want to build
 
 
+## Using this template repo
+
+Copy this repo as a template.
+> to pull in updates on the template to your repo:
+Add this repo as a remote called "template"
+Git fetch from all remotes.
+Merge from template using this line:
+`git merge template/master --strategy-option ours --allow-unrelated-histories`
+
+
 ## Services
 
 ### API
