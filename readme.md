@@ -18,7 +18,6 @@ Auth0 for authentication and SSO
 
 TODO:
 - full pnp for yarn (currently Anuglar has issues with Yarn pnp)
-- containerise Angular pgAdmin4
 - Add Grafana as service to visualise your data
 
 
