@@ -31,7 +31,7 @@ Copy this repo as a template.
 Add this repo as a remote called "template"
 Git fetch from all remotes.
 Merge from template using this line:
-`git merge template/master --strategy-option ours --allow-unrelated-histories`
+`git merge template/master --strategy-option ours --squash`
 
 
 ## Services
