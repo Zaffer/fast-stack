@@ -22,4 +22,4 @@ docker exec -u fish -w /app/db api_container alembic upgrade head
 # docker cp ./_api/db/sql/data.sql local-db:/docker-entrypoint-initdb.d/data.sql
 # docker exec -u postgres local-db psql postgres postgres -f docker-entrypoint-initdb.d/data.sql
 
-echo '🍞'
+echo '⬆️'

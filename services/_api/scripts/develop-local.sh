@@ -2,11 +2,14 @@
 set -e
 
 ## START SCRIPT FOR DEVELOPMENT ##
-## start the local development environment with this script
+# start the local development environment with this script
+# make sure docker desktop is running
 
 export ENVIRONMENT=dev
+export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
+# export GOOGLE_CLOUD_PROJECT=your_gcp_project_prod
 
-services/_api/scripts/start.sh
+docker compose up api -d
 
 services/_api/scripts/db-up.sh
 
