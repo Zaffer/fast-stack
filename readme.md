@@ -190,9 +190,11 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
         "--max-line-length=119",
         "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
       ],
-      "python.linting.flake8CategorySeverity.E": "Hint",
-      "python.linting.flake8CategorySeverity.W": "Warning",
-      "python.linting.flake8CategorySeverity.F": "Information",
+      "flake8.severity": {
+        "E": "Warning",
+        "F": "Warning",
+        "W": "Hint"
+      },
       "isort.args": ["--profile=black"],
       "search.exclude": {
         "**/.yarn": true,

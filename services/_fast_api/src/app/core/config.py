@@ -21,7 +21,6 @@ ORIGINS = [
 
 class Settings(BaseSettings):
     ENVIRONMENT: str
-    PROXY: str = 0
     TESTING: int = 0
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -37,6 +36,7 @@ class Settings(BaseSettings):
 
     ORIGINS: List[AnyHttpUrl] = ORIGINS
 
+    # # you can load settings from a .env file here 
     # class Config:
     #     env_file = ".env"
     #     env_file_encoding = "utf-8"

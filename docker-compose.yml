@@ -63,8 +63,7 @@ services:
     command: "yarn start --host 0.0.0.0"
     
 
-  # # a plotly dash service that runs ontop of flask, for doing charts with just python
-  # dash:
-  #   # 8888 ports for kernel in jupytor notebooks
-  #   ports:
-  #     - 8888:8888
+  dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
+    # 8888 ports for kernel in jupytor notebooks
+    ports:
+      - 8888:8888
