@@ -1,31 +1,31 @@
 version: "3"
 services:
 
-  api: # fastapi service for rapidly create robuse apis
-    container_name: api_container
+  temp_api: # Fastapi service for rapidly create robuse apis
+    container_name: temp_api_container
     build:
-      context: ./services/_api
-      dockerfile: api.fa.dockerfile
+      context: ./services/_templates/_fast_api
+      dockerfile: fastapi.dockerfile
       network: host
       args:
         - ENVIRONMENT=${ENVIRONMENT-dev}
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_prod}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project}
       # - POSTGRES_DB=${POSTGRES_DB:-db}
     ports:
       - 8000:8000
     volumes:
-      - ./services/_api/src:/app
+      - ./services/_templates/_fast_api/src:/app
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
     # command: sh -c "while true; do sleep 1; done"
 
 
-  web: # Angular service framework
-    container_name: web_container
+  temp_web: # Angular service framework
+    container_name: temp_web_container
     build:
-      context: ./services/_web
+      context: ./services/_templates/_web
       dockerfile: web.ngfb.dockerfile
       network: host
     ports:
@@ -36,7 +36,7 @@ services:
     # command: sh -c "while true; do sleep 1; done"
 
 
-  web_srv: # Angular service that is designed to be a microservice to embed via iframe into other frameworks
+  temp_web_srv: # Angular service that is designed to be a microservice to embed via iframe into other frameworks
     container_name: web_srv_container
     build:
       context: ./services/_web_srv
@@ -50,7 +50,7 @@ services:
     # command: sh -c "while true; do sleep 1; done"
 
   
-  admin_web: # Angular service for administration and settings management
+  temp_admin_web: # Angular service for administration and settings management
     container_name: admin_web_container
     build:
       context: ./services/admin_web
@@ -63,7 +63,20 @@ services:
     command: "yarn start --host 0.0.0.0"
     
 
-  dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
-    # 8888 ports for kernel in jupytor notebooks
-    ports:
+  temp_dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
+    container_name: temp_dash_container
+    build:
+      context: ./services/_template/_flsk_dash
+      dockerfile: flask.dash.dockerfile
+    ports: # 8888 ports for kernel in jupytor notebooks
       - 8888:8888
+    environment:
+      - FLASK_APP=app/main.py
+      - FLASK_ENV=development
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_name}
+    volumes:
+      - ./services/fleet_flask/src:/app
+      - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+    command: flask run --host=0.0.0.0 --port=5002
+    

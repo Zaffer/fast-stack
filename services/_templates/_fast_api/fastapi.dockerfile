@@ -1,5 +1,5 @@
 # pull python image
-FROM python:3.10-slim as base
+FROM python:3.11-slim as base
 
 # set working directory
 WORKDIR /app

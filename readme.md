@@ -123,6 +123,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 5.  Poetry
     https://python-poetry.org/
     > after install, add to PATH:
+    `nano ~/.bashrc`
     `export PATH="$HOME/.local/bin:$PATH"`
 
 
@@ -301,12 +302,12 @@ docker-compose exec web isort . --check-only
 ## Deploy
 > deploy to staging environment
 ```
-sh scripts/deploy-to-stage.sh
+sh scripts/deploy-stage.sh
 ```
 
 > deploy to production environment
 ```
-sh scripts/deploy-to-prod.sh
+sh scripts/deploy-prod.sh
 ```
 
 

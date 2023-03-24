@@ -8,4 +8,7 @@ export ENVIRONMENT=proxy
 export GOOGLE_CLOUD_PROJECT=$(gcloud config get-value project)
 # export GOOGLE_CLOUD_PROJECT=your_gcp_project_prod
 
-docker compose up qrs_api
+docker compose up cloudsql -d
+docker compose up db-local -d
+docker compose up temp_api -d
+# docker compose up temp_api -d --build

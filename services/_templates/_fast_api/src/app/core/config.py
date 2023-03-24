@@ -36,14 +36,15 @@ class Settings(BaseSettings):
 
     ORIGINS: List[AnyHttpUrl] = ORIGINS
 
-    # # you can load settings from a .env file here 
+    GOOGLE_CLOUD_PROJECT: str = "your-gcp-project"
+
+    # # you can load settings from a .env file here
     # class Config:
     #     env_file = ".env"
     #     env_file_encoding = "utf-8"
 
 
 def get_settings() -> BaseSettings:
-    logger.info("Loading config settings from the environment...")
     return Settings()
 
 
@@ -51,15 +52,28 @@ settings = Settings()
 
 
 class Secrets(GoogleCloudSecretSettings):
-    project_id = os.getenv('GOOGLE_CLOUD_PROJECT')
 
-    # GCS_MY_KEY_RESOURCE_NAME=projects/<id>/secrets/<resource-name>/versions/latest
+    POSTGRES_URL: str = "postgresql+psycopg2://postgres:postgres@db-local:5432/db"
 
+    @validator("POSTGRES_URL", pre=True)
+    def postgres_url_deps_env(cls, v: str) -> str | None:
+        if settings.ENVIRONMENT == "prod":
+            return GoogleCloudSecretSettings.get_secret(
+                cls,
+                cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'POSTGRES_URL'}/versions/latest",
+            )
+        if settings.ENVIRONMENT == "proxy":
+            return GoogleCloudSecretSettings.get_secret(
+                cls,
+                cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest",
+            )
+        return v
+    
     AUTH0_DOMAIN: str | None = Field(
-        cloud_key=f"projects/{project_id}/secrets/{'AUTH0_DOMAIN'}/versions/latest"
+        cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'AUTH0_DOMAIN'}/versions/latest"
     )
     AUTH0_API_AUDIENCE: str | None = Field(
-        cloud_key=f"projects/{project_id}/secrets/{'AUTH0_API_AUDIENCE'}/versions/latest"
+        cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'AUTH0_API_AUDIENCE'}/versions/latest"
     )
     # AUTH0_CLIENT_ID: str | None
     # AUTH0_CLIENT_SECRET: str | None

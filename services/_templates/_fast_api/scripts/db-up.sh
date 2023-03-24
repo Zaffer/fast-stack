@@ -13,7 +13,7 @@ if docker exec -u postgres db-local psql postgres postgres -c "CREATE DATABASE d
 fi
 
 ## execute the alembic up grade inside the container
-docker exec -u fish -w /app/db api_container alembic upgrade head
+docker exec -u fish -w /app/db temp_api_container alembic upgrade head
 
 ## manually add sql into the container to execute
 # docker cp ./_api/db/sql/data.sql local-db:/docker-entrypoint-initdb.d/data.sql
