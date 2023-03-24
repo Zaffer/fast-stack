@@ -63,18 +63,22 @@ services:
     volumes:
       - redisinsight-data:/db
 
-  api:
-    depends_on:
-      - db-local
-      # - cloudsql-proxy
 
-  # web:
-  #   depends_on:
-  #     - api
-
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-oss
+    environment:
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_URL=postgres://postgres:postgres@db-local:5432/grafana
+      # - GF_DATABASE_SSL_MODE=disable
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 3000:3000
 
 volumes:
   db-local-data:
   pgadmin-data:
   redis-data:
   redisinsight-data:
+  grafana-data:
