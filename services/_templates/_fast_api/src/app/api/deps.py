@@ -2,16 +2,20 @@
 """
 from typing import Generator
 
-from fastapi import Depends, HTTPException, Security, status
-from fastapi.security import HTTPBearer, OAuth2PasswordBearer
-from pydantic import ValidationError
-
-from app.core.security.auth0 import Auth0, Auth0User
-
 # from app import crud, schemas, models
 from app.core.config import secrets
-
+from app.core.security.auth0 import Auth0, Auth0User
+from app.core.session import SessionLocal
+from fastapi import Depends, HTTPException, Security, status
+from fastapi.security import HTTPBearer, OAuth2PasswordBearer
 from loguru import logger
+from pydantic import ValidationError
+
+
+def get_session() -> Generator:
+    with SessionLocal() as session:
+        yield session
+
 
 auth0 = Auth0(
     domain=secrets.AUTH0_DOMAIN,

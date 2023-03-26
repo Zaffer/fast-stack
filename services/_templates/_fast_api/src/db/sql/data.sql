@@ -1,8 +1,7 @@
 -- DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA DATA --
 
-INSERT INTO "user"(name)
+INSERT INTO "user"(name, email)
 VALUES 
-('user'),
-('admin'),
-('test');
-
+('user', 'user@email.com'),
+('admin', 'admin@email.com'),
+('test', 'test@email.com');

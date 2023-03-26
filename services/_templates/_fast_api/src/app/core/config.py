@@ -68,11 +68,13 @@ class Secrets(GoogleCloudSecretSettings):
                 cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'POSTGRES_URL_PROXY'}/versions/latest",
             )
         return v
-    
+
     AUTH0_DOMAIN: str | None = Field(
+        default='auth0.auth0.com',
         cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'AUTH0_DOMAIN'}/versions/latest"
     )
     AUTH0_API_AUDIENCE: str | None = Field(
+        default='YOUR_API_AUDIENCE',
         cloud_key=f"projects/{settings.GOOGLE_CLOUD_PROJECT}/secrets/{'AUTH0_API_AUDIENCE'}/versions/latest"
     )
     # AUTH0_CLIENT_ID: str | None
