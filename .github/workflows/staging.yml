@@ -89,20 +89,20 @@ jobs:
         run: |
           docker run \
             -d \
-            --name quickdesk-api \
+            --name service_account-api \
             --env-file ./src/.env \
             -p 5003:8765 \
             ${{ env.IMAGE }}-final:latest
       - name: Install requirements
-        run: docker exec quickdesk-api pip install black flake8 isort pytest
+        run: docker exec service_account-api pip install black flake8 isort pytest
       - name: Pytest
-        run: docker exec quickdesk-api python -m pytest .
+        run: docker exec service_account-api python -m pytest .
       - name: Flake8
-        run: docker exec quickdesk-api python -m flake8 .
+        run: docker exec service_account-api python -m flake8 .
       - name: Black
-        run: docker exec quickdesk-api python -m black . --check
+        run: docker exec service_account-api python -m black . --check
       - name: isort
-        run: docker exec quickdesk-api python -m isort . --check-only
+        run: docker exec service_account-api python -m isort . --check-only
 
   deploy:
     name: Deploy to Cloud Run

@@ -1,0 +1,14 @@
+<ion-accordion-group>
+  <ion-accordion [value]="building.id" *ngFor="let building of buildings">
+    <ion-item slot="header" color="light" title="building">
+      <fa-icon [icon]="['fas', 'building']"></fa-icon>
+      <ion-label>{{building.building_name}}</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-item class="floor-select" *ngFor="let floor of building.floors" (click)="getFloorLink(floor.id)" title="floor">
+        <fa-icon id="floor-icon" [icon]="['fas', 'layer-group']"></fa-icon>
+        {{floor.floor_name}}
+      </ion-item>
+    </div>
+  </ion-accordion>
+</ion-accordion-group>

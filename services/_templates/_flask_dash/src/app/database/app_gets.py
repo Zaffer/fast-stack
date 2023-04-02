@@ -10,7 +10,6 @@ import numpy as np
 
 
 
-# QUICKDESK GETS
 def get_workspace_data():
     query = sql.SQL(
         """
@@ -30,9 +29,3 @@ def get_workspace_data():
         return error
     logger.info(f"DF::: {type(response)}")
     return [response]
-
-# QUICKBUTTON GETS
-
-
-# QUICKCHECKIN GETS
-

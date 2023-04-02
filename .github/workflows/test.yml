@@ -28,8 +28,8 @@ jobs:
 #       with:
 #         token_format: 'access_token'
 #         workload_identity_provider: projects/662974556749/locations/global/workloadIdentityPools/github-actions-identity-pool/providers/github-action-stage
-#         service_account: quickdesk-testing-service-acc@quickdesk-320608.iam.gserviceaccount.com
+#         service_account: service_account@service_account.iam.gserviceaccount.com
 #     - name: Access secret
 #       run: |-
-#         curl https://secretmanager.googleapis.com/v1/projects/662974556749/secrets/tester-secret \
+#         curl https://secretmanager.googleapis.com/v1/projects/662974556749/secrets/service_account \
 #           --header "Authorization: Bearer ${{ steps.auth.outputs.access_token }}"

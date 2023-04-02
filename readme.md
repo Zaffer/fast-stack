@@ -18,7 +18,10 @@ Auth0 for authentication and SSO
 
 TODO:
 - full pnp for yarn (currently Anuglar has issues with Yarn pnp)
-- Add Grafana as service to visualise your data
+- ~~containerise Angular pgAdmin4~~
+- ~~Add Grafana as service to visualise your data~~
+- Make a single Mat Web service
+- Add Ionic service
 
 
 Duplicate _api, _web, or _app for each new service you want to build
@@ -85,7 +88,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 ==============================
 
-![Continuous Integration and Delivery](https://github.com/qr-space/quickdesk-api/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
+![Continuous Integration and Delivery](https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
 
 # ENVIROMENT SETUP
 
@@ -174,10 +177,10 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 
 11. VSCode Settings
-    > paste into .vscode/settings.json settings (swap 'quickdesk-api-tLv1QZSI-py3.9' with your venv name):
+    > paste into .vscode/settings.json settings (swap 'api-tLv1QZSI-py3.9' with your venv name):
     ```
     {
-      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{quickdesk-api-t4Xs1vGN-py3.10}}}}}/bin/python",
+      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{api-t4Xs1vGN-py3.10}}}}}/bin/python",
       "python.terminal.activateEnvironment": true,
       "python.analysis.extraPaths": [
         "./services/_api/src"
@@ -414,8 +417,106 @@ ng g c feature -m features.module --dry-run
 
 
 ## Ionic:
+Angular Ionic web app for user facing frontend end web app
+
 for an ionic, start with:
 `ionic start`
+
+### Node
+> make sure you install:
+- nvm
+  install latest
+
+- Yarn
+  install yarn
+
+- Firebase
+  npm install firebase globally
+
+- Ionic
+  npm install ionic globally
+
+### Ionic setup
+`ionic start`
+
+### Firebase setup
+`firebase login`
+
+`firebase init`
+
+`firebase deploy`
+
+
+### Ionic develop
+
+`yarn install`
+
+`ionic serve`
+
+> view ionic on native devices with Ionic Lab
+`ionic serve -l`
+
+
+
+### TEST
+
+### Emulater Mode
+Emulater UI
+`firebase emulators:start`
+
+i  View Emulator UI at http://127.0.0.1:5001
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:5001/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:5001/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5000 │ n/a                             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:5001/storage   │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500
+
+
+### OPENAPI GENERATOR
+1. Download openapi.json from API page
+2. Replace */openapi.json* file in root
+3. Run recreate_api.sh script
+
+
+
+### BUILD
+
+`ionic capacitor add`
+
+web
+`ionic build --prod --aot`
+
+android
+`ionic capacitor build android`
+post android build:
+> copy `google-services.json` from firebase to `/android/app/`
+
+
+### DEPLOY
+
+`firebase deploy -m "Deploying the best new feature ever."`
+
+
+### HELPFUL
+
+`ionic generate module things --routing --dry-run`
+`ionic generate module things --routing`
+
+`ionic generate page /pages/thing --module=things`
+
+`ionic generate compenent /components/thing`
+
+`firebase projects:list`
+
 
 
 

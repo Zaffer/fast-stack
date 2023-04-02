@@ -16,7 +16,7 @@ docker compose -f docker-compose.yml build api --no-cache
 
 # # upload image to artifact registry
 docker tag faap-stack-api europe-west1-docker.pkg.dev/your_gcp_project_prod/your-gcp-artifacts/api:latest
-docker push europe-west1-docker.pkg.dev/your_gcp_project_prod/quickdesk-artifacts-prod/api:latest
+docker push europe-west1-docker.pkg.dev/your_gcp_project_prod/service_account-artifacts-prod/api:latest
 
 # # deploy cloud run revision with latest image
 gcloud run deploy api --image europe-west1-docker.pkg.dev/your_gcp_project_prod/your-gcp-artifacts/api:latest

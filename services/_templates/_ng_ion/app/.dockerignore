@@ -1,0 +1,10 @@
+.env
+
+.dockerignore
+Dockerfile
+.dockerfile
+
+.coverage
+htmlcov/
+
+/node_modules
