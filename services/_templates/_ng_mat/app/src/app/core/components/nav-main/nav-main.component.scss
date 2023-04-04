@@ -1,0 +1,38 @@
+// .sidenav-container {
+//   height: 100%;
+// }
+
+// .sidenav {
+//   width: 200px;
+// }
+
+// .sidenav .mat-toolbar {
+//   background: inherit;
+// }
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.loader-container {
+  position: fixed;
+  width: 100%;
+  z-index: 99;
+}
+
+mat-divider {
+  width: 80%;
+  margin: auto;
+}
+
+mat-sidenav-content {
+  min-height: calc(100vh - 64px);
+}
+
+.app {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+}

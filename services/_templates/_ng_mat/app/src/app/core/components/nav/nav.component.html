@@ -1,6 +1,6 @@
 <!-- <mat-toolbar color="primary" class="mat-elevation-z3" style="background-color: #ffffff;"> -->
-  <!-- <mat-toolbar color="primary" class="mat-elevation-z3"> -->
-  <!-- <button mat-icon-button (click)="drawer.toggle()">
+<!-- <mat-toolbar color="primary" class="mat-elevation-z3"> -->
+<!-- <button mat-icon-button (click)="drawer.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
 
@@ -19,12 +19,18 @@
 <!-- </mat-toolbar> -->
 
 <mat-sidenav-container class="mat-app-background">
-  <mat-sidenav #drawer fixedInViewport class="mat-elevation-z2" role="navigation" mode="side" opened="true">
+  <mat-sidenav
+    #drawer
+    fixedInViewport
+    class="mat-elevation-z2"
+    role="navigation"
+    mode="side"
+    [opened]="(isHandset$ | async) === false"
+  >
     <app-menu></app-menu>
   </mat-sidenav>
   <mat-sidenav-content role="main">
-
-    <div *ngIf="loaderService.isLoading | async " class="loader-container">
+    <div *ngIf="loaderService.isLoading | async" class="loader-container">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </div>
 
