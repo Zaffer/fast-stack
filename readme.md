@@ -112,27 +112,35 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     https://www.docker.com/products/docker-desktop/
 
 
-4. Visual Studio Code & Extensions
+4. Visual Studio Code & suggest extensions
     https://code.visualstudio.com/download
 
-    Suggested visual studio code extensions:
-    > Pylance
-    > Docker
-    > Thunder Client
-    > Prettier
-    > ZipFS
+    > suggested extensions:
+    - Thunder Client
+    - Docker
+    - Pylance
+    - Prettier
 
 
-5.  Poetry
+5.  Poetry (needed for IDE support)
     https://python-poetry.org/
+
     > after install, add to PATH:
     `nano ~/.bashrc`
     `export PATH="$HOME/.local/bin:$PATH"`
 
+    > create poetry venv and install packages (then open venv in terminal to use linting)
+    > copy the name of this new venv into your vscode settings
+    ```
+      cd services/_api/src
+      poetry shell
+      poetry install
+    ```
+
 
 6. GCloud CLI
     https://cloud.google.com/sdk/docs/install
-    (`gcloud init --no-launch-browser` if open in browser error)
+    > (`gcloud init --no-launch-browser` if open in browser error)
     
     > Authorise Docker Cred Helper
     https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper
@@ -156,31 +164,25 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 	https://github.com/nvm-sh/nvm
   `nvm install --lts`
 
-	> yarn:
-	https://yarnpkg.com/getting-started/install
-
-
-9. Global CLI's:
-    > Angular:
-    `npm install -g @angular/cli`
+  > global Angular CLI's:
     `npm install -g firebase-tools`
+    `npm install -g @angular/cli`
     `npm install -g @ionic/cli`
 
 
-10. Virtual Environment
-    > create poetry venv and install packages (then open venv in terminal to use linting)
-    ```
-      cd services/frontend/src
-      poetry shell
-      poetry install
-    ```
+9. yarn:
+	https://yarnpkg.com/getting-started/install
+
+  > cd into the app folder
+    `yarn set version stable`
+    `yarn install`
 
 
-11. VSCode Settings
+10. VSCode Settings
     > paste into .vscode/settings.json settings (swap 'api-tLv1QZSI-py3.9' with your venv name):
     ```
     {
-      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{api-t4Xs1vGN-py3.10}}}}}/bin/python",
+      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{_api-py3.11}}}}}/bin/python",
       "python.terminal.activateEnvironment": true,
       "python.analysis.extraPaths": [
         "./services/_api/src"
@@ -216,24 +218,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     > start new terminal that must automatically load into the poetry virtual environment
 
 
-# PRODUCTION SERVICES
-
-## _api
-
-## _dash
-
-## _web_srv
-
-## _web
-
-if creating a new service with angular cli directly, then remeber to choose yarn as the package manager.
-`ng config cli.packageManager yarn`
-
-
-cd into the app folder
-`yarn set version stable`
-`yarn install`
-
+(angular note)
 
 > the following is get pnp working once Angular supports it again.
 
@@ -241,18 +226,20 @@ cd into the app folder
 `yarn build`
 `yarn start`
 `yarn dlx @yarnpkg/sdks vscode`
-
-add paths to your app's .yarn file in workspace root .vscode/settings.json
+> add paths to your app's .yarn file in workspace root .vscode/settings.json
 
 
 # DEVELOPMENT SERVICES
 
+
+## db-local
+Local Postgres db for development
+
+
 ## pgAmdin
 This is a GUI for postgresql. It is not required but it is very useful for development.
 
-`
-docker compose up pgadmin
-`
+`docker compose up pgadmin`
 
 http://localhost:5050
 postgres@postgres.com
@@ -267,34 +254,45 @@ username: postgres
 password: postgres
 ```
 
+## cloudsql-proxy
+for connecting to cloud db from your local environment
+
+
+## grafana
+for viewing analytics
+
 
 # SCRIPTS
 
 ## Develop 
-> build the images
-```
-sh scripts/build-dev.sh
-```
-
 > run the containers for local development
 ```
-sh scripts/develop-local.sh
+sh ./scripts/develop-local.sh
 ```
 
 > run the containers connected to the live database
 ```
-sh scripts/develop-prod.sh
+sh ./scripts/develop-prod.sh
 ```
 
+## Database migrations
+```
+sh ./scripts/db-revise.sh
+```
+```
+sh ./scripts/db-up.sh
+```
+```
+sh ./scripts/db-down.sh
+```
 
-## Test
+## Test & Quality
 > modify the script to choose options like turning off --build
 ```
-sh scripts/test.sh
+sh ./scripts/test.sh
 ```
 
-
-## Quality
+> quality
 ```
 docker-compose exec web flake8 .
 docker-compose exec web black . --check
@@ -302,10 +300,10 @@ docker-compose exec web isort . --check-only
 ```
 
 
-## Deploy
+## Deployment
 > deploy to staging environment
 ```
-sh scripts/deploy-stage.sh
+sh ./scripts/deploy-stage.sh
 ```
 
 > deploy to production environment
@@ -330,31 +328,6 @@ docker exec -it -u root api bash
 > Exec bash command into container
 ```
 docker exec -u root api bash -c "alembic upgrade head"
-```
-
-
-## Alembic
-> Migrations
-```
-cd ./database/
-```
-
-```
-alembic revision --autogenerate -m 'revision message'
-```
-
-```
-alembic upgrade head --sql > migration.sql
-```
-```
-alembic upgrade head
-```
-```
-alembic downgrade -1
-```
-```
-docker cp ./sql/A_data.sql local-db:/docker-entrypoint-initdb.d/A_data.sql &&
-docker exec -u postgres local-db psql postgres postgres -f docker-entrypoint-initdb.d/A_data.sql
 ```
 
 
@@ -416,52 +389,37 @@ ng g c feature -m features.module --dry-run
 ```
 
 
-## Ionic:
-Angular Ionic web app for user facing frontend end web app
-
-for an ionic, start with:
-`ionic start`
-
-### Node
-> make sure you install:
-- nvm
-  install latest
-
-- Yarn
-  install yarn
-
-- Firebase
-  npm install firebase globally
-
-- Ionic
-  npm install ionic globally
-
-### Ionic setup
-`ionic start`
-
-### Firebase setup
-`firebase login`
-
-`firebase init`
-
-`firebase deploy`
-
-
-### Ionic develop
-
-`yarn install`
-
+## Ionic
 `ionic serve`
 
 > view ionic on native devices with Ionic Lab
 `ionic serve -l`
 
+> natice 
+`ionic capacitor add`
+
+web
+`ionic build --prod --aot`
+
+android
+`ionic capacitor build android`
+post android build:
+> copy `google-services.json` from firebase to `/android/app/`
+
+`ionic generate module things --routing --dry-run`
+`ionic generate module things --routing`
+
+`ionic generate page /pages/thing --module=things`
+
+`ionic generate compenent /components/thing`
 
 
-### TEST
 
-### Emulater Mode
-Emulater UI
+## Firebase
+
+`firebase deploy -m "Deploying the best new feature ever."`
+
+Emulater mode UI
 `firebase emulators:start`
 
 i  View Emulator UI at http://127.0.0.1:5001
@@ -481,47 +439,8 @@ i  View Emulator UI at http://127.0.0.1:5001
   Other reserved ports: 4500
 
 
-### OPENAPI GENERATOR
+## OpenAPI generator
 1. Download openapi.json from API page
 2. Replace */openapi.json* file in root
 3. Run recreate_api.sh script
-
-
-
-### BUILD
-
-`ionic capacitor add`
-
-web
-`ionic build --prod --aot`
-
-android
-`ionic capacitor build android`
-post android build:
-> copy `google-services.json` from firebase to `/android/app/`
-
-
-### DEPLOY
-
-`firebase deploy -m "Deploying the best new feature ever."`
-
-
-### HELPFUL
-
-`ionic generate module things --routing --dry-run`
-`ionic generate module things --routing`
-
-`ionic generate page /pages/thing --module=things`
-
-`ionic generate compenent /components/thing`
-
-`firebase projects:list`
-
-
-
-
-# TROUBLESHOOTING
-
-if the container is running different .env file to the one in your local volume, then rebuild the container for local
-
 
