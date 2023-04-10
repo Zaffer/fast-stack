@@ -1,11 +1,13 @@
-# Introduction
-
 FAAP Stack
 ---------
+
+# Introduction
 FastAPI
+Firebase
 Angular
 Auth0
 PostgreSQL
+Google Cloud Platform
 
 SQLModel for database ORM and API schemas
 Material Design for admin panel
@@ -37,46 +39,28 @@ Merge from template using this line:
 `git merge template/master --strategy-option ours --squash`
 
 
-## Services
+## Template Services
 
-### API
-service: "_api"
+### _fast_api
 FastAPI
-SQLModel 
+SQLModel
 
-### WEB
-service: "_web"
+### _ng_mat
 Angular
 Firebase
 Material Design
 
-### APP
-service: "_app"
+### _ng_ion
 Angular
 Firebase
 Ionic
 
-
-## Tools
-
-
-### VSCode Settings
-
-## Poetry
-Needed in your local environment (not container only) so Python IDE can support  
+### _flask_dash
+Flask
+Plotly Dash
 
 
-### Docker Compose
-
-
-## Alembic
-Alembic is a lightweight database migration tool for usage with the SQLAlchemy Database Toolkit for Python. It provides a full suite of revision control and scripting facilities out of the box, as well as more advanced features.
-
-For a new project you need to delete the sql files in db/sql.
-Genereate new SQL using Alembic replaces the old SQL files.
-On local database start these files will automatically be run because they are mounted into /docker-entrypoint-initdb.d/
-For production database you need to run the db-up.sh script to manaully upgrade the live database useing alembic.
-
+## Notes
 
 ### Github Actions
 IMPORATANT NOTE: Github Actions secrets is only free from public repos, if you need a private or organisation repo you need to update the workflow to not use secrets.
