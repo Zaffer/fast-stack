@@ -149,8 +149,8 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
   `nvm install --lts`
 
   > global Angular CLI's:
-    `npm install -g firebase-tools`
     `npm install -g @angular/cli`
+    `npm install -g firebase-tools`
     `npm install -g @ionic/cli`
 
 
@@ -405,22 +405,7 @@ post android build:
 
 Emulater mode UI
 `firebase emulators:start`
-
-i  View Emulator UI at http://127.0.0.1:5001
-
-┌────────────────┬────────────────┬─────────────────────────────────┐
-│ Emulator       │ Host:Port      │ View in Emulator UI             │
-├────────────────┼────────────────┼─────────────────────────────────┤
-│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:5001/auth      │
-├────────────────┼────────────────┼─────────────────────────────────┤
-│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:5001/firestore │
-├────────────────┼────────────────┼─────────────────────────────────┤
-│ Hosting        │ 127.0.0.1:5000 │ n/a                             │
-├────────────────┼────────────────┼─────────────────────────────────┤
-│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:5001/storage   │
-└────────────────┴────────────────┴─────────────────────────────────┘
-  Emulator Hub running at 127.0.0.1:4400
-  Other reserved ports: 4500
+`firebase emulators:start --only auth`
 
 
 ## OpenAPI generator

@@ -54,6 +54,6 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseConfig)),
     importProvidersFrom(FirebaseUIModule.forRoot(firebaseUiAuthConfig)),
     provideRouter(routes),
-    { provide: USE_AUTH_EMULATOR, useValue: !environment.production ? ['localhost', 9099] : undefined },
+    { provide: USE_AUTH_EMULATOR, useValue: !environment.production ? ['http://localhost:9099'] : undefined },
   ],
 });
