@@ -37,6 +37,7 @@ Add this repo as a remote called "template"
 Git fetch from all remotes.
 Merge from template using this line:
 `git merge template/master --strategy-option ours --squash`
+`git pull https://github.com/Zaffer/faap-stack master --ff --allow-unrelated-histories`
 
 
 ## Template Services
