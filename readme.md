@@ -398,6 +398,32 @@ post android build:
 
 `ionic generate compenent /components/thing`
 
+### Build Android APK
+`sudo apt install default-jre`
+`sudo apt install default-jdk`
+`sudo apt install android-sdk`
+`sudo apt install sdkmanager`
+
+`sudo sdkmanager "platforms;android-32" "build-tools;30.0.3"`
+`sudo cp -R /opt/android-sdk/licenses/* /usr/lib/android-sdk/licenses`
+`sudo cp -R /opt/android-sdk/build-tools/* /usr/lib/android-sdk/build-tools`
+`sudo cp -R /opt/android-sdk/platforms/* /usr/lib/android-sdk/platforms`
+`sudo sdkmanager --licenses`
+
+Create a `local.properties` file inside `app/android`:
+insert this into the file: `sdk.dir=/usr/lib/android-sdk`
+
+`ionic cap build --no-open --androidreleasetype APK android`
+`cd android`
+> test on for unsigned apk
+`./gradlew assembleDebug`
+
+> test for signed apk
+`./gradlew assembleRelease`
+
+
+
+
 
 
 ## Firebase
