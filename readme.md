@@ -75,147 +75,115 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 ![Continuous Integration and Delivery](https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
 
+
 # ENVIROMENT SETUP
-
 1. Linux
-    > WSL2
+    - WSL2
     https://learn.microsoft.com/en-us/windows/wsl/install-manual
-
-    > or linux
+    - or linux
     https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview
 
-
-2. Python version 3.11
-    https://www.python.org/
-    
-    > Pyenv (optional)
-    https://github.com/pyenv/pyenv
-    https://realpython.com/intro-to-pyenv/
-
-
-3. Docker Desktop
+1. Docker Desktop
     https://www.docker.com/products/docker-desktop/
 
-
-4. Visual Studio Code & suggest extensions
-    https://code.visualstudio.com/download
-
-    > suggested extensions:
-    - Thunder Client
-    - Docker
-    - Pylance
-    - Prettier
-
-
-5.  Poetry (needed for IDE support)
-    https://python-poetry.org/
-
-    > after install, add to PATH:
-    `nano ~/.bashrc`
-    `export PATH="$HOME/.local/bin:$PATH"`
-
-    > create poetry venv and install packages (then open venv in terminal to use linting)
-    > copy the name of this new venv into your vscode settings
-    ```
-      cd services/_api/src
-      poetry shell
-      poetry install
-    ```
-
-
-6. GCloud CLI
-    https://cloud.google.com/sdk/docs/install
-    > (`gcloud init --no-launch-browser` if open in browser error)
-    
-    > Authorise Docker Cred Helper
-    https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper
-    (eg: `gcloud auth configure-docker europe-west1-docker.pkg.dev`)
-
-    > Create Service Account Key of signed in user for ADC
-    `gcloud auth application-default login`
-    `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
-
-    > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
-
-
-7. Github
+1. Github
     > Save credentials
     `git config --global user.name "YOUR USERNAME"`
     `git config --global user.email "YOUR EMAIL"`
 
+1. Python version 3.11
+    - Pyenv (optional)
+    https://github.com/pyenv/pyenv
+    > note: currently poetry will only install using the system version of python, it wont use the pyenv shims
 
-8. Node
-	> nvm:
-	https://github.com/nvm-sh/nvm
-  `nvm install --lts`
+1. Visual Studio Code & suggest extensions
+    - Docker
+    - Thunder Client
+    - Pylance
+    - Black Formatter
+    - Mypy Type Checker
+    - Ruff
+    - Prettier
 
-  > global Angular CLI's:
-    `npm install -g @angular/cli`
-    `npm install -g firebase-tools`
-    `npm install -g @ionic/cli`
+1.  Poetry (needed for IDE support https://python-poetry.org/)
+    > after install, add to PATH:
+    - `nano ~/.bashrc`
+    - `export PATH="$HOME/.local/bin:$PATH"`
 
+1. Google Cloud CLI (https://cloud.google.com/sdk/docs/install)
+    - if open in browser error use `gcloud init --no-launch-browser`
+    
+    - Create Service Account Key of signed in user for ADC
+      - `gcloud auth application-default login`
+      - `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
+    > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
 
-9. yarn:
-	https://yarnpkg.com/getting-started/install
+1. Docker
+    > Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper)
+    - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
 
-  > cd into the app folder
-    `yarn set version stable`
-    `yarn install`
+1. Node
+   - nvm (https://github.com/nvm-sh/nvm)
+     - `nvm install --lts`
 
+   - global Angular CLI's:
+     - `npm install -g @angular/cli`
+     - `npm install -g firebase-tools`
+     - `npm install -g @ionic/cli`
 
-10. VSCode Settings
-    > paste into .vscode/settings.json settings (swap 'api-tLv1QZSI-py3.9' with your venv name):
+1. yarn (https://yarnpkg.com/getting-started/install)
+
+    - cd into the app folder
+      - `yarn set version stable`
+      - `yarn install`
+
+1. VSCode Settings
+    - paste into .vscode/settings.json settings 
+    > swap `nosible-digest-api-QN8QTDzb-py3.10` with your venv name
     ```
     {
-      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{{{{{_api-py3.11}}}}}/bin/python",
+      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/nosible-digest-api-QN8QTDzb-py3.10/bin/python",
       "python.terminal.activateEnvironment": true,
-      "python.analysis.extraPaths": [
-        "./services/_api/src"
-      ],
-      "python.analysis.typeCheckingMode": "basic",
-      "python.analysis.diagnosticSeverityOverrides": {"reportGeneralTypeIssues": "information"},
+      "python.analysis.importFormat": "relative",
+      "python.analysis.autoFormatStrings": true,
+      "python.linting.mypyEnabled": true,
+      "python.linting.mypyCategorySeverity.error": "Information",
+      "python.linting.mypyCategorySeverity.note": "Hint",
       "python.formatting.provider": "black",
-      "python.linting.enabled": true,
-      "python.linting.flake8Enabled": true,
-      "python.linting.flake8Args": [
-        "--max-line-length=119",
-        "--exclude=alembic,env.py,git,__pycache__,__init__.py,.pytest_cache"
-      ],
-      "flake8.severity": {
-        "E": "Warning",
-        "F": "Warning",
-        "W": "Hint"
+      "mypy.runUsingActiveInterpreter": true,
+      "[python]": {
+        // "editor.defaultFormatter": null,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports.ruff": true,
+          "source.fixAll.ruff": true
+        },
       },
-      "isort.args": ["--profile=black"],
       "search.exclude": {
         "**/.yarn": true,
-        "**/.pnp.*": true
+        "**/.pnp.*": true,
+        "**/node_modules": true,
+        "**/.anglar": true,
       },
       "[typescript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "vscode.typescript-language-features"
       },
-      "prettier.prettierPath": "./services/_web/app/.yarn/sdks/prettier/index.js",
-      "typescript.tsdk": "./services/_web/app/.yarn/sdks/typescript/lib",
-      "typescript.enablePromptUseWorkspaceTsdk": true,
     }
     ```
-    > start new terminal that must automatically load into the poetry virtual environment
 
+1. (angular note)
 
-(angular note)
+    > the following is get pnp working once Angular supports it again.
 
-> the following is get pnp working once Angular supports it again.
-
-`yarn add -D @types/node`
-`yarn build`
-`yarn start`
-`yarn dlx @yarnpkg/sdks vscode`
-> add paths to your app's .yarn file in workspace root .vscode/settings.json
+    `yarn add -D @types/node`
+    `yarn build`
+    `yarn start`
+    `yarn dlx @yarnpkg/sdks vscode`
+    > add paths to your app's .yarn file in workspace root .vscode/settings.json
 
 
 # DEVELOPMENT SERVICES
-
 
 ## db-local
 Local Postgres db for development
