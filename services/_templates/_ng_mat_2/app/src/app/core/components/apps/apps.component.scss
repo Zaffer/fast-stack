@@ -1,0 +1,24 @@
+.tile-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 84px;
+  width: 84px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.mat-mdc-button > .mat-icon {
+  margin-left: unset;
+  margin-right: unset;
+  display: unset;
+  position: unset;
+  vertical-align: unset;
+  font-size: unset;
+  height: unset;
+  width: unset;
+
+  margin: auto;
+  font-size: x-large;
+}

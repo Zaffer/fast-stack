@@ -1,4 +1,4 @@
-FAAP Stack
+FAST Stack
 ---------
 
 # Introduction
@@ -172,7 +172,10 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     }
     ```
 
-1. (angular note)
+1. Angular
+
+  Set yarn as you package manager globally
+  `ng config -g cli.packageManager yarn`
 
     > the following is get pnp working once Angular supports it again.
 
@@ -295,6 +298,7 @@ docker compose exec local-db psql -U postgres
 \dt
 `
 
+
 ## Jupyter Notebook
 >Attach shell to backend api
 ```bash
@@ -330,7 +334,17 @@ gcloud config list
 poetry add black@latest --group dev
 ```
 
-## Angular CLI
+
+## Angular
+
+New setup:
+`ng new my_app --package-manager=yarn`
+
+Set package manager to yarn:
+`ng config cli.packageManager yarn`
+
+
+
 > Create new service
 ```bash
 ng generate service services/<service-name>
@@ -340,6 +354,8 @@ ng generate service services/<service-name>
 ```bash
 ng g c feature -m features.module --dry-run
 ```
+
+
 
 
 ## Ionic
@@ -365,6 +381,8 @@ post android build:
 `ionic generate page /pages/thing --module=things`
 
 `ionic generate compenent /components/thing`
+
+
 
 ### Build Android APK
 `sudo apt install default-jre`
@@ -403,7 +421,9 @@ Emulater mode UI
 `firebase emulators:start --only auth`
 
 
-## OpenAPI generator
+
+
+## OpenAPI Generator
 1. Download openapi.json from API page
 2. Replace */openapi.json* file in root
 3. Run recreate_api.sh script

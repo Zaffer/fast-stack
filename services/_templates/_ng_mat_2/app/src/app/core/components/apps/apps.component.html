@@ -1,0 +1,34 @@
+<div style="width: 280px;">
+  <mat-grid-list cols="3" rowHeight="1:1" gutterSize="8px">
+    <mat-grid-tile>
+      <button mat-button class="tile-button" [routerLink]="['/']">
+        <mat-icon class="tile-icon">manage_accounts</mat-icon>
+        <span>Users</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-button class="tile-button" [routerLink]="['/']">
+        <mat-icon class="tile-icon">home</mat-icon>
+        <span>Home</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-button class="tile-button">
+        <mat-icon class="tile-icon">apps</mat-icon>
+        <span mat-line>QR Space</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-button class="tile-button">
+        <mat-icon class="tile-icon">looks_one</mat-icon>
+        <span>One</span>
+      </button>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <button mat-button class="tile-button">
+        <mat-icon class="tile-icon">looks_two</mat-icon>
+        <span>Two</span>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
