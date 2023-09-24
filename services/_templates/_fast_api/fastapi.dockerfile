@@ -7,7 +7,7 @@ WORKDIR /app
 # set python environment
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/
 
 # set environment variables
 ARG ENVIRONMENT=prod
@@ -31,6 +31,9 @@ FROM base as builder
 # prevent poetry virtual environment
 ENV POETRY_VIRTUALENVS_CREATE false
 
+# copy in local packages for installation
+COPY ./local_package /app/local_package
+
 # install python dependencies
 RUN pip install --upgrade pip \
   && pip install --no-cache-dir poetry
@@ -53,7 +56,7 @@ FROM base as final
 COPY --from=builder /venv /venv
 
 # copy src to app folder
-COPY ./src .
+COPY ./src/app .
 
 # use a non-root user
 RUN addgroup --system school && adduser --system --ingroup school fish
@@ -61,7 +64,7 @@ RUN chown -R fish:school /app
 USER fish
 
 # start the worker
-CMD uvicorn app.main:app --workers 1 --host 0.0.0.0 --port ${PORT-8080} --log-level info
+CMD uvicorn main:app --workers 1 --host 0.0.0.0 --port ${PORT-8080} --log-level info
 
 # keep container alive for inspection
 # CMD sh -c "while true; do sleep 1; done"

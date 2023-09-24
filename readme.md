@@ -146,29 +146,29 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       "python.terminal.activateEnvironment": true,
       "python.analysis.importFormat": "relative",
       "python.analysis.autoFormatStrings": true,
-      "python.linting.mypyEnabled": true,
-      "python.linting.mypyCategorySeverity.error": "Information",
-      "python.linting.mypyCategorySeverity.note": "Hint",
-      "python.formatting.provider": "black",
-      "mypy.runUsingActiveInterpreter": true,
+      "mypy-type-checker.severity":	{ "error": "Information", "note": "Hint" },
+      // "python.formatting.provider": "black",
       "[python]": {
         // "editor.defaultFormatter": null,
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-          "source.organizeImports.ruff": true,
-          "source.fixAll.ruff": true
-        },
+          "source.fixAll.ruff": true,
+          "source.organizeImports.ruff": true
+        }
       },
       "search.exclude": {
-        "**/.yarn": true,
-        "**/.pnp.*": true,
-        "**/node_modules": true,
-        "**/.anglar": true,
+        "/.yarn": true,
+        "/.pnp.*": true,
+        "/node_modules": true,
+        "/.angular": true,
+        "/android/": true,
+        "/www": true
       },
       "[typescript]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "vscode.typescript-language-features"
       },
+      // "python.linting.enabled": true,
     }
     ```
 
@@ -335,24 +335,31 @@ poetry add black@latest --group dev
 ```
 
 
-## Angular
+## Angular CLI
 
-New setup:
-`ng new my_app --package-manager=yarn`
+New Angular setup:
+```bash
+ng new my_app --package-manager=yarn
+```
 
 Set package manager to yarn:
-`ng config cli.packageManager yarn`
+```bash
+ng config cli.packageManager yarn
+```
 
-
-
-> Create new service
+Create new service
 ```bash
 ng generate service services/<service-name>
 ```
 
-> Create new component, then remove dry-run if happy to create
+Create new component, then remove dry-run if happy to create
 ```bash
 ng g c feature -m features.module --dry-run
+```
+
+Options for generating componets
+```bash
+ng g c manage-users-layout --style none --skip-tests --flat --skip-import --dry-run
 ```
 
 
