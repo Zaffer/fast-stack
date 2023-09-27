@@ -12,8 +12,8 @@ from sqlmodel import (
     func,
 )
 
-# if TYPE_CHECKING:
-#     from .item import Item
+if TYPE_CHECKING:
+    from .item import Item
 
 
 class UserBase(SQLModel):
@@ -29,7 +29,7 @@ class User(UserBase, table=True):
         primary_key=True,
         nullable=False,
     )
-    # items: Optional[List["Item"]] = Relationship(back_populates="user")
+    items: List["Item"] = Relationship(back_populates="owner")
 
 
 class UserCreate(UserBase):
@@ -49,3 +49,7 @@ class UserBasicRead(SQLModel):
 class UserUpdate(SQLModel):
     name: str | None = None
     email: str | None = None
+
+
+class UserReadWithItems(UserRead):
+    items: List["Item"] = []
