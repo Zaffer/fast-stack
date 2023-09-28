@@ -47,4 +47,4 @@ class ItemUpdate(SQLModel):
 
 
 class ItemReadWithOwner(ItemRead):
-    owner: Type["UserRead"] | None = None
+    owner: Optional["UserRead"] = None
