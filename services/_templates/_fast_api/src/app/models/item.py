@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import TYPE_CHECKING, List, Optional
+from typing import TYPE_CHECKING, List, Optional, Type
 
 from sqlmodel import (
     Column,
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 
 
 class ItemBase(SQLModel):
-    __tablename__ = "item" # type: ignore
+    __tablename__ = "item"  # type: ignore
     owner_id: int | None = Field(default=None, foreign_key="user.id")
     name: str = Field(sa_column_kwargs={"unique": True})
     description: str | None = None
@@ -47,4 +47,4 @@ class ItemUpdate(SQLModel):
 
 
 class ItemReadWithOwner(ItemRead):
-    owner: "UserRead" | None = None
+    owner: Type["UserRead"] | None = None

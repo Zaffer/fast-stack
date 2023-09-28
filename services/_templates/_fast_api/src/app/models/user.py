@@ -52,4 +52,4 @@ class UserUpdate(SQLModel):
 
 
 class UserReadWithItems(UserRead):
-    items: List["Item"] = []
+    items: List["Item"] | None = []
