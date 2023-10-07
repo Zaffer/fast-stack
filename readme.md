@@ -1,41 +1,37 @@
-FAST Stack
+⚡ Fast Stack
 ---------
 
 # Introduction
-FastAPI
-Firebase
-Angular
-Auth0
-PostgreSQL
-Google Cloud Platform
-
-SQLModel for database ORM and API schemas
-Material Design for admin panel
-Ionic for web and mobile app
-
-Docker Containers of everything
-Google Cloud Platform for hosting
-Auth0 for authentication and SSO
+FastAPI                 backend
+SQLModel                database ORM and API schemas
+Angular                 frontend
+Angular Material        admin dashboard
+Angular Ionic           web and native apps
+Auth0                   authentication and authorisation
+Firestore               document database
+PostgreSQL              relational database
+Google Cloud Platform   cloud infrastructure
+Firebase                web app hosting
+Docker Compose          containerise everything
 
 
-TODO:
+Roadmap:
 - full pnp for yarn (currently Anuglar has issues with Yarn pnp)
 - ~~containerise Angular pgAdmin4~~
 - ~~Add Grafana as service to visualise your data~~
-- Make a single Mat Web service
-- Add Ionic service
-
-
-Duplicate _api, _web, or _app for each new service you want to build
+- ~~Make a single Mat Web service~~
+- ~~Add Ionic service~~
+- iframe grafana oss into angular dashboard
+- fix github actions to pull secrets from Google Secret Manager
 
 
 ## Using this template repo
 
 Copy this repo as a template.
-> to pull in updates on the template to your repo:
-Add this repo as a remote called "template"
+> to pull in future updates of these template to your own repo
+Add this repo as a remote called "templates"
 Git fetch from all remotes.
-Merge from template using this line:
+Merge from template using this line to remove templates' histories:
 `git merge template/master --strategy-option ours --squash`
 `git pull https://github.com/Zaffer/faap-stack master --ff --allow-unrelated-histories`
 
@@ -73,39 +69,42 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 ==============================
 
-![Continuous Integration and Delivery](https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)
+![Continuous Integration and Delivery]"(https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
 
 
 # ENVIROMENT SETUP
-1. Linux
-    - WSL2
-    https://learn.microsoft.com/en-us/windows/wsl/install-manual
-    - or linux
-    https://ubuntu.com/tutorials/install-ubuntu-desktop#1-overview
+1. Ubuntu on Windows using WSL2
+    - https://learn.microsoft.com/en-us/windows/wsl/install-manual
+
+1. Visual Studio Code
+    - suggest extensions
+      - Python
+      - Pylance
+      - Docker
+      - Mypy Type Checker
+      - Black Formatter
+      - Ruff
+      - Prettier - Code Formatter
+      - Thunder Client
+      - GitHub Copilot
+    
 
 1. Docker Desktop
-    https://www.docker.com/products/docker-desktop/
+    - https://www.docker.com/products/docker-desktop/
+
 
 1. Github
-    > Save credentials
-    `git config --global user.name "YOUR USERNAME"`
-    `git config --global user.email "YOUR EMAIL"`
+    - `git config --global user.name "YOUR USERNAME"`
+    - `git config --global user.email "YOUR EMAIL"`
 
-1. Python version 3.11
-    - Pyenv (optional)
-    https://github.com/pyenv/pyenv
-    > note: currently poetry will only install using the system version of python, it wont use the pyenv shims
 
-1. Visual Studio Code & suggest extensions
-    - Docker
-    - Thunder Client
-    - Pylance
-    - Black Formatter
-    - Mypy Type Checker
-    - Ruff
-    - Prettier
+1. Python
+    - Pyenv (optional) https://github.com/pyenv/pyenv
+      > note: currently poetry will only install using the system version of python, it wont use the pyenv shims
 
-1.  Poetry (needed for IDE support https://python-poetry.org/)
+
+1.  Poetry
+  - https://python-poetry.org/)
     > after install, add to PATH:
     - `nano ~/.bashrc`
     - `export PATH="$HOME/.local/bin:$PATH"`
