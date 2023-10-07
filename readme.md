@@ -24,6 +24,13 @@ Roadmap:
 - iframe grafana oss into angular dashboard
 - fix github actions to pull secrets from Google Secret Manager
 
+    > The following is get pnp working once Angular supports it again.
+    `yarn add -D @types/node`
+    `yarn build`
+    `yarn start`
+    `yarn dlx @yarnpkg/sdks vscode`
+    > add paths to your app's .yarn file in workspace root .vscode/settings.json
+
 
 ## Using this template repo
 
@@ -36,7 +43,7 @@ Merge from template using this line to remove templates' histories:
 `git pull https://github.com/Zaffer/faap-stack master --ff --allow-unrelated-histories`
 
 
-## Template Services
+# Application Services
 
 ### _fast_api
 FastAPI
@@ -57,6 +64,38 @@ Flask
 Plotly Dash
 
 
+# Development Tools
+
+1. db-local
+    - Local Postgres db for development
+
+1.  pgAdmin
+    - This is a GUI for postgresql. It is not required but it is very useful for development.
+
+    `docker compose up pgadmin`
+
+    http://localhost:5050
+    postgres@postgres.com
+    grespost
+
+    > add the local server
+    ```
+    name: db-local
+    host: db-local
+    port: 5432
+    username: postgres
+    password: postgres
+    ```
+
+1. cloudsql-proxy
+    - for connecting to cloud db from your local environment
+
+
+1. grafana
+    - for viewing analytics
+
+
+
 ## Notes
 
 ### Github Actions
@@ -72,7 +111,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 ![Continuous Integration and Delivery]"(https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
 
 
-# ENVIROMENT SETUP
+# Environment Setup
 1. Ubuntu on Windows using WSL2
     - https://learn.microsoft.com/en-us/windows/wsl/install-manual
 
@@ -89,40 +128,40 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       - GitHub Copilot
     
 
-1. Docker Desktop
-    - https://www.docker.com/products/docker-desktop/
-
+1. Docker
+    - install Docker Desktop: https://www.docker.com/products/docker-desktop/
 
 1. Github
     - `git config --global user.name "YOUR USERNAME"`
     - `git config --global user.email "YOUR EMAIL"`
 
 
-1. Python
-    - Pyenv (optional) https://github.com/pyenv/pyenv
+1. Pyenv
+    - (optional) https://github.com/pyenv/pyenv
       > note: currently poetry will only install using the system version of python, it wont use the pyenv shims
 
 
 1.  Poetry
-  - https://python-poetry.org/)
-    > after install, add to PATH:
-    - `nano ~/.bashrc`
-    - `export PATH="$HOME/.local/bin:$PATH"`
+    - https://python-poetry.org/
+    - add to bashrc: `export PATH="$HOME/.local/bin:$PATH"`
 
-1. Google Cloud CLI (https://cloud.google.com/sdk/docs/install)
-    - if open in browser error use `gcloud init --no-launch-browser`
-    
+
+1. Google Cloud CLI
+    - https://cloud.google.com/sdk/docs/install
+      - `snap install google-cloud-cli --classic`
+    - add to bashrc: `source /snap/google-cloud-cli/current/completion.bash.inc`
+
     - Create Service Account Key of signed in user for ADC
       - `gcloud auth application-default login`
       - `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
-    > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
+      > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
 
-1. Docker
-    > Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper)
-    - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
+    - Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper): 
+      - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
+
 
 1. Node
-   - nvm (https://github.com/nvm-sh/nvm)
+   - install nvm (https://github.com/nvm-sh/nvm)
      - `nvm install --lts`
 
    - global Angular CLI's:
@@ -130,91 +169,83 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
      - `npm install -g firebase-tools`
      - `npm install -g @ionic/cli`
 
-1. yarn (https://yarnpkg.com/getting-started/install)
 
-    - cd into the app folder
+1. Yarn
+    - Install Yarn: https://yarnpkg.com/getting-started/install
+      - `corepack enable`
+
+
+    - Project setup:
+      - cd into the app folder
       - `yarn set version stable`
       - `yarn install`
 
-1. VSCode Settings
-    - paste into .vscode/settings.json settings 
-    > swap `nosible-digest-api-QN8QTDzb-py3.10` with your venv name
-    ```
-    {
-      "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/nosible-digest-api-QN8QTDzb-py3.10/bin/python",
-      "python.terminal.activateEnvironment": true,
-      "python.analysis.importFormat": "relative",
-      "python.analysis.autoFormatStrings": true,
-      "mypy-type-checker.severity":	{ "error": "Information", "note": "Hint" },
-      // "python.formatting.provider": "black",
-      "[python]": {
-        // "editor.defaultFormatter": null,
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-          "source.fixAll.ruff": true,
-          "source.organizeImports.ruff": true
-        }
-      },
-      "search.exclude": {
-        "/.yarn": true,
-        "/.pnp.*": true,
-        "/node_modules": true,
-        "/.angular": true,
-        "/android/": true,
-        "/www": true
-      },
-      "[typescript]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-      },
-      // "python.linting.enabled": true,
-    }
-    ```
 
 1. Angular
 
-  Set yarn as you package manager globally
-  `ng config -g cli.packageManager yarn`
+    - Project Setup:
+      - Set yarn as you package manager globally: `ng config -g cli.packageManager yarn`
 
-    > the following is get pnp working once Angular supports it again.
+    
+1. bashrc
 
-    `yarn add -D @types/node`
-    `yarn build`
-    `yarn start`
-    `yarn dlx @yarnpkg/sdks vscode`
-    > add paths to your app's .yarn file in workspace root .vscode/settings.json
+    - `nano ~/.bashrc`
+    - should look like at the end
+    ```sh
+    ...
+    # poetry
+    export PATH="/home/james/.local/bin:$PATH"
 
+    # gcloud cli
+    source /snap/google-cloud-cli/current/completion.bash.inc
 
-# DEVELOPMENT SERVICES
+    # nvm
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-## db-local
-Local Postgres db for development
+    # Load Angular CLI autocompletion.
+    source <(ng completion script)
 
+    ```
 
-## pgAmdin
-This is a GUI for postgresql. It is not required but it is very useful for development.
+# Visual Studio Code Settings
 
-`docker compose up pgadmin`
+  - paste into .vscode/settings.json
+  > swap `{-api-QN8QTDzb-py3.10-}` with your venv name
 
-http://localhost:5050
-postgres@postgres.com
-grespost
+  ```json
+  {
+    "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{-api-QN8QTDzb-py3.10-}/bin/python",
+    "python.terminal.activateEnvironment": true,
+    "python.analysis.importFormat": "relative",
+    "python.analysis.autoFormatStrings": true,
+    "mypy-type-checker.severity":	{ "error": "Information", "note": "Hint" },
+    // "python.formatting.provider": "black",
+    "[python]": {
+      // "editor.defaultFormatter": null,
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.fixAll.ruff": true,
+        "source.organizeImports.ruff": true
+      }
+    },
+    "search.exclude": {
+      "/.yarn": true,
+      "/.pnp.*": true,
+      "/node_modules": true,
+      "/.angular": true,
+      "/android/": true,
+      "/www": true
+    },
+    "[typescript]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    // "python.linting.enabled": true,
+  }
+  ```
 
-> add the local server
-```
-name: db-local
-host: db-local
-port: 5432
-username: postgres
-password: postgres
-```
-
-## cloudsql-proxy
-for connecting to cloud db from your local environment
-
-
-## grafana
-for viewing analytics
 
 
 # SCRIPTS
@@ -434,3 +465,10 @@ Emulater mode UI
 2. Replace */openapi.json* file in root
 3. Run recreate_api.sh script
 
+
+## Troubshooting
+
+### GCloud CLI:
+
+  - if using linux and getting "open in browser error" then use `gcloud init --no-launch-browser` to login
+  - if you mess up with Application Default Credentials sometimes it makes a folder where it expects a file at this location: `~/.config/gcloud/application_default_credentials.json`. Delete and the directory and recreate the json file.
