@@ -40,7 +40,7 @@ Add this repo as a remote called "templates"
 Git fetch from all remotes.
 Merge from template using this line to remove templates' histories:
 `git merge template/master --strategy-option ours --squash`
-`git pull https://github.com/Zaffer/faap-stack master --ff --allow-unrelated-histories`
+`git pull https://github.com/Zaffer/fast-stack master --ff --allow-unrelated-histories`
 
 
 # Application Services
@@ -218,17 +218,23 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
   {
     "python.defaultInterpreterPath": "~/.cache/pypoetry/virtualenvs/{-api-QN8QTDzb-py3.10-}/bin/python",
     "python.terminal.activateEnvironment": true,
-    "python.analysis.importFormat": "relative",
+    "python.analysis.extraPaths": ["services/_api/src"],
     "python.analysis.autoFormatStrings": true,
-    "mypy-type-checker.severity":	{ "error": "Information", "note": "Hint" },
-    // "python.formatting.provider": "black",
+    "mypy-type-checker.severity": { "error": "Information", "note": "Hint" },
     "[python]": {
-      // "editor.defaultFormatter": null,
       "editor.formatOnSave": true,
       "editor.codeActionsOnSave": {
         "source.fixAll.ruff": true,
         "source.organizeImports.ruff": true
       }
+    },
+    "[typescript]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "search.exclude": {
       "/.yarn": true,
@@ -237,12 +243,6 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       "/.angular": true,
       "/android/": true,
       "/www": true
-    },
-    "[typescript]": {
-      "editor.formatOnSave": true,
-      "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    // "python.linting.enabled": true,
   }
   ```
 
@@ -469,6 +469,10 @@ Emulater mode UI
 ## Troubshooting
 
 ### GCloud CLI:
+- if using linux and getting "open in browser error" then use `gcloud init --no-launch-browser` to login
 
-  - if using linux and getting "open in browser error" then use `gcloud init --no-launch-browser` to login
-  - if you mess up with Application Default Credentials sometimes it makes a folder where it expects a file at this location: `~/.config/gcloud/application_default_credentials.json`. Delete and the directory and recreate the json file.
+- if you mess up with Application Default Credentials sometimes it makes a folder where it expects a file at this location: `~/.config/gcloud/application_default_credentials.json`. Delete and the directory and recreate the json file.
+
+
+- "OCI runtime exec failed: exec failed: unable to start container process: exec: "alembic": executable file not found in $PATH: unknown"
+  - likely that your image running locally is the production version, rebuild your image for dev environment first then run start-dev.sh again.
