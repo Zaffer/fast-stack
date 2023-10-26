@@ -476,3 +476,15 @@ Emulater mode UI
 
 - "OCI runtime exec failed: exec failed: unable to start container process: exec: "alembic": executable file not found in $PATH: unknown"
   - likely that your image running locally is the production version, rebuild your image for dev environment first then run start-dev.sh again.
+
+
+## Bonus
+
+add this to your .bashrc for tab completion in the terminal:
+
+```
+# terminal tab completion
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
+bind '"\e[Z":menu-complete-backward'
+```
