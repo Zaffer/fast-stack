@@ -28,5 +28,6 @@ alembic = "^1.9.1"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+line-length = 119
+per-file-ignores = {"__init__.py" = ["F401"]}

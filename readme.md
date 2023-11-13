@@ -190,9 +190,16 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1. bashrc
 
     - `nano ~/.bashrc`
-    - should look like at the end
+    - should look like this at the end of the file
     ```sh
     ...
+
+    # pyenv
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+
     # poetry
     export PATH="/home/james/.local/bin:$PATH"
 
@@ -207,6 +214,10 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     # Load Angular CLI autocompletion.
     source <(ng completion script)
 
+    # terminal tab completion
+    bind 'set show-all-if-ambiguous on'
+    bind 'TAB:menu-complete'
+    bind '"\e[Z":menu-complete-backward'
     ```
 
 # Visual Studio Code Settings
@@ -243,6 +254,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       "/.angular": true,
       "/android/": true,
       "/www": true
+    }
   }
   ```
 
