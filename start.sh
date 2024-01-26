@@ -4,26 +4,18 @@ set -e
 ## START SCRIPT COLLECTION ##
 # comment out and uncomment each line as needed ##
 
-## MAIN APPLICATIONS ##
-
-## backend
-sh services/_api/scripts/start-dev.sh
-
-## frontend
-# sh services/_web/scripts/start-dev.sh
-
 
 ## DEVELOPMENT TOOLS ##
+docker compose up db-local -d ## local database
+docker compose up pgadmin -d ## PGAdmin
+# docker compose up cloudsql -d ## cloudsql proxy
 
-## pgadmin
-# docker compose up pgadmin -d
 
-## cloudsql proxy
-# docker compose up cloudsql -d
+## MAIN APPLICATIONS ##
+sh services/_api/scripts/start-dev.sh ## backend
+# sh services/_web/scripts/start-dev.sh ## frontend
 
 
 ## LOGS ##
-
-## follow the logs 
-# docker compose logs -f
-# docker compose logs -f api, web, db-local
+# docker compose logs -f ## follow the logs 
+# docker compose logs -f api, web, db-local ## follow specific logs 

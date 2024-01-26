@@ -1,12 +1,15 @@
 #! /usr/bin/env sh
 set -e
 
-## DOWNGRADE THE DATABASE TO LATEST REVISION ##
+## UPGRADE THE DATABASE TO LATEST REVISION ##
 
-# checks for active db connection before alembic upgrade
-timeout 30s bash -c "until docker exec local-db pg_isready ; do echo '⌛'; sleep 3 ; done"; echo -e \\a
+# Source the utilities script
+. services/qrs_api/scripts/db-utils.sh
 
-# execute the alembic down grade inside the container
-docker exec -u monkey -w /app/db qrs_api_container alembic downgrade -1
+# wait for the database server to be ready
+check_pg_server
+
+# execute the alembic up grade inside the container
+docker exec -u fish -w /app/db qrs_api_container alembic downgrade -1
 
 echo '⬇️'
