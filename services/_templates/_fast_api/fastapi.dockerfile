@@ -38,7 +38,7 @@ COPY ./local_package /app/local_package
 RUN pip install --upgrade pip \
   && pip install --no-cache-dir poetry
 COPY ./src/pyproject.toml ./src/poetry.lock ./
-RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] ; \
+RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] || [ ${ENVIRONMENT} == 'proxy' ] ; \
   then . /venv/bin/activate && poetry install --no-root --no-interaction; \
   else . /venv/bin/activate && poetry install --no-root --no-interaction --no-ansi --only main; fi"
 

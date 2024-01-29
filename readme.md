@@ -16,13 +16,16 @@ Docker Compose          containerise everything
 
 
 Roadmap:
-- full pnp for yarn (currently Anuglar has issues with Yarn pnp)
-- ~~containerise Angular pgAdmin4~~
-- ~~Add Grafana as service to visualise your data~~
-- ~~Make a single Mat Web service~~
-- ~~Add Ionic service~~
-- iframe grafana oss into angular dashboard
-- fix github actions to pull secrets from Google Secret Manager
+- [ ] full pnp for yarn (currently Anuglar has issues with Yarn pnp)
+- [x] ~~containerise Angular pgAdmin4~~
+- [x] ~~Add Grafana as service to visualise your data~~
+- [x] ~~Make a single Mat Web service~~
+- [x] ~~Add Ionic service~~
+- [ ] iframe grafana oss into angular dashboard
+- [ ] fix github actions to pull secrets from Google Secret Manager
+- [ ] clean up ng templates to do the following only:
+  - Angular Ionic, Firebase Auth, Firestore, Cloud Functions
+  - Angular, Material Design, Auth0, API
 
     > The following is get pnp working once Angular supports it again.
     `yarn add -D @types/node`
