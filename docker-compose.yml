@@ -1,6 +1,23 @@
 version: "3"
 services:
 
+  # TEMPLATES
+
+  web_admin: # Angular frontend for management console, settings, dashboards, etc
+    container_name: web_admin_container
+    build:
+      context: ./services/_templates/web_admin
+      dockerfile: web.admin.dockerfile
+      network: host
+    ports:
+      - 4200:4200
+    volumes:
+      - ./services/_templates/web_admin/svc:/home/node/app
+    command: "yarn start --host 0.0.0.0"
+
+
+  # TEMPORARY
+
   temp_api: # Fastapi service for rapidly create robuse apis
     container_name: temp_api_container
     build:

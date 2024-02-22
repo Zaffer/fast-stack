@@ -10,7 +10,7 @@ RUN npm install -g firebase-tools
 
 WORKDIR /home/node/app
 
-COPY --chown=node ./app .
+COPY --chown=node ./svc .
 
 RUN yarn set version stable
 RUN yarn install
