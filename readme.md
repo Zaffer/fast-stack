@@ -187,6 +187,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1. Angular
 
     - Project Setup:
+      - create new project using CLI: `ng new my-project --package-manager yarn`
       - Set yarn as you package manager globally: `ng config -g cli.packageManager yarn`
 
     
