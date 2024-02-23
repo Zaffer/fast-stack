@@ -1,1 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+// https://material.angular.io/guide/material-3
+@use "@angular/material" as mat;
+@use "@angular/material-experimental" as matx;
+
+$theme: matx.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: matx.$m3-violet-palette,
+    ),
+    typography: (
+      brand: "Comic Sans",
+      bold: 900,
+    ),
+    density: (
+      scale: -1,
+    ),
+  )
+);
+
+// // example of using the color palette on a specific component
+// .tertiary-checkbox {
+//     @include mat.checkbox-color($theme, $color-variant: tertiary);
+//   }
+
+// // example of targeting states of the class of a component
+// .danger {
+//     // Override the checkbox hover state to indicate that this is a dangerous setting. No need to
+//     // target the internal selectors for the elements that use these variables.
+//     --mdc-checkbox-unselected-hover-state-layer-color: red;
+//     --mdc-checkbox-unselected-hover-icon-color: red;
+//   }
+
+html {
+  // Apply the base theme at the root, so it will be inherited by the whole app.
+  @include mat.all-component-themes($theme);
+}
