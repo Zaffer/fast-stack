@@ -1,0 +1,8 @@
+<div class="nav-bar__tabs">
+  <app-nav-bar-tab path="/profile" label="Profile"></app-nav-bar-tab>
+  <app-nav-bar-tab path="/public" label="Public"></app-nav-bar-tab>
+  <ng-container *ngIf="isAuthenticated$ | async">
+    <app-nav-bar-tab path="/protected" label="Protected"></app-nav-bar-tab>
+    <app-nav-bar-tab path="/admin" label="Admin"></app-nav-bar-tab>
+  </ng-container>
+</div>
