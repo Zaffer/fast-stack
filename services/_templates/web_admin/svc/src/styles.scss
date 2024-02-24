@@ -1,37 +1,44 @@
-// https://material.angular.io/guide/material-3
-@use "@angular/material" as mat;
-@use "@angular/material-experimental" as matx;
+/* Custom Theming for Angular Material https://material.angular.io/guide/theming */
 
-$theme: matx.define-theme(
+@use "@angular/material" as mat;
+
+@include mat.core();
+
+// Define a dark theme
+$dark-theme: mat.define-dark-theme(
   (
     color: (
-      theme-type: dark,
-      primary: matx.$m3-violet-palette,
+      primary: mat.define-palette(mat.$deep-purple-palette),
+      accent: mat.define-palette(mat.$deep-orange-palette),
     ),
-    typography: (
-      brand: "Comic Sans",
-      bold: 900,
-    ),
-    density: (
-      scale: -1,
+    // Only include `typography` and `density` in the default dark theme.
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+// Define a light theme
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette(mat.$light-blue-palette),
+      accent: mat.define-palette(mat.$purple-palette),
     ),
   )
 );
 
-// // example of using the color palette on a specific component
-// .tertiary-checkbox {
-//     @include mat.checkbox-color($theme, $color-variant: tertiary);
-//   }
+// Apply the dark theme by default
+@include mat.core-theme($dark-theme);
+// Include all theme styles for the components.
+@include mat.all-component-themes($dark-theme);
+@include mat.all-component-typographies($dark-theme);
 
-// // example of targeting states of the class of a component
-// .danger {
-//     // Override the checkbox hover state to indicate that this is a dangerous setting. No need to
-//     // target the internal selectors for the elements that use these variables.
-//     --mdc-checkbox-unselected-hover-state-layer-color: red;
-//     --mdc-checkbox-unselected-hover-icon-color: red;
-//   }
-
-html {
-  // Apply the base theme at the root, so it will be inherited by the whole app.
-  @include mat.all-component-themes($theme);
+.color-scheme-light {
+  @include mat.all-component-colors($light-theme);
+  // @include mat.all-component-typographies($light-theme);
 }
+
+
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
