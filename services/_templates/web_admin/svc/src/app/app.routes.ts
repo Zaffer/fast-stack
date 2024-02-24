@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from '@auth0/auth0-angular';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/dash', pathMatch: 'full' },
@@ -11,6 +12,7 @@ export const routes: Routes = [
     path: 'dash',
     loadComponent: () =>
       import('./features/dash/dash.component').then((m) => m.DashComponent),
+      canActivate: [AuthGuard]
   },
   {
     path: 'table',
