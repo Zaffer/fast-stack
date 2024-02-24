@@ -1,1 +1,9 @@
 <app-nav></app-nav>
+
+<div *ngIf="isAuth0Loading$ | async; else auth0Loaded">
+  <!-- <app-page-loader></app-page-loader> -->
+  loading...
+</div>
+<ng-template #auth0Loaded>
+  <router-outlet></router-outlet>
+</ng-template>
