@@ -48,6 +48,16 @@ Merge from template using this line to remove templates' histories:
 
 # Application Services
 
+## Web Admin
+- Angular
+- Material Design
+- Auth0
+
+## Web App
+- Angular
+- Ionic
+- Firebase Auth
+
 ### _fast_api
 FastAPI
 SQLModel

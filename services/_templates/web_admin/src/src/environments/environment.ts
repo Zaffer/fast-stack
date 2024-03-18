@@ -14,7 +14,7 @@ export const environment = {
     httpInterceptor: {
       allowedList: [
         {
-          uri: 'http://localhost:3001/api/external',
+          uri: 'http://localhost:8000/api/external',
         },
       ],
     },

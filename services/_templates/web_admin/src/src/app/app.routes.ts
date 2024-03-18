@@ -1,8 +1,13 @@
 import { Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dash', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  {
+    path: '',
+    component: HomeComponent,
+  },
   {
     path: 'form',
     loadComponent: () =>
@@ -12,7 +17,6 @@ export const routes: Routes = [
     path: 'dash',
     loadComponent: () =>
       import('./features/dash/dash.component').then((m) => m.DashComponent),
-      canActivate: [AuthGuard]
   },
   {
     path: 'table',
@@ -31,6 +35,13 @@ export const routes: Routes = [
         (m) => m.DragDropComponent
       ),
   },
-
-  { path: '**', redirectTo: '/dash' },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./features/profile/profile.component').then(
+        (m) => m.ProfileComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  { path: '**', redirectTo: '/' },
 ];
