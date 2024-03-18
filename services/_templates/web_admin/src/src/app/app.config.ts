@@ -1,5 +1,5 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { RouterModule, provideRouter } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
@@ -17,7 +17,6 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
     importProvidersFrom(
-      // RouterModule.forRoot(ROUTES),
       HttpClientModule,
       AuthModule.forRoot({
         ...environment.auth0

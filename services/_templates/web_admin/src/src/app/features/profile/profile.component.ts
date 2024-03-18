@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './profile.component.scss'
 })
 export class ProfileComponent {
+  public profileUrl = 'http://localhost:4201/profile'
 
 }
