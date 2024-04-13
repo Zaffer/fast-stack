@@ -1,0 +1,7 @@
+{
+  "name": "Sobirovs GPT",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
