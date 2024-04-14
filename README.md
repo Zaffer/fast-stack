@@ -57,6 +57,8 @@ Merge from template using this line to remove templates' histories:
 - Angular
 - Ionic
 - Firebase Auth
+- Cloud Functions
+- Firestore
 
 ### _fast_api
 FastAPI
