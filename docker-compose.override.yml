@@ -40,6 +40,29 @@ services:
        - pgadmin-data:/var/lib/pgadmin
 
 
+  firebase: # custom image for running firestore emulators locally
+    container_name: firebase_container
+    build:
+      context: ./services/_tools
+      dockerfile: firebase.dockerfile
+      network: host
+    ports:
+      - 4000:4000 # ui
+      - 9099:9099 # auth
+      - 5001:5001 # functions
+      - 8080:8080 # firestore
+      # NOTE hosting might not be needed in this context
+      - 5000:5000 # hosting
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+    volumes:
+      - firebase-data:/home/node/data/ # persistant local data store
+      - ./services/${FAST_STACK_SERVICE}/src:/home/node/app # local app source code
+      - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
+    command: firebase emulators:start --only auth,firestore,functions,hosting --import /home/node/data/firebase --export-on-exit
+    # tty: true
+
+
   redis:
     container_name: redis
     image: redis:alpine
@@ -79,6 +102,7 @@ services:
 volumes:
   db-local-data:
   pgadmin-data:
+  firebase-data:
   redis-data:
   redisinsight-data:
   grafana-data:

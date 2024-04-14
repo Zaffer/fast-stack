@@ -3,7 +3,7 @@ services:
 
   # TEMPLATES
 
-  web_admin: # Angular frontend for management console, settings, dashboards, etc
+  web_admin: # Angular frontend for management console, admin panel, dashboards, etc
     container_name: web_admin_container
     build:
       context: ./services/_templates/web_admin
@@ -14,6 +14,19 @@ services:
     volumes:
       - ./services/_templates/web_admin/src:/home/node/app
     command: "yarn start --host 0.0.0.0"
+
+  web_app: # Angular Ionic frontend for user-facing cross-platform progresive web app
+    container_name: web_app_container
+    build:
+      context: ./services/_templates/web_app
+      dockerfile: web.app.dockerfile
+      network: host
+    ports:
+      - 8100:8100
+    volumes:
+      - ./services/_templates/web_app/app:/home/node/app
+    command: ionic serve --external
+    # command: sh -c "while true; do sleep 1; done"
 
 
   # TEMPORARY
