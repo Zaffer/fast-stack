@@ -4,13 +4,13 @@ ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
 
 ENV PATH=$PATH:/home/node/.npm-global/bin
 
-# RUN npm install -g @ionic/cli
+RUN npm install -g @ionic/cli
 RUN npm install -g @angular/cli
 RUN npm install -g firebase-tools
 
 WORKDIR /home/node/app
 
-COPY --chown=node ./svc .
+COPY --chown=node ./src .
 
 RUN yarn set version stable
 RUN yarn install

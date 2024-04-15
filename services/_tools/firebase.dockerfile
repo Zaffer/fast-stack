@@ -11,12 +11,12 @@ RUN apk add --no-cache openjdk11
 RUN npm install -g firebase-tools
 
 # Setup Firebase emulators
-RUN firebase setup:emulators:ui
-RUN firebase setup:emulators:auth
-RUN firebase setup:emulators:functions
-RUN firebase setup:emulators:firestore
-RUN firebase setup:emulators:hosting
-RUN firebase setup:emulators:extensions
+# RUN firebase setup:emulators:ui
+# RUN firebase setup:emulators:auth
+# RUN firebase setup:emulators:functions
+# RUN firebase setup:emulators:firestore
+# RUN firebase setup:emulators:hosting
+# RUN firebase setup:emulators:extensions
 
 # # Copy the entrypoint script into the container
 # COPY entrypoint.sh /entrypoint.sh

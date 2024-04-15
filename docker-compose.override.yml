@@ -43,24 +43,24 @@ services:
   firebase: # custom image for running firestore emulators locally
     container_name: firebase_container
     build:
-      context: ./services/digest_all
+      context: ./services/_tools
       dockerfile: firebase.dockerfile
       network: host
     ports:
-      - 4000:4000 # Emulator UI
-      - 9099:9099 # Authentication
-      - 5001:5001 # Functions
-      - 8080:8080 # Firestore
-      - 5000:5000 # Hosting
-      - 5001:5001 # Extensions
+      - 4000:4000 # ui
+      - 9099:9099 # auth
+      - 5001:5001 # functions
+      - 8080:8080 # firestore
+      - 5000:5000 # hosting
+      - 5002:5002 # extensions
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
     volumes:
-      - firebase-data:/home/node/data/
-      - ./services/digest_web/app:/home/node/app
+      - firebase-data:/home/node/data/ # persistant local data store
+      - ./services/_templates/web_app/src:/home/node/app # local app source code
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
-    command: firebase emulators:start --only auth,firestore,functions --import /home/node/data/firebase --export-on-exit
-    # tty: true
+    # command: firebase emulators:start --only auth,firestore,functions --import /home/node/data/firebase --export-on-exit
+    tty: true
 
 
   redis:
