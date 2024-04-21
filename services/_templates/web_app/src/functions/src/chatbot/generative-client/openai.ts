@@ -2,25 +2,27 @@ import OpenAI from 'openai';
 import { ChatResponse, DiscussionClient } from './base_class';
 import config from '../config';
 
-interface AssistantChatOptions {
-  history?: Message[];
-  model: string;
-  temperature?: number;
-  candidateCount?: number;
-  topP?: number;
-  topK?: number;
-  maxOutputTokens?: number;
-  projectId: string;
-  location: string;
-  context?: string;
-  safetySettings: SafetySetting[];
+// interface AssistantChatOptions {
+//   model: string;
+//   temperature?: number;
+//   candidateCount?: number;
+//   topP?: number;
+//   topK?: number;
+//   maxOutputTokens?: number;
+//   projectId: string;
+//   location: string;
+//   context?: string;
+//   safetySettings: SafetySetting[];
+// }
+
+enum Role {
+  USER = 'user',
+  ASSISTANT = 'assistant',
 }
 
 type ApiMessage = {
   role: string;
-  parts: {
-    text: string;
-  }[];
+  content: string;
 };
 
 export class AssistantsDiscussionClient extends DiscussionClient<
@@ -40,8 +42,16 @@ export class AssistantsDiscussionClient extends DiscussionClient<
     this.client = new OpenAI({ apiKey: config.openai.apiKey });
   }
 
-  createThread() {
-    return this.client.beta.threads.create({
+  // send(messageContent: string, options: any): Promise<ChatResponse> {
+  //   // options has thread ID.
+
+  //   console.log('Sending message: ' + messageContent);
+  //   console.log('Options: ' + JSON.stringify(options));
+  //   return this.generateResponse();
+  // }
+
+  async createThread() {
+    const thread = await this.client.beta.threads.create({
       messages: [
         {
           role: 'user',
@@ -50,16 +60,18 @@ export class AssistantsDiscussionClient extends DiscussionClient<
         },
       ],
     });
+    
+    return thread;
   }
 
   createApiMessage(
     messageContent: string,
     role: 'user' | 'model' = 'user'
   ): ApiMessage {
-    const apiRole = role === 'user' ? Role.USER : Role.GEMINI;
+    const apiRole = role === 'user' ? Role.USER : Role.ASSISTANT;
     return {
-      role: ,
-      content: ,
+      role: apiRole,
+      content: messageContent,
     };
   }
 }

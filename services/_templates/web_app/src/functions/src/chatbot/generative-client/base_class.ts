@@ -6,10 +6,10 @@ export interface Message {
 
 export interface ChatResponse {
   response: string;
-  candidates: string[];
+  // candidates: string[];
   //TODO: fix this type
-  safetyMetadata?: any;
-  history: Message[];
+  // safetyMetadata?: any;
+  // history: Message[];
 }
 
 export abstract class DiscussionClient<
@@ -20,9 +20,12 @@ export abstract class DiscussionClient<
   },
   ApiMessage
 > {
-  client?: Client;
+  client: Client;
   modelName?: string;
-  constructor() {}
+
+  constructor() {
+    this.client = {} as Client;
+  }
 
   private getHistory(options: ChatOptions) {
     let history: Message[] = [];

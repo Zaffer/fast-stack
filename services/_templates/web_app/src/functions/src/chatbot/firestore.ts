@@ -7,6 +7,18 @@ import {DocumentReference} from 'firebase-admin/firestore';
 
 const {promptField, responseField, orderField} = config;
 
+// TODO get thread ID from user or thread sub-collection
+export async function fetchThread(ref: DocumentReference) {
+
+  // return thread is exists on firstore
+  // else create thread on openai (function on openai assistant client)
+  // then create thread on firestore and return
+  return {
+    thread: 'thread-id',
+  };
+}
+
+
 export async function fetchHistory(ref: DocumentReference) {
   const collSnap = await ref.parent.orderBy(orderField, 'desc').get();
 

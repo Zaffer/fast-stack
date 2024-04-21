@@ -73,6 +73,10 @@ export interface GenerateMessageOptions {
    */
   history?: Message[];
   /**
+   * Provide the thread ID.
+   */
+  thread?: string;
+  /**
    * Set or override temperature for this request.
    */
   temperature?: number;
