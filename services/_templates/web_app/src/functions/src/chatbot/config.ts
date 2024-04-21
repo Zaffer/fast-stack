@@ -19,11 +19,17 @@ import {SafetySetting as VertexSafetySetting} from '@google-cloud/vertexai';
 import {SafetySetting as GoogleAISafetySetting} from '@google/generative-ai';
 
 export enum GenerativeAIProvider {
+  OPENAI = 'openai',
   GOOGLE_AI = 'google-ai',
   VERTEX_AI = 'vertex-ai',
 }
 
 export interface Config {
+  openai: {
+    namespace: string;
+    apiKey: string;
+    model: string;
+  };
   vertex: {
     model: string;
   };
@@ -50,36 +56,43 @@ export interface Config {
   maxOutputTokens?: number;
 }
 
-function getSafetySettings(): GoogleAISafetySetting[] | VertexSafetySetting[] {
-  const categories = [
-    'HARM_CATEGORY_HATE_SPEECH',
-    'HARM_CATEGORY_DANGEROUS_CONTENT',
-    'HARM_CATEGORY_HARASSMENT',
-    'HARM_CATEGORY_SEXUALLY_EXPLICIT',
-  ];
+// function getSafetySettings(): GoogleAISafetySetting[] | VertexSafetySetting[] | undefined {
+//   const categories = [
+//     'HARM_CATEGORY_HATE_SPEECH',
+//     'HARM_CATEGORY_DANGEROUS_CONTENT',
+//     'HARM_CATEGORY_HARASSMENT',
+//     'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+//   ];
 
-  const settings = [];
+//   const settings = [];
 
-  for (const category of categories) {
-    if (process.env[category]) {
-      settings.push({
-        category,
-        threshold: process.env[category],
-      });
-    }
-  }
+//   for (const category of categories) {
+//     if (process.env[category]) {
+//       settings.push({
+//         category,
+//         threshold: process.env[category],
+//       });
+//     }
+//   }
 
-  switch (process.env.GENERATIVE_AI_PROVIDER) {
-    case 'vertex-ai':
-      return settings as VertexSafetySetting[];
-    case 'google-ai':
-      return settings as GoogleAISafetySetting[];
-    default:
-      throw new Error('Invalid Provider');
-  }
-}
+//   switch (process.env.GENERATIVE_AI_PROVIDER) {
+//     case 'openai':
+//       return undefined;
+//     case 'vertex-ai':
+//       return settings as VertexSafetySetting[];
+//     case 'google-ai':
+//       return settings as GoogleAISafetySetting[];
+//     default:
+//       throw new Error('Invalid Provider');
+//   }
+// }
 
 const config: Config = {
+  openai: {
+    namespace: "openai-chatbot",
+    apiKey: process.env.OPENAI_API_KEY || "",
+    model: process.env.MODEL || "gpt-4-turbo",
+  },
   vertex: {
     model: process.env.MODEL!,
   },
@@ -94,7 +107,7 @@ const config: Config = {
   // user defined
   collectionName:
     process.env.COLLECTION_NAME ||
-    'users/{uid}/discussions/{discussionId}/messages',
+    'users/{uid}/messages/{mid}',
   promptField: process.env.PROMPT_FIELD || 'prompt',
   responseField: process.env.RESPONSE_FIELD || 'response',
   orderField: process.env.ORDER_FIELD || 'createTime',
@@ -109,10 +122,9 @@ const config: Config = {
     ? parseInt(process.env.CANDIDATE_COUNT)
     : 1,
   candidatesField: process.env.CANDIDATES_FIELD || 'candidates',
-  safetySettings: getSafetySettings(),
+  // safetySettings: getSafetySettings(),
   provider:
-    (process.env.GENERATIVE_AI_PROVIDER as GenerativeAIProvider) ||
-    GenerativeAIProvider.GOOGLE_AI,
+    (process.env.GENERATIVE_AI_PROVIDER as GenerativeAIProvider),
   maxOutputTokens: process.env.MAX_OUTPUT_TOKENS
     ? parseInt(process.env.MAX_OUTPUT_TOKENS)
     : undefined,

@@ -1,4 +1,3 @@
-version: "3"
 services:
 
   db-local:
@@ -55,6 +54,7 @@ services:
       - 5000:5000 # hosting
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - firebase-data:/home/node/data/ # persistant local data store
       - ./services/${FAST_STACK_SERVICE}/src:/home/node/app # local app source code

@@ -1,7 +1,8 @@
-import {Change as FirestoreChange} from 'firebase-functions/v1';
-import {DocumentSnapshot} from 'firebase-functions/v1/firestore';
-import {FieldValue, GeoPoint, Timestamp} from 'firebase-admin/firestore';
-export type Change = FirestoreChange<DocumentSnapshot>;
+import { Change } from 'firebase-functions/v2';
+import { DocumentSnapshot } from 'firebase-functions/v2/firestore';
+import { FieldValue, GeoPoint, Timestamp } from 'firebase-admin/firestore';
+
+export type FirestoreChange = Change<DocumentSnapshot>;
 
 export enum ChangeType {
   CREATE = 'CREATE',
@@ -37,7 +38,7 @@ export const now = () => FieldValue.serverTimestamp();
 
 export interface ProcessConfig<
   TInput,
-  TOutput extends Record<string, FirestoreField>,
+  TOutput extends Record<string, FirestoreField>
 > {
   inputField: string;
   processFn: (val: TInput, after: DocumentSnapshot) => Promise<TOutput>;
@@ -46,7 +47,7 @@ export interface ProcessConfig<
   orderField?: string;
 }
 
-export const getChangeType = (change: Change) => {
+export const getChangeType = (change: FirestoreChange) => {
   if (!change.before || !change.before.exists) {
     return ChangeType.CREATE;
   }
@@ -56,11 +57,11 @@ export const getChangeType = (change: Change) => {
   return ChangeType.UPDATE;
 };
 
-export const isDelete = (change: Change) =>
+export const isDelete = (change: FirestoreChange) =>
   getChangeType(change) === ChangeType.DELETE;
 
-export const isUpdate = (change: Change) =>
+export const isUpdate = (change: FirestoreChange) =>
   getChangeType(change) === ChangeType.UPDATE;
 
-export const isCreate = (change: Change) =>
+export const isCreate = (change: FirestoreChange) =>
   getChangeType(change) === ChangeType.CREATE;

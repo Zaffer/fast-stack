@@ -1,6 +1,6 @@
 import { onDocumentCreated, onDocumentUpdated } from "firebase-functions/v2/firestore";
 import { FieldValue } from "firebase-admin/firestore";
-import { admin, db } from "./admin";
+import { admin, db } from "../admin";
 
 
 /**

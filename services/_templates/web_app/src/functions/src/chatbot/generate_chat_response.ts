@@ -1,8 +1,8 @@
 import config from './config';
-import {GenerateMessageOptions} from './types';
-import {fetchDiscussionOptions, fetchHistory} from './firestore';
-import {getGenerativeClient} from './generative-client';
-import {DocumentSnapshot} from 'firebase-functions/v1/firestore';
+import { GenerateMessageOptions } from './types';
+import { fetchHistory } from './firestore';
+import { getGenerativeClient } from './generative-client';
+import { DocumentSnapshot } from 'firebase-functions/v1/firestore';
 
 /**
  * Takes a prompt, calls the llm, returns the update object (with or without candidates accordingly).
@@ -22,10 +22,10 @@ export const generateChatResponse = async (
     safetySettings: config.safetySettings || [],
   };
 
-  if (config.enableDiscussionOptionOverrides) {
-    const discussionOptions = await fetchDiscussionOptions(ref);
-    requestOptions = {...requestOptions, ...discussionOptions};
-  }
+  // if (config.enableDiscussionOptionOverrides) {
+  //   const discussionOptions = await fetchDiscussionOptions(ref);
+  //   requestOptions = {...requestOptions, ...discussionOptions};
+  // }
 
   const discussionClient = getGenerativeClient();
   const result = await discussionClient.send(prompt, requestOptions);

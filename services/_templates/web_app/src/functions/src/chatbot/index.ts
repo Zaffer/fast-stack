@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import * as functions from 'firebase-functions';
+import { onDocumentWritten } from 'firebase-functions/v2/firestore';
 import config from './config';
-import {FirestoreOnWriteProcessor} from './firestore-onwrite-processor';
-import {generateChatResponse} from './generate_chat_response';
-import {createErrorMessage} from './errors';
+import { FirestoreOnWriteProcessor } from './firestore-onwrite-processor';
+import { generateChatResponse } from './generate_chat_response';
+import { createErrorMessage } from './errors';
 
 // TODO: needs logging/error logging, and fixing tests
 // logs.init(config);
@@ -34,8 +34,12 @@ const processor = new FirestoreOnWriteProcessor<
   Record<string, string | string[]>
 >(processorOptions);
 
-export const generateMessage = functions.firestore
-  .document(config.collectionName)
-  .onWrite(async change => {
-    return processor.run(change);
-  });
+
+export const generateMessage = onDocumentWritten(
+  config.collectionName,
+  async (event) => {
+    const snapshot = event.data;
+    if (!snapshot) return console.error(`no document at ${config.collectionName}`);
+    return processor.run(snapshot);
+  }
+);

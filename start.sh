@@ -9,7 +9,7 @@ set -e
 # docker compose up db-local -d ## Postgres local database
 # docker compose up pgadmin -d ## PGAdmin
 # docker compose up cloudsql -d ## CloudSQL Proxy
-env FAST_STACK_SERVICE=_templates/web_app docker compose up firebase -d ## Firebase Emulator Suite
+sh services/_tools/scripts/start.sh ## Firebase Emulator Suite
 
 
 ## MAIN APPLICATIONS ##

@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions/v1";
-import { db } from "./admin";
+import { db } from "../admin";
 
 interface User {
   uid: string;

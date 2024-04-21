@@ -1,7 +1,7 @@
-import {DiscussionClient, Message} from './base_class';
-import {GoogleGenerativeAI, InputContent} from '@google/generative-ai';
-import {logger} from 'firebase-functions/v1';
-import {SafetySetting} from '@google/generative-ai';
+import { DiscussionClient, Message } from './base_class';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logger } from 'firebase-functions/v1';
+import { SafetySetting } from '@google/generative-ai';
 
 interface GeminiChatOptions {
   history?: Message[];
@@ -35,7 +35,7 @@ export class GeminiDiscussionClient extends DiscussionClient<
   ApiMessage
 > {
   modelName: string;
-  constructor({apiKey, modelName}: {apiKey?: string; modelName: string}) {
+  constructor({ apiKey, modelName }: { apiKey?: string; modelName: string }) {
     super();
     if (!apiKey) {
       throw new Error('API key required.');
@@ -55,7 +55,7 @@ export class GeminiDiscussionClient extends DiscussionClient<
 
     return {
       role: apiRole,
-      parts: [{text: messageContent}],
+      parts: [{ text: messageContent }],
     };
   }
 
@@ -104,7 +104,7 @@ export class GeminiDiscussionClient extends DiscussionClient<
     return {
       response: text,
       candidates:
-        result.response.candidates?.map(c => c.content.parts[0].text ?? '') ??
+        result.response.candidates?.map((c) => c.content.parts[0].text ?? '') ??
         [],
       safetyMetadata: result.response.promptFeedback,
       history,
@@ -112,14 +112,14 @@ export class GeminiDiscussionClient extends DiscussionClient<
   }
 
   private messagesToApi(messages: Message[]) {
-    const out: InputContent[] = [];
+    const out = [];
     for (const message of messages) {
       if (!message.prompt || !message.response) {
         // logs.warnMissingPromptOrResponse(message.path!);
         continue;
       }
-      out.push({role: Role.USER, parts: [{text: message.prompt!}]});
-      out.push({role: Role.GEMINI, parts: [{text: message.response!}]});
+      out.push({ role: Role.USER, parts: [{ text: message.prompt! }] });
+      out.push({ role: Role.GEMINI, parts: [{ text: message.response! }] });
     }
     return out;
   }

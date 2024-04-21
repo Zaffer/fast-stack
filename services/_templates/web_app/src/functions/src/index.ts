@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
-import { setGlobalOptions } from "firebase-functions/v2";
+import { setGlobalOptions } from 'firebase-functions/v2';
 
-setGlobalOptions({ region: "europe-west2" });
+setGlobalOptions({ region: 'europe-west2' });
 
 export { helloWorld } from './helloWorld';
-export { triggerAuthUserCreate } from './trigger-auth';
-export { onSummaryCreated, onThemeFollowed, onNotificationsToggled } from './trigger-firestore';
-import {generateChatResponse} from './chatbot/generate_chat_response';
+export { triggerAuthUserCreate } from './triggers/trigger-auth';
+export {
+  onSummaryCreated,
+  onThemeFollowed,
+  onNotificationsToggled,
+} from './triggers/trigger-firestore';
+export { generateMessage } from './chatbot/index';
