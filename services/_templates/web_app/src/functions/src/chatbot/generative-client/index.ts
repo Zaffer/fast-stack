@@ -1,9 +1,9 @@
-import config, {GenerativeAIProvider} from '../config';
-import {DiscussionClient} from './base_class';
-import {GeminiDiscussionClient} from './google_ai';
-import {VertexDiscussionClient} from './vertex_ai';
-import {VertexAI} from '@google-cloud/vertexai';
-import {GoogleGenerativeAI} from '@google/generative-ai';
+import config, { GenerativeAIProvider } from '../config';
+import { DiscussionClient, Message } from './base_class';
+import { GeminiDiscussionClient } from './google_ai';
+import { VertexDiscussionClient } from './vertex_ai';
+import { VertexAI } from '@google-cloud/vertexai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import { AssistantsDiscussionClient } from './openai';
 import OpenAI from 'openai';
 

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import {SafetySetting as VertexSafetySetting} from '@google-cloud/vertexai';
+import { SafetySetting as VertexSafetySetting } from '@google-cloud/vertexai';
 
-import {SafetySetting as GoogleAISafetySetting} from '@google/generative-ai';
+import { SafetySetting as GoogleAISafetySetting } from '@google/generative-ai';
 
 export enum GenerativeAIProvider {
   OPENAI = 'openai',
@@ -45,6 +45,7 @@ export interface Config {
   responseField: string;
   orderField: string;
   enableDiscussionOptionOverrides: boolean;
+  enableThreadRetrieval: boolean;
   collectionName: string;
   temperature?: number;
   topP?: number;
@@ -89,9 +90,9 @@ export interface Config {
 
 const config: Config = {
   openai: {
-    namespace: "openai-chatbot",
-    apiKey: process.env.OPENAI_API_KEY || "",
-    model: process.env.MODEL || "gpt-4-turbo",
+    namespace: 'openai-chatbot',
+    apiKey: process.env.OPENAI_API_KEY || '',
+    model: process.env.MODEL || 'gpt-4-turbo',
   },
   vertex: {
     model: process.env.MODEL!,
@@ -104,30 +105,27 @@ const config: Config = {
   location: process.env.LOCATION!,
   projectId: process.env.PROJECT_ID!,
   instanceId: process.env.EXT_INSTANCE_ID!,
-  // user defined
-  collectionName:
-    process.env.COLLECTION_NAME ||
-    'users/{uid}/messages/{mid}',
+  collectionName: process.env.COLLECTION_NAME || 'users/{uid}/messages/{mid}',
   promptField: process.env.PROMPT_FIELD || 'prompt',
   responseField: process.env.RESPONSE_FIELD || 'response',
   orderField: process.env.ORDER_FIELD || 'createTime',
   enableDiscussionOptionOverrides:
     process.env.ENABLE_DISCUSSION_OPTION_OVERRIDES === 'yes',
+  enableThreadRetrieval: process.env.ENABLE_THREAD_RETRIEVAL === 'yes',
   temperature: process.env.TEMPERATURE
     ? parseFloat(process.env.TEMPERATURE)
     : undefined,
   topP: process.env.TOP_P ? parseFloat(process.env.TOP_P) : undefined,
   topK: process.env.TOP_K ? parseInt(process.env.TOP_K) : undefined,
+  maxOutputTokens: process.env.MAX_OUTPUT_TOKENS
+    ? parseInt(process.env.MAX_OUTPUT_TOKENS)
+    : undefined,
   candidateCount: process.env.CANDIDATE_COUNT
     ? parseInt(process.env.CANDIDATE_COUNT)
     : 1,
   candidatesField: process.env.CANDIDATES_FIELD || 'candidates',
   // safetySettings: getSafetySettings(),
-  provider:
-    (process.env.GENERATIVE_AI_PROVIDER as GenerativeAIProvider),
-  maxOutputTokens: process.env.MAX_OUTPUT_TOKENS
-    ? parseInt(process.env.MAX_OUTPUT_TOKENS)
-    : undefined,
+  provider: process.env.GENERATIVE_AI_PROVIDER as GenerativeAIProvider,
 };
 
 export default config;

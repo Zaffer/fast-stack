@@ -25,7 +25,7 @@ export async function fetchHistory(ref: DocumentReference) {
     }));
 }
 
-// NOT NEEDED
+// NOTE only needed for discussions
 // export async function fetchDiscussionOptions(
 //   ref: DocumentReference
 // ): Promise<GenerateMessageOptions> {
@@ -58,7 +58,7 @@ export async function fetchHistory(ref: DocumentReference) {
 //   return overrides;
 // }
 
-// NOT NEEDED
+// NOTE only needed for discussions
 // function validateExamples(examples: Record<string, unknown>[]): Message[] {
 //   if (!Array.isArray(examples)) {
 //     throw new Error('Invalid examples: ' + JSON.stringify(examples));

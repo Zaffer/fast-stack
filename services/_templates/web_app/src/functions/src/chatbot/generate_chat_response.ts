@@ -1,6 +1,6 @@
 import config from './config';
 import { GenerateMessageOptions } from './types';
-import { fetchHistory } from './firestore';
+// import { fetchHistory } from './firestore';
 import { getGenerativeClient } from './generative-client';
 import { DocumentSnapshot } from 'firebase-functions/v1/firestore';
 
@@ -12,16 +12,21 @@ export const generateChatResponse = async (
   prompt: string,
   after: DocumentSnapshot
 ) => {
-  const ref = after.ref;
-  const history = await fetchHistory(ref);
-
   let requestOptions: GenerateMessageOptions = {
-    history,
-    context: config.context,
-    maxOutputTokens: config.maxOutputTokens,
-    safetySettings: config.safetySettings || [],
+    // context: config.context,
+    // maxOutputTokens: config.maxOutputTokens,
+    // safetySettings: config.safetySettings || [],
   };
 
+  // NOTE not needed if using threads
+  // if (!config.enableThreadRetrieval) {
+  //   const ref = after.ref;
+  //   const history = await fetchHistory(ref);
+
+  //   requestOptions = { history };
+  // }
+
+  // NOTE not needed if not using discussions
   // if (config.enableDiscussionOptionOverrides) {
   //   const discussionOptions = await fetchDiscussionOptions(ref);
   //   requestOptions = {...requestOptions, ...discussionOptions};

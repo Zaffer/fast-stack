@@ -2,18 +2,75 @@ import OpenAI from 'openai';
 import { ChatResponse, DiscussionClient } from './base_class';
 import config from '../config';
 
-/**
- * Example of polling for a complete response from an assistant
- */
+interface AssistantChatOptions {
+  history?: Message[];
+  model: string;
+  temperature?: number;
+  candidateCount?: number;
+  topP?: number;
+  topK?: number;
+  maxOutputTokens?: number;
+  projectId: string;
+  location: string;
+  context?: string;
+  safetySettings: SafetySetting[];
+}
 
-const openai = new OpenAI({ apiKey: config.openai.apiKey });
+type ApiMessage = {
+  role: string;
+  parts: {
+    text: string;
+  }[];
+};
 
 export class AssistantsDiscussionClient extends DiscussionClient<
   OpenAI,
   any,
   any
 > {
+  constructor() {
+    super();
+    if (!config.openai.apiKey) {
+      throw new Error('API key required.');
+    }
+    if (!config.openai.model) {
+      throw new Error('Model name required.');
+    }
+    this.modelName = config.openai.model;
+    this.client = new OpenAI({ apiKey: config.openai.apiKey });
+  }
+
+  createThread() {
+    return this.client.beta.threads.create({
+      messages: [
+        {
+          role: 'user',
+          content:
+            '"I need to solve the equation `3x + 11 = 14`. Can you help me?"',
+        },
+      ],
+    });
+  }
+
+  createApiMessage(
+    messageContent: string,
+    role: 'user' | 'model' = 'user'
+  ): ApiMessage {
+    const apiRole = role === 'user' ? Role.USER : Role.GEMINI;
+    return {
+      role: ,
+      content: ,
+    };
+  }
+}
+
+export class _AssistantsDiscussionClient extends DiscussionClient<
+  OpenAI,
+  any,
+  any
+> {
   async _generateResponse() {
+    const openai = new OpenAI({ apiKey: config.openai.apiKey });
     const assistant = await openai.beta.assistants.create({
       model: 'gpt-4-turbo',
       name: 'Math Tutor',
