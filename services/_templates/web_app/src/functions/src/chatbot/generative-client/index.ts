@@ -1,5 +1,5 @@
 import config, { GenerativeAIProvider } from '../config';
-import { DiscussionClient, Message } from './base_class';
+import { DiscussionClient } from './base_class';
 import { GeminiDiscussionClient } from './google_ai';
 import { VertexDiscussionClient } from './vertex_ai';
 import { VertexAI } from '@google-cloud/vertexai';

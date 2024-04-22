@@ -16,11 +16,12 @@
 
 import { setGlobalOptions } from 'firebase-functions/v2';
 
-setGlobalOptions({ region: 'europe-west2' });
+setGlobalOptions({ region: 'northamerica-northeast1' });
 
 export { helloWorld } from './helloWorld';
 export { triggerAuthUserCreate } from './triggers/trigger-auth';
 export {
+  onUserCreated,
   onSummaryCreated,
   onThemeFollowed,
   onNotificationsToggled,

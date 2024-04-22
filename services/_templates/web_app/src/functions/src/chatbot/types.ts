@@ -16,6 +16,7 @@
 
 import {SafetySetting as VertexSafetySetting} from '@google-cloud/vertexai';
 import {SafetySetting as GoogleAISafetySetting} from '@google/generative-ai';
+import { firestore } from 'firebase-admin';
 
 // our own types
 
@@ -23,6 +24,11 @@ export interface Message {
   path?: string;
   prompt?: string;
   response?: string;
+}
+
+export interface FirestoreThread {
+    threadId: string;
+    createdAt?: firestore.Timestamp;
 }
 
 export interface DiscussionOptions {
