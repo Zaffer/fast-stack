@@ -25,6 +25,12 @@ type ApiMessage = {
   content: string;
 };
 
+// TODO http functiong from frontend to create prompt message
+// prompt message sent to openai and added to exsiting thread
+// on success create prompt message in firestore
+// new prompt message will trigger this function to generate response
+// generation of response will just run the thread 
+// with response attached to last prompted message
 export class AssistantsDiscussionClient extends DiscussionClient<
   OpenAI,
   any,

@@ -105,7 +105,7 @@ const config: Config = {
   location: process.env.LOCATION!,
   projectId: process.env.PROJECT_ID!,
   instanceId: process.env.EXT_INSTANCE_ID!,
-  collectionName: process.env.COLLECTION_NAME || 'users/{uid}/messages/{mid}',
+  collectionName: process.env.COLLECTION_NAME || 'users/{uid}/threads/{tid}/messages/{mid}',
   promptField: process.env.PROMPT_FIELD || 'prompt',
   responseField: process.env.RESPONSE_FIELD || 'response',
   orderField: process.env.ORDER_FIELD || 'createTime',
