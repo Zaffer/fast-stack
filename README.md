@@ -178,6 +178,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1. Node
    - install nvm (https://github.com/nvm-sh/nvm)
      - `nvm install --lts`
+     - `nvm use --lts`
 
    - global Angular CLI's:
      - `npm install -g @angular/cli`
@@ -188,7 +189,6 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1. Yarn
     - Install Yarn: https://yarnpkg.com/getting-started/install
       - `corepack enable`
-
 
     - Project setup:
       - cd into the app folder
