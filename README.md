@@ -326,7 +326,7 @@ sh scripts/deploy-prod.sh
 ```
 
 
-# COMMANDS
+# COMMAND ALMANAC
 
 ## Docker
 > bring container down
@@ -420,6 +420,12 @@ Options for generating componets
 ng g c manage-users-layout --style none --skip-tests --flat --skip-import --dry-run
 ```
 
+## Yarn
+
+Upgrade all packages in repo at once
+```sh
+yarn upgrade-interactive --latest
+```
 
 
 
@@ -440,12 +446,11 @@ android
 post android build:
 > copy `google-services.json` from firebase to `/android/app/`
 
+Generate modules, pages, components, and services (add `--dry-run` to test first):
 `ionic generate module things --routing --dry-run`
-`ionic generate module things --routing`
-
 `ionic generate page /pages/thing --module=things`
-
 `ionic generate compenent /components/thing`
+`ionic generate service api/user`
 
 
 

@@ -4,6 +4,9 @@ set -e
 ## START SCRIPT COLLECTION ##
 # comment out and uncomment each line as needed
 
+## CLEAR CONTAINERS ##
+# docker compose down ## clear all containers
+
 
 ## DEVELOPMENT TOOLS ##
 # docker compose up db-local -d ## Postgres local database
@@ -17,8 +20,8 @@ set -e
 
 
 ## WEB APP ##
-# sh services/_templates/web_app/scripts/start-dev.sh ## user app frontend
-sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
+sh services/_templates/web_app/scripts/start-dev.sh ## user app frontend
+# sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
 
 
 ## LOGS ##

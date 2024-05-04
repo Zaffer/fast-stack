@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title size="large">Chat Page</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    @for (message of messages; track message) {
+    <ion-item>
+      <ion-label>{{ message.content }}</ion-label>
+    </ion-item>
+    }
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="9">
+        <ion-input
+          placeholder="Type your message..."
+          [(ngModel)]="userMessage"
+        ></ion-input>
+      </ion-col>
+      <ion-col size="3">
+        <ion-button expand="block" (click)="sendMessage()">Send</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

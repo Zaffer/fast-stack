@@ -2,6 +2,8 @@
 
 set -e
 
+## this script is for building the API for the web app ##
+
 # define which api to build
 api="news"
 

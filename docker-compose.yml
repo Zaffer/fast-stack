@@ -13,6 +13,8 @@ services:
     volumes:
       - ./services/_templates/web_admin/src:/home/node/app
     command: "yarn start --host 0.0.0.0"
+    # tty: true
+
 
   web_app: # Angular Ionic frontend for user-facing cross-platform progresive web app
     container_name: web_app_container
@@ -23,9 +25,9 @@ services:
     ports:
       - 8100:8100
     volumes:
-      - ./services/_templates/web_app/app:/home/node/app
+      - ./services/_templates/web_app/src:/home/node/app
     command: ionic serve --external
-    # command: sh -c "while true; do sleep 1; done"
+    # tty: true
 
 
   # TEMPORARY
