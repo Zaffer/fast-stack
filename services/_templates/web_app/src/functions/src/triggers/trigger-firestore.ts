@@ -21,7 +21,7 @@ export const onUserCreated = onDocumentCreated('users/{uid}', async (event) => {
   try {
     // create thread on OpenAI
     const thread = await openai.beta.threads.create();
-    console.log('🧵✅ created thread on OpenAI: ', thread);
+    console.log('🧵🤖✅ created thread on OpenAI: ', thread);
 
     // create thread document in Firestore
     await snapshot.ref

@@ -17,6 +17,6 @@ export interface Status {
  */
 export interface Messages {
   prompt: string;
-  createTime: Timestamp;
-  status: Status;
+  createTime?: Timestamp | undefined;
+  status?: Status | undefined;
 }
