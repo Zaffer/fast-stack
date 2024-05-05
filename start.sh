@@ -21,7 +21,7 @@ set -e
 
 ## WEB APP ##
 sh services/_templates/web_app/scripts/start-dev.sh ## user app frontend
-# sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
+sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
 
 
 ## LOGS ##
