@@ -29,6 +29,7 @@ export interface Config {
     namespace: string;
     apiKey: string;
     model: string;
+    assistantId: string;
   };
   vertex: {
     model: string;
@@ -93,6 +94,7 @@ const config: Config = {
     namespace: 'openai-chatbot',
     apiKey: process.env.OPENAI_API_KEY || '',
     model: process.env.MODEL || 'gpt-4-turbo',
+    assistantId: process.env.OPENAI_ASSISTANT_ID || '',
   },
   vertex: {
     model: process.env.MODEL!,

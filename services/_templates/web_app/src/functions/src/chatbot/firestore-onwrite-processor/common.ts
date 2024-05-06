@@ -1,6 +1,12 @@
 import { Change } from 'firebase-functions/v2';
-import { DocumentSnapshot } from 'firebase-functions/v2/firestore';
-import { FieldValue, GeoPoint, Timestamp } from 'firebase-admin/firestore';
+import { DocumentSnapshot } from 'firebase-admin/firestore';
+import {
+  DocumentData,
+  FieldValue,
+  GeoPoint,
+  Timestamp,
+} from 'firebase-admin/firestore';
+import { FirestoreEvent } from 'firebase-functions/v2/firestore';
 
 export type FirestoreChange = Change<DocumentSnapshot>;
 
@@ -41,7 +47,13 @@ export interface ProcessConfig<
   TOutput extends Record<string, FirestoreField>
 > {
   inputField: string;
-  processFn: (val: TInput, after: DocumentSnapshot) => Promise<TOutput>;
+  processFn: (
+    val: TInput,
+    event: FirestoreEvent<
+      Change<DocumentSnapshot<DocumentData>> | undefined,
+      Record<string, string>
+    >
+  ) => Promise<TOutput>;
   errorFn: (e: unknown) => string;
   statusField?: string;
   orderField?: string;

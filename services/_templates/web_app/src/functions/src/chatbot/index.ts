@@ -34,12 +34,10 @@ const processor = new FirestoreOnWriteProcessor<
   Record<string, string | string[]>
 >(processorOptions);
 
-
 export const generateMessage = onDocumentWritten(
   config.collectionName,
   async (event) => {
-    const snapshot = event.data;
-    if (!snapshot) return console.error(`no document at ${config.collectionName}`);
-    return processor.run(snapshot);
+    if (!event) return console.error(`no document at ${config.collectionName}`);
+    return processor.run(event);
   }
 );

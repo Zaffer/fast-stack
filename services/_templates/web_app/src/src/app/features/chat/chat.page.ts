@@ -91,13 +91,13 @@ export class ChatPage implements OnInit {
   }
 
   // TODO remove this
-  async fetchAllUsers() {
-    const usersCol = collection(this.firestore, 'users');
-    const snapshot = await getDocs(usersCol);
-    snapshot.forEach((doc) => {
-      console.log(doc.id, ' => ', doc.data());
-    });
-  }
+  // async fetchAllUsers() {
+  //   const usersCol = collection(this.firestore, 'users');
+  //   const snapshot = await getDocs(usersCol);
+  //   snapshot.forEach((doc) => {
+  //     console.log(doc.id, ' => ', doc.data());
+  //   });
+  // }
 
   sendMessage() {
     if (this.userMessage.trim().length > 0) {
@@ -111,7 +111,6 @@ export class ChatPage implements OnInit {
 
       addDoc(messagesCol, newMessage).then((docRef: DocumentReference) => {
         console.log("Message added with ID: ", docRef.id);
-        console.log("Message added: ", docRef);
       }).catch(error => {
         console.error("Error adding message: ", error);
       });

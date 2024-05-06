@@ -1,4 +1,4 @@
-import { Change } from 'firebase-functions/v2/firestore';
+import { Change, FirestoreEvent } from 'firebase-functions/v2/firestore';
 import {
   FirestoreChange,
   State,
@@ -8,14 +8,20 @@ import {
   now,
   FirestoreField,
 } from './common';
-import { DocumentSnapshot } from 'firebase-admin/firestore';
+import { DocumentData, DocumentSnapshot } from 'firebase-admin/firestore';
 
 export class FirestoreOnWriteProcessor<
   TInput,
   TOutput extends Record<string, FirestoreField>
 > {
   inputField: string;
-  processFn: (val: TInput, after: DocumentSnapshot) => Promise<TOutput>;
+  processFn: (
+    val: TInput,
+    event: FirestoreEvent<
+      Change<DocumentSnapshot<DocumentData>> | undefined,
+      Record<string, string>
+    >
+  ) => Promise<TOutput>;
   statusField: string;
   processUpdates: boolean;
   orderField: string;
@@ -107,28 +113,36 @@ export class FirestoreOnWriteProcessor<
     });
   }
 
-  async run(event: Change<DocumentSnapshot>): Promise<void> {
-    console.log('message document written');
+  async run(
+    event: FirestoreEvent<
+      Change<DocumentSnapshot<DocumentData>> | undefined,
+      Record<string, string>
+    >
+  ): Promise<void> {
+    if (!event) return console.error('no event data');
 
-    const changeType = getChangeType(event);
+    const data = event.data;
+    if (!data) return console.error('no document data');
+
+    const changeType = getChangeType(data);
     if (changeType === ChangeType.DELETE) return;
 
     // Initialize or get the status
-    const state: State = event.after.get(this.statusField)?.state;
+    const state: State = data.after.get(this.statusField)?.state;
 
-    if (!this.shouldProcess(event, changeType, state)) {
+    if (!this.shouldProcess(data, changeType, state)) {
       return;
     }
 
-    await this.writeStartEvent(event);
+    await this.writeStartEvent(data);
 
     try {
-      const input = this.getLatestInputValue(event);
-      const output = await this.processFn(input, event.after);
-      await this.writeCompletionEvent(event, output);
+      const input = this.getLatestInputValue(data);
+      const output = await this.processFn(input, event);
+      await this.writeCompletionEvent(data, output);
     } catch (e) {
       console.log('message processing error', e);
-      await this.writeErrorEvent(event, e);
+      await this.writeErrorEvent(data, e);
     }
   }
 }

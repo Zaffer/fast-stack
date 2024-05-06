@@ -1,63 +1,32 @@
 import OpenAI from 'openai';
-import { ChatResponse, DiscussionClient } from './base_class';
+import { ChatResponse } from './base_class';
 import config from '../config';
+import {
+  MessageDelta,
+  TextContentBlock,
+  TextDelta,
+} from 'openai/resources/beta/threads/messages';
+import { DocumentData, DocumentSnapshot } from 'firebase-admin/firestore';
+import { Change, FirestoreEvent } from 'firebase-functions/v2/firestore';
 
-// interface AssistantChatOptions {
-//   model: string;
-//   temperature?: number;
-//   candidateCount?: number;
-//   topP?: number;
-//   topK?: number;
-//   maxOutputTokens?: number;
-//   projectId: string;
-//   location: string;
-//   context?: string;
-//   safetySettings: SafetySetting[];
-// }
+export class AssistantsDiscussionClient {
+  openai: OpenAI;
 
-enum Role {
-  USER = 'user',
-  ASSISTANT = 'assistant',
-}
-
-type ApiMessage = {
-  role: string;
-  content: string;
-};
-
-// TODO http functiong from frontend to create prompt message
-// prompt message sent to openai and added to exsiting thread
-// on success create prompt message in firestore
-// new prompt message will trigger this function to generate response
-// generation of response will just run the thread 
-// with response attached to last prompted message
-export class AssistantsDiscussionClient extends DiscussionClient<
-  OpenAI,
-  any,
-  any
-> {
   constructor() {
-    super();
+    // super();
     if (!config.openai.apiKey) {
       throw new Error('API key required.');
     }
     if (!config.openai.model) {
       throw new Error('Model name required.');
     }
-    this.modelName = config.openai.model;
-    this.client = new OpenAI({ apiKey: config.openai.apiKey });
+    // this.modelName = config.openai.model;
+    this.openai = new OpenAI({ apiKey: config.openai.apiKey });
   }
 
-  // send(messageContent: string, options: any): Promise<ChatResponse> {
-  //   // options has thread ID.
-
-  //   console.log('Sending message: ' + messageContent);
-  //   console.log('Options: ' + JSON.stringify(options));
-  //   return this.generateResponse();
-  // }
-
+  // creates a thread on OpenAI to attach messages to
   async createThread() {
-    const thread = await this.client.beta.threads.create({
+    const thread = await this.openai.beta.threads.create({
       messages: [
         {
           role: 'user',
@@ -66,78 +35,88 @@ export class AssistantsDiscussionClient extends DiscussionClient<
         },
       ],
     });
-    
+
     return thread;
   }
 
-  createApiMessage(
+  // creats a message on the thread and runs the assistant for a response
+  async send(
     messageContent: string,
-    role: 'user' | 'model' = 'user'
-  ): ApiMessage {
-    const apiRole = role === 'user' ? Role.USER : Role.ASSISTANT;
-    return {
-      role: apiRole,
-      content: messageContent,
-    };
-  }
-}
+    event: FirestoreEvent<
+      Change<DocumentSnapshot<DocumentData>> | undefined,
+      Record<string, string>
+    >
+  ): Promise<ChatResponse> {
+    if (!this.openai) {
+      throw new Error('client not initialized.');
+    }
 
-export class _AssistantsDiscussionClient extends DiscussionClient<
-  OpenAI,
-  any,
-  any
-> {
-  async _generateResponse() {
-    const openai = new OpenAI({ apiKey: config.openai.apiKey });
-    const assistant = await openai.beta.assistants.create({
-      model: 'gpt-4-turbo',
-      name: 'Math Tutor',
-      instructions:
-        'You are a personal math tutor. Write and run code to answer math questions.',
-      // tools = [],
-    });
+    if (!event) {
+      console.log('message data:', event);
+      throw new Error('document does not exist');
+    }
 
-    let assistantId = assistant.id;
-    console.log('Created Assistant with Id: ' + assistantId);
+    // create message on OpenAI thread
+    const message = await this.openai.beta.threads.messages.create(
+      event.params.tid,
+      {
+        role: 'user',
+        content: messageContent,
+      }
+    );
+    console.log('created message: ' + message);
 
-    const thread = await openai.beta.threads.create({
-      messages: [
-        {
-          role: 'user',
-          content:
-            '"I need to solve the equation `3x + 11 = 14`. Can you help me?"',
-        },
-      ],
-    });
+    let response = '';
+    const run = this.openai.beta.threads.runs
+      .stream(event.params.tid, {
+        assistant_id: config.openai.assistantId,
+      })
+      .on('runStepCreated', (step) => console.log('runStepCreated: ', step))
+      .on('textDelta', (delta: TextDelta, snapshot) => {
+        // console.log('textDelta delta: ', delta);
+        console.log('textDelta snapshot: ', snapshot);
+        // stream message deltas to Firestore response field here
+      })
+      .on('messageDone', (message) => {
+        console.log('messageDone: ', message)
+        // TODO get the actual final response message properly here.
+        // example output:
+        // messageDone:  {
+        //   firebase_container  | >    id: 'msg_123',
+        //   firebase_container  | >    object: 'thread.message',
+        //   firebase_container  | >    created_at: 1714979258,
+        //   firebase_container  | >    assistant_id: 'asst_132',
+        //   firebase_container  | >    thread_id: 'thread_123',
+        //   firebase_container  | >    run_id: 'run_123',
+        //   firebase_container  | >    status: 'completed',
+        //   firebase_container  | >    incomplete_details: null,
+        //   firebase_container  | >    incomplete_at: null,
+        //   firebase_container  | >    completed_at: 11111,
+        //   firebase_container  | >    role: 'assistant',
+        //   firebase_container  | >    content: [ { type: 'text', text: [Object] } ],
+        //   firebase_container  | >    attachments: [],
+        //   firebase_container  | >    metadata: {}
+        //   firebase_container  | >  }
+        response = (message.content[-1] as TextContentBlock).text.value;
+      }
+    )
+      .on('end', () => console.log('end'))
+      .on('error', (error) => console.log(error));
 
-    let threadId = thread.id;
-    console.log('Created thread with Id: ' + threadId);
+    const result = await run.finalRun();
+    console.log('run finished with status: ' + result.status);
 
-    const run = await openai.beta.threads.runs.createAndPoll(thread.id, {
-      assistant_id: assistantId,
-      additional_instructions:
-        'Please address the user as Jane Doe. The user has a premium account.',
-    });
-
-    console.log('Run finished with status: ' + run.status);
-
-    if (run.status == 'completed') {
-      const messages = await openai.beta.threads.messages.list(thread.id);
+    if (result.status == 'completed') {
+      const messages = await this.openai.beta.threads.messages.list(
+        event.params.tid
+      );
       for (const message of messages.getPaginatedItems()) {
         console.log(message);
       }
     }
 
     return {
-      response: 'Success',
-      candidates: [],
-      history: [],
+      response: response,
     };
-  }
-
-  async send(messageContent: string, options: any): Promise<ChatResponse> {
-    console.log('Sending message: ' + messageContent);
-    console.log('Options: ' + JSON.stringify(options));
-    return await this._generateResponse();
   }
 }
