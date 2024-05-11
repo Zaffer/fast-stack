@@ -2,12 +2,15 @@ import OpenAI from 'openai';
 import { ChatResponse } from './base_class';
 import config from '../config';
 import {
-  MessageDelta,
+  Message,
+  Text,
+  // MessageDelta,
   TextContentBlock,
   TextDelta,
 } from 'openai/resources/beta/threads/messages';
 import { DocumentData, DocumentSnapshot } from 'firebase-admin/firestore';
 import { Change, FirestoreEvent } from 'firebase-functions/v2/firestore';
+import { FirestoreField } from '../firestore-onwrite-processor/common';
 
 export class AssistantsDiscussionClient {
   openai: OpenAI;
@@ -47,14 +50,14 @@ export class AssistantsDiscussionClient {
       Record<string, string>
     >
   ): Promise<ChatResponse> {
-    if (!this.openai) {
+    if (!this.openai)
       throw new Error('client not initialized.');
-    }
 
-    if (!event) {
-      console.log('message data:', event);
-      throw new Error('document does not exist');
-    }
+    if (!event)
+      throw new Error('event does not exist');
+
+    if (!event.data)
+      throw new Error('event data does not exist');
 
     // create message on OpenAI thread
     const message = await this.openai.beta.threads.messages.create(
@@ -64,42 +67,34 @@ export class AssistantsDiscussionClient {
         content: messageContent,
       }
     );
-    console.log('created message: ' + message);
 
-    let response = '';
+    // update Firestore message document with OpenAI message ID
+    event.data.after.ref.update({
+      msg_id: message.id,
+    });
+    console.log('created message OpenAI with ID: ' + message.id);
+
+    // run assistant on OpenAI thread
+    let response = undefined;
     const run = this.openai.beta.threads.runs
       .stream(event.params.tid, {
         assistant_id: config.openai.assistantId,
       })
       .on('runStepCreated', (step) => console.log('runStepCreated: ', step))
-      .on('textDelta', (delta: TextDelta, snapshot) => {
-        // console.log('textDelta delta: ', delta);
-        console.log('textDelta snapshot: ', snapshot);
-        // stream message deltas to Firestore response field here
+      .on('textDelta', (delta: TextDelta, snapshot: Text) => {
+        console.log('textDelta snapshot: ', snapshot.value);
+        event.data?.after.ref.update({
+          response: snapshot.value,
+        } as Record<string, FirestoreField>);
       })
-      .on('messageDone', (message) => {
-        console.log('messageDone: ', message)
-        // TODO get the actual final response message properly here.
-        // example output:
-        // messageDone:  {
-        //   firebase_container  | >    id: 'msg_123',
-        //   firebase_container  | >    object: 'thread.message',
-        //   firebase_container  | >    created_at: 1714979258,
-        //   firebase_container  | >    assistant_id: 'asst_132',
-        //   firebase_container  | >    thread_id: 'thread_123',
-        //   firebase_container  | >    run_id: 'run_123',
-        //   firebase_container  | >    status: 'completed',
-        //   firebase_container  | >    incomplete_details: null,
-        //   firebase_container  | >    incomplete_at: null,
-        //   firebase_container  | >    completed_at: 11111,
-        //   firebase_container  | >    role: 'assistant',
-        //   firebase_container  | >    content: [ { type: 'text', text: [Object] } ],
-        //   firebase_container  | >    attachments: [],
-        //   firebase_container  | >    metadata: {}
-        //   firebase_container  | >  }
+      .on('messageDone', (message: Message) => {
+        console.log('messageDone message: ', message)
         response = (message.content[-1] as TextContentBlock).text.value;
-      }
-    )
+        event.data?.after.ref.update({
+          response: response,
+        } as Record<string, FirestoreField>);
+
+      })
       .on('end', () => console.log('end'))
       .on('error', (error) => console.log(error));
 

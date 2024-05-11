@@ -1,39 +1,39 @@
-name: MASTER CI/CD
+# name: MASTER CI/CD
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  test:
-    name: Test
-    permissions:
-      contents: 'read'
-      id-token: 'write'
+# jobs:
+#   test:
+#     name: Test
+#     permissions:
+#       contents: 'read'
+#       id-token: 'write'
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Google Auth
-        id: auth
-        uses: 'google-github-actions/auth@v1'
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
-          service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
+#       - name: Google Auth
+#         id: auth
+#         uses: 'google-github-actions/auth@v1'
+#         with:
+#           token_format: 'access_token'
+#           workload_identity_provider: '${{ secrets.GCP_WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+#           service_account: '${{ secrets.GCP_WIF_SERVICE_ACCOUNT }}' # e.g. - my-service-account@my-project.iam.gserviceaccount.com
 
-      - name: Start
-        env:
-          GOOGLE_CLOUD_PROJECT: '${{ steps.auth.outputs.project_id }}'
-          GOOGLE_APPLICATION_CREDENTIALS: '${{ steps.auth.outputs.credentials_file_path }}'
-          ENVIRONMENT: test
-        run: docker compose up api
+#       - name: Start
+#         env:
+#           GOOGLE_CLOUD_PROJECT: '${{ steps.auth.outputs.project_id }}'
+#           GOOGLE_APPLICATION_CREDENTIALS: '${{ steps.auth.outputs.credentials_file_path }}'
+#           ENVIRONMENT: test
+#         run: docker compose up api
 
-      - name: Test
-        run: echo "THIS IS WHERE PYTEST SHOULD BE CALLED"
+#       - name: Test
+#         run: echo "THIS IS WHERE PYTEST SHOULD BE CALLED"
 
 
 

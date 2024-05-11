@@ -5,4 +5,5 @@ import { Messages } from './messages';
  */
 export interface Threads {
   messages: Messages[];
+  thread_id?: string;
 }

@@ -36,13 +36,16 @@ export class FirestoreOnWriteProcessor<
     this.errorFn = options.errorFn;
   }
 
+  // determin if the document should be processed
   private shouldProcess(
     change: FirestoreChange,
-    changeType: ChangeType,
-    state: State
   ) {
-    const newValue = this.getLatestInputValue(change);
-    const oldValue = this.getPreviousInputValue(change);
+    const changeType = getChangeType(change);
+    if (changeType === ChangeType.DELETE) return;
+
+    const state: State = change.after.get(this.statusField)?.state;
+    const newValue = change.after.get(this.inputField);
+    const oldValue = change.before.get(this.inputField);
 
     const hasChanged =
       changeType === ChangeType.CREATE ||
@@ -61,13 +64,7 @@ export class FirestoreOnWriteProcessor<
     return true;
   }
 
-  private getLatestInputValue(change: FirestoreChange) {
-    return change.after?.get(this.inputField);
-  }
-  private getPreviousInputValue(change: FirestoreChange) {
-    return change.before?.get(this.inputField);
-  }
-
+  // write the start event to the document
   private async writeStartEvent(change: FirestoreChange) {
     const createTime = change.after.createTime!;
     const updateTime = now();
@@ -87,6 +84,7 @@ export class FirestoreOnWriteProcessor<
     await change.after.ref.update(update);
   }
 
+  // write the completion event to the document
   private async writeCompletionEvent(change: FirestoreChange, output: TOutput) {
     const updateTime = now();
     const stateField = `${this.statusField}.state`;
@@ -100,6 +98,7 @@ export class FirestoreOnWriteProcessor<
     });
   }
 
+  // write the error event to the document
   private async writeErrorEvent(change: FirestoreChange, e: unknown) {
     const eventTimestamp = now();
 
@@ -120,29 +119,21 @@ export class FirestoreOnWriteProcessor<
     >
   ): Promise<void> {
     if (!event) return console.error('no event data');
+    if (!event.data) return console.error('no document event.data');
 
-    const data = event.data;
-    if (!data) return console.error('no document data');
-
-    const changeType = getChangeType(data);
-    if (changeType === ChangeType.DELETE) return;
-
-    // Initialize or get the status
-    const state: State = data.after.get(this.statusField)?.state;
-
-    if (!this.shouldProcess(data, changeType, state)) {
+    if (!this.shouldProcess(event.data)) {
       return;
     }
 
-    await this.writeStartEvent(data);
+    await this.writeStartEvent(event.data);
 
     try {
-      const input = this.getLatestInputValue(data);
+      const input = event.data.after?.get(this.inputField);
       const output = await this.processFn(input, event);
-      await this.writeCompletionEvent(data, output);
+      await this.writeCompletionEvent(event.data, output);
     } catch (e) {
-      console.log('message processing error', e);
-      await this.writeErrorEvent(data, e);
+      console.log('message processing error: ', e);
+      await this.writeErrorEvent(event.data, e);
     }
   }
 }

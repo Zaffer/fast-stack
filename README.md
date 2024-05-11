@@ -200,6 +200,9 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       - `yarn set version stable`
       - `yarn install`
 
+    - Angular compatability:
+      - add `nodeLinker: node-modules` to .yarnrc.yml
+
 
 1. Angular
 

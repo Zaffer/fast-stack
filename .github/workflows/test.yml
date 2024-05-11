@@ -1,16 +1,16 @@
 # name: Test Yaml File
 
-on:
-  push:
-    branches:
-      - test_CI_CD
+# on:
+#   push:
+#     branches:
+#       - test_CI_CD
 
-jobs:
-  skip:
-    if: true
-    steps:
-      - name: skip
-        uses: actions/checkout@v2
+# jobs:
+#   skip:
+#     if: true
+#     steps:
+#       - name: skip
+#         uses: actions/checkout@v2
   
 
 #   test:
