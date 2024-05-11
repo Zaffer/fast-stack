@@ -174,6 +174,11 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     - Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper): 
       - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
 
+    - Default settings:
+    `glcoud confing list`
+    `gcloud config set compute/region europe-west-1`
+    `gcloud config unset compute/region`
+
 
 1. Node
    - install nvm (https://github.com/nvm-sh/nvm)
@@ -278,6 +283,12 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 # SCRIPTS
 
+## Start
+Customise and run start.sh to bring all the services you want to develop on:
+```sh
+sh start.sh
+```
+
 ## Develop 
 > run the containers for local development
 ```
@@ -327,6 +338,14 @@ sh scripts/deploy-prod.sh
 
 
 # COMMAND ALMANAC
+
+## Linux
+Update and upgrade Ubuntu packages
+```sh
+apt-get -y update
+&& apt-get -y upgrade
+&& apt-get clean
+```
 
 ## Docker
 > bring container down
