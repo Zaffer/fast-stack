@@ -15,9 +15,10 @@ export interface Status {
 /**
  * Mesages document model, this is collection of messages for within each Thread.
  */
-export interface Messages {
-  prompt: string;
+export interface Message {
   msg_id?: string;
+  prompt?: string;
+  response?: string;
   createTime?: Timestamp | undefined;
   status?: Status | undefined;
 }

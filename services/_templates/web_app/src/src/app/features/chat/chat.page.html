@@ -7,9 +7,45 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     @for (message of messages; track message) {
-    <ion-item>
-      <ion-label>{{ message.content }}</ion-label>
-    </ion-item>
+      <ion-item style="text-align: right;">
+        <ion-label>
+          {{ message.prompt }}
+        </ion-label>
+          <ion-note slot="end">
+            <p>👤</p>
+          </ion-note>
+      </ion-item>
+      @if (message.response) {
+        <ion-item style="text-align: left;">
+          <ion-note slot="start">
+            <p>🤖</p>
+          </ion-note>
+          <ion-label>
+            {{ message.response }}
+          </ion-label>
+        </ion-item>
+      }
+    }
+    <!-- TODO: fix if statement to check for empty object -->
+    @if (currentMessage) {
+      <ion-item style="text-align: right;">
+        <ion-label>
+          {{ currentMessage.prompt }}
+        </ion-label>
+          <ion-note slot="end">
+            <p>👤</p>
+          </ion-note>
+      </ion-item>
+      @if (currentMessage.response) {
+        <ion-item style="text-align: left;">
+          <ion-note slot="start">
+            <p class="robot-thinking">🤖</p>
+          </ion-note>
+          <ion-label>
+            {{ currentMessage.response }}
+          </ion-label>
+        </ion-item>
+      }
     }
   </ion-list>
 </ion-content>
@@ -18,10 +54,14 @@
   <ion-toolbar>
     <ion-row>
       <ion-col size="9">
-        <ion-input
-          placeholder="Type your message..."
-          [(ngModel)]="userMessage"
-        ></ion-input>
+        @if (processing) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          <ion-input
+            placeholder="Type your message..."
+            [(ngModel)]="userInput"
+          ></ion-input>
+        }
       </ion-col>
       <ion-col size="3">
         <ion-button expand="block" (click)="sendMessage()">Send</ion-button>

@@ -88,30 +88,26 @@ export class AssistantsDiscussionClient {
         } as Record<string, FirestoreField>);
       })
       .on('messageDone', (message: Message) => {
-        console.log('messageDone message: ', message)
-        response = (message.content[-1] as TextContentBlock).text.value;
+        response = (message.content[0] as TextContentBlock).text.value;
+        console.log('messageDone text: ', response)
         event.data?.after.ref.update({
           response: response,
         } as Record<string, FirestoreField>);
-
       })
       .on('end', () => console.log('end'))
       .on('error', (error) => console.log(error));
 
     const result = await run.finalRun();
-    console.log('run finished with status: ' + result.status);
+    console.log('run finalised with status: ' + result.status);
 
-    if (result.status == 'completed') {
-      const messages = await this.openai.beta.threads.messages.list(
-        event.params.tid
-      );
-      for (const message of messages.getPaginatedItems()) {
-        console.log(message);
+    if (result.status == 'completed' && response) {
+      return {
+        response: response,
+      };
+    } else {
+      return {
+        response: 'Sorry, there appearst to be an issue. Please inform support.'
       }
     }
-
-    return {
-      response: response,
-    };
   }
 }

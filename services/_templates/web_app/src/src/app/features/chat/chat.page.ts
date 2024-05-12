@@ -10,8 +10,12 @@ import {
   serverTimestamp,
   doc,
   getDocs,
+  docData,
+  query,
+  orderBy,
+  onSnapshot,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import {
   IonHeader,
   IonToolbar,
@@ -25,17 +29,11 @@ import {
   IonButton,
   IonRow,
   IonCol,
+  IonSpinner,
+  IonNote
 } from '@ionic/angular/standalone';
 import { Users } from 'src/app/core/models/users';
-import { Messages } from 'src/app/core/models/messages';
-
-interface Message {
-  content: string;
-  sender: string; // 'user' or 'bot'
-}
-interface Item {
-  name: string;
-}
+import { Message, State } from 'src/app/core/models/messages';
 
 @Component({
   selector: 'app-chat',
@@ -56,18 +54,23 @@ interface Item {
     IonButton,
     IonRow,
     IonCol,
+    IonSpinner,
+    IonNote,
   ],
 })
 export class ChatPage implements OnInit {
   // TODO send message on enter key press
+  // TODO style messages with markdown
 
   private firestore: Firestore = inject(Firestore);
   // messages$: Observable<Messages[]>;
-  usersCol: CollectionReference | undefined;
-  usersDoc: DocumentReference | undefined;
+  private usersCol: CollectionReference | undefined;
+  private usersDoc: DocumentReference | undefined;
 
-  public messages: Message[] = [];
-  public userMessage = '';
+  messages: Message[] = [];
+  currentMessage: Message = {};
+  userInput = '';
+  processing = false;
 
   constructor() {
     // // Create the user document
@@ -88,6 +91,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     // this.fetchAllUsers();
+    console.log(this.currentMessage);
   }
 
   // TODO remove this
@@ -100,23 +104,37 @@ export class ChatPage implements OnInit {
   // }
 
   sendMessage() {
-    if (this.userMessage.trim().length > 0) {
-      const messagesCol = collection(this.firestore, 'users/', '1ZrStjcBlXcpDLv9xxZy', 'threads', 'thread_NWvCaojlpjWlDI9uebgGsoD7', 'messages');
-
-      const newMessage: Messages = {
-        prompt: this.userMessage
-      };
-
-      this.messages.push({ content: this.userMessage, sender: 'user' });
-
-      addDoc(messagesCol, newMessage).then((docRef: DocumentReference) => {
-        console.log("Message added with ID: ", docRef.id);
-      }).catch(error => {
-        console.error("Error adding message: ", error);
-      });
-
+    if (!(this.userInput.trim().length > 0)) {
+      this.userInput = '';
+      return;
     }
 
-    this.userMessage = ''; // Reset input field
+    this.processing = true;
+    this.currentMessage = {
+      prompt: this.userInput
+    };
+    this.userInput = '';
+
+    const messagesCol = collection(this.firestore, 'users/', '1ZrStjcBlXcpDLv9xxZy', 'threads', 'thread_NWvCaojlpjWlDI9uebgGsoD7', 'messages');
+    addDoc(messagesCol, this.currentMessage).then((docRef: DocumentReference) => {
+      console.log("Message added with ID: ", docRef.id);
+      this.processResponse(docRef);
+    }).catch(error => {
+      console.error("Error adding message: ", error);
+    });
+  }
+
+  processResponse(docRef: DocumentReference) {
+    onSnapshot(docRef, (doc) => {
+      const updatedMessage = { ...doc.data() as Message };
+
+      if (updatedMessage.status?.state === State.COMPLETED) {
+        this.messages.push(updatedMessage);
+        this.currentMessage = {};
+        this.processing = false;
+      } else {
+        this.currentMessage.response = updatedMessage.response;
+      }
+    });
   }
 }
