@@ -12,13 +12,13 @@
           {{ message.prompt }}
         </ion-label>
           <ion-note slot="end">
-            <p>👤</p>
+            <p style="font-size: 1.5em;">🧑</p>
           </ion-note>
       </ion-item>
       @if (message.response) {
         <ion-item style="text-align: left;">
           <ion-note slot="start">
-            <p>🤖</p>
+            <p style="font-size: 1.5em;">🤖</p>
           </ion-note>
           <ion-label>
             {{ message.response }}
@@ -33,13 +33,13 @@
           {{ currentMessage.prompt }}
         </ion-label>
           <ion-note slot="end">
-            <p>👤</p>
+            <p style="font-size: 1.5em;">🧑</p>
           </ion-note>
       </ion-item>
       @if (currentMessage.response) {
         <ion-item style="text-align: left;">
           <ion-note slot="start">
-            <p class="robot-thinking">🤖</p>
+            <p class="robot-thinking" style="font-size: 1.5em;">🤖</p>
           </ion-note>
           <ion-label>
             {{ currentMessage.response }}
