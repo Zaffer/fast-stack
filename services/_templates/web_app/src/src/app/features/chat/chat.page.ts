@@ -104,7 +104,17 @@ export class ChatPage implements OnInit {
   // }
 
   sendMessage() {
+    // prevent bad user input
     if (!(this.userInput.trim().length > 0)) {
+      this.userInput = '';
+      return;
+    }
+
+    // limit total number of messages and alert user with a popup
+    if (this.messages.length >= 5) {
+      alert('Messages limit reached. Please book a consultation to continue.');
+      console.error('too many messages');
+
       this.userInput = '';
       return;
     }
@@ -117,10 +127,10 @@ export class ChatPage implements OnInit {
 
     const messagesCol = collection(this.firestore, 'users/', '1ZrStjcBlXcpDLv9xxZy', 'threads', 'thread_NWvCaojlpjWlDI9uebgGsoD7', 'messages');
     addDoc(messagesCol, this.currentMessage).then((docRef: DocumentReference) => {
-      console.log("Message added with ID: ", docRef.id);
+      console.log("message added with ID: ", docRef.id);
       this.processResponse(docRef);
     }).catch(error => {
-      console.error("Error adding message: ", error);
+      console.error("error adding message: ", error);
     });
   }
 
