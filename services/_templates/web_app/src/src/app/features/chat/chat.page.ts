@@ -14,6 +14,7 @@ import {
   query,
   orderBy,
   onSnapshot,
+  limit,
 } from '@angular/fire/firestore';
 import { EMPTY, Observable } from 'rxjs';
 import {
@@ -30,7 +31,7 @@ import {
   IonRow,
   IonCol,
   IonSpinner,
-  IonNote
+  IonNote,
 } from '@ionic/angular/standalone';
 import { Users } from 'src/app/core/models/users';
 import { Message, State } from 'src/app/core/models/messages';
@@ -66,6 +67,7 @@ export class ChatPage implements OnInit {
   // messages$: Observable<Messages[]>;
   private usersCol: CollectionReference | undefined;
   private usersDoc: DocumentReference | undefined;
+  private threadsDoc: DocumentReference | undefined;
 
   messages: Message[] = [];
   currentMessage: Message = {};
@@ -75,35 +77,22 @@ export class ChatPage implements OnInit {
   constructor() {
     // // Create the user document
     // TODO connect authentication, create user on auth user create, pull in user id from auth here, and retrieve latest thread.
-    // this.usersCol = collection(this.firestore, 'users');
-    // addDoc(this.usersCol, <Users>{
-    //   createTime: serverTimestamp(),
-    // })
-    //   .then((docRef) => {
-    //     this.usersDoc = docRef;
-    //     console.log('user: ', this.usersDoc.id);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error adding document: ', error);
-    //   });
-    // this.messages$ = collectionData(this.usersCollection) as Observable<Messages[]>;
+    this.usersCol = collection(this.firestore, 'users');
+    addDoc(this.usersCol, <Users>{
+      createTime: serverTimestamp(),
+    })
+      .then((docRef) => {
+        this.usersDoc = docRef;
+        console.log('user: ', this.usersDoc.id);
+      })
+      .catch((error) => {
+        console.error('error creating user document: ', error);
+      });
   }
 
-  ngOnInit() {
-    // this.fetchAllUsers();
-    console.log(this.currentMessage);
-  }
+  ngOnInit() {}
 
-  // TODO remove this
-  // async fetchAllUsers() {
-  //   const usersCol = collection(this.firestore, 'users');
-  //   const snapshot = await getDocs(usersCol);
-  //   snapshot.forEach((doc) => {
-  //     console.log(doc.id, ' => ', doc.data());
-  //   });
-  // }
-
-  sendMessage() {
+  async sendMessage() {
     // prevent bad user input
     if (!(this.userInput.trim().length > 0)) {
       this.userInput = '';
@@ -121,22 +110,61 @@ export class ChatPage implements OnInit {
 
     this.processing = true;
     this.currentMessage = {
-      prompt: this.userInput
+      prompt: this.userInput,
     };
     this.userInput = '';
 
-    const messagesCol = collection(this.firestore, 'users/', '1ZrStjcBlXcpDLv9xxZy', 'threads', 'thread_NWvCaojlpjWlDI9uebgGsoD7', 'messages');
-    addDoc(messagesCol, this.currentMessage).then((docRef: DocumentReference) => {
-      console.log("message added with ID: ", docRef.id);
-      this.processResponse(docRef);
-    }).catch(error => {
-      console.error("error adding message: ", error);
-    });
+    // get the thread created by the user creation trigger cloud function
+    if (!this.threadsDoc) {
+      if (this.usersDoc) {
+        const threadsCol = collection(
+          this.firestore,
+          `${this.usersDoc.path}/threads`
+        );
+        const threadsQuery = query(threadsCol, limit(1));
+        await getDocs(threadsQuery)
+          .then((querySnapshot) => {
+            if (!querySnapshot.empty) {
+              this.threadsDoc = querySnapshot.docs[0].ref;
+              console.log('thread: ', this.threadsDoc?.id);
+            } else {
+              console.error('no thread created yet');
+              this.processing = false;
+              this.userInput = '';
+              return;
+            }
+          })
+          .catch((error) => {
+            console.error('error retrieving thread:', error);
+          });
+      } else {
+        console.error('user not created yet');
+        this.processing = false;
+        this.userInput = '';
+        return;
+      }
+    }
+
+    if (this.threadsDoc) {
+      const messagesCol = collection(
+        this.firestore,
+        this.threadsDoc.path,
+        'messages'
+      );
+      addDoc(messagesCol, this.currentMessage)
+        .then((docRef: DocumentReference) => {
+          console.log('message: ', docRef.id);
+          this.processResponse(docRef);
+        })
+        .catch((error) => {
+          console.error('error adding message: ', error);
+        });
+    }
   }
 
   processResponse(docRef: DocumentReference) {
     onSnapshot(docRef, (doc) => {
-      const updatedMessage = { ...doc.data() as Message };
+      const updatedMessage = { ...(doc.data() as Message) };
 
       if (updatedMessage.status?.state === State.COMPLETED) {
         this.messages.push(updatedMessage);
