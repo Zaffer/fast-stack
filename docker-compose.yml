@@ -50,7 +50,7 @@ services:
       - ./services/_templates/_fast_api/src:/app
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
-    # command: sh -c "while true; do sleep 1; done"
+    # tty: true
 
 
   temp_web: # Angular service framework
@@ -64,7 +64,7 @@ services:
     volumes:
       - ./services/_web/app:/home/node/app
     command: "yarn start --host 0.0.0.0"
-    # command: sh -c "while true; do sleep 1; done"
+    # tty: true
 
 
   temp_web_srv: # Angular service that is designed to be a microservice to embed via iframe into other frameworks
@@ -110,4 +110,23 @@ services:
       - ./services/fleet_flask/src:/app
       - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
     command: flask run --host=0.0.0.0 --port=5002
+
+  grafana:
+    container_name: grafana_container
+    image: grafana/grafana-oss
+    # build:
+    #   context: ./services/_templates/grafana
+    #   dockerfile: grafana.dockerfile
+    #   network: host
+    environment:
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_URL=postgres://postgres:postgres@db-local:5432/grafana
+      # - GF_DATABASE_SSL_MODE=disable
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    # tty: true
+    command: "yarn start --host 0.0.0.0"
+
     
