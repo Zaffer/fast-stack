@@ -532,6 +532,20 @@ Emulater mode UI
 - "OCI runtime exec failed: exec failed: unable to start container process: exec: "alembic": executable file not found in $PATH: unknown"
   - likely that your image running locally is the production version, rebuild your image for dev environment first then run start-dev.sh again.
 
+## WSL disk out of space
+- Get the full path to your VHDX file.
+- Find by going to WSL2 instance package directory in: "C:\Users\james\AppData\Local\Packages\."
+- Followed by vendor name: ie. "CanonicalGroupLimited" for Ubuntu.
+- VHDX is in the LocalState subdirectory: eg. "C:\Users\james\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx"
+
+1. Shutdown Docker Desktop.
+1. Open Powershell as administrator
+1. `wsl.exe --shutdown`
+1. `diskpart`
+1. `select vdisk file="C:\Users\james\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc\LocalState\ext4.vhdx"`
+1. `attach vdisk readonly`
+1. `compact vdisk`
+1. `detach vdisk`
 
 ## Bonus
 
