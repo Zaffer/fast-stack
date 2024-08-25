@@ -4,11 +4,11 @@ WORKDIR /app
 RUN git clone https://github.com/grafana/grafana.git .
 
 # Switch to a selected version tag
-RUN git checkout v11.0.0
+RUN git checkout v11.1.4
 
 
 #  Stage 2: Node build stage
-FROM grafana/grafana:11.0.0 as build-stage
+FROM grafana/grafana:11.1.4 as build-stage
 USER root
 
 # Set the Node.js memory limit to 4 GB
@@ -23,16 +23,13 @@ RUN apk add --no-cache nodejs yarn python3 make g++
 WORKDIR /usr/share/grafana
 
 # Now install node modules and build the frontend assets
-COPY --from=clone-stage /app/package.json /app/yarn.lock /app/.yarnrc.yml ./
-## TODO THIS IS A MAJOR BLOCKER ON CURRENT VESRIONS: this dir seems wrong of versions 11
-COPY --from=clone-stage /app/packages/grafana-plugin-configs/webpack.config.ts ./grafana-plugin-configs/scripts/webpack/webpack.prod.js
+COPY --from=clone-stage /app/package.json /app/project.json /app/nx.json /app/yarn.lock /app/.yarnrc.yml ./
 COPY --from=clone-stage /app/.yarn .yarn
 COPY --from=clone-stage /app/packages packages
 COPY --from=clone-stage /app/plugins-bundled plugins-bundled
 COPY --from=clone-stage /app/public public
-RUN yarn install --immutable
+
 COPY --from=clone-stage /app/tsconfig.json /app/.editorconfig /app/.browserslistrc /app/.prettierrc.js ./
-COPY --from=clone-stage /app/public public
 COPY --from=clone-stage /app/scripts scripts
 COPY --from=clone-stage /app/emails emails
 
@@ -44,13 +41,11 @@ COPY ./src/assets/grafana_icon.svg ./public/img/grafana_icon.svg
 COPY ./src/components/Branding.tsx ./public/app/core/components/Branding/Branding.tsx
 # RUN sed -i 's/"Grafana"/"FastDash"/g' ./public/app/core/components/Branding/Branding.tsx
 
-# https://grafana.com/static/assets/img/logo_new_transparent_200x48.png
-# https://grafana.com/static/assets/img/logo_new_transparent_light_400x100.png
-
 # replace email images
 RUN sed -i 's|https://grafana.com/static/assets/img/logo_new_transparent_200x48.png|https://repository-images.githubusercontent.com/578973863/6ff42f1d-f4b2-48e7-9458-40d5ab309cdf|g' /usr/share/grafana/public/emails/*
 RUN sed -i 's|https://grafana.com/static/assets/img/logo_new_transparent_light_400x100.png|https://repository-images.githubusercontent.com/578973863/6ff42f1d-f4b2-48e7-9458-40d5ab309cdf|g' /usr/share/grafana/public/emails/*
 
+RUN yarn install --immutable
 RUN yarn build
 
 

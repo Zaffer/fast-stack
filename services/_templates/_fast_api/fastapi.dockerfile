@@ -1,5 +1,5 @@
 # pull python image
-FROM python:3.11-slim as base
+FROM python:3.11-slim as base-stage
 
 # set working directory
 WORKDIR /app
@@ -25,8 +25,8 @@ RUN apt-get -y update \
   # && apt-get -y install gcc \
   && apt-get clean
 
-# use base for build
-FROM base as builder
+# use base-stage for build
+FROM base-stage as builder
 
 # prevent poetry virtual environment
 ENV POETRY_VIRTUALENVS_CREATE false
@@ -49,8 +49,8 @@ RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] || [ ${ENVIRONMENT} == 'proxy' ] ; \
 # RUN black .
 # RUN isort .
 
-# use base for final image
-FROM base as final
+# use base-stage for final image
+FROM base-stage as final
 
 # copy built venv folder
 COPY --from=builder /venv /venv

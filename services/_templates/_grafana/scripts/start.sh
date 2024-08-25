@@ -7,7 +7,7 @@ set -e
 # docker compose build grafana --no-cache
 
 docker compose up db-local -d
-services/_templates/grafana/scripts/db-up.sh
+services/_templates/_grafana/scripts/db-up.sh
 
 # docker compose up grafana -d
 docker compose up grafana --build -d

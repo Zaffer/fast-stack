@@ -2,7 +2,7 @@ services:
 
   db-local:
     container_name: db-local
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     ports:
       - 5432:5432
     environment:
@@ -11,7 +11,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes:
       - db-local-data:/var/lib/postgresql/data/pgdata
-      # - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/
+      # - ./services/_api/src/db/sql:/docker-entrypoint-initdb.d/ # to auto-seed the database
     command: postgres -c log_statement=all
 
 

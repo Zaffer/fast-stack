@@ -108,6 +108,7 @@ Plotly Dash
 
 1. grafana
     - for viewing analytics
+    - Dockerfile builds a version that includes a custom branding and pre-installs plugins
 
 
 

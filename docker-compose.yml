@@ -113,15 +113,17 @@ services:
 
   grafana:
     container_name: grafana_container
-    image: grafana/grafana-oss
-    # build:
-    #   context: ./services/_templates/grafana
-    #   dockerfile: grafana.dockerfile
-    #   network: host
+    # image: grafana/grafana-oss
+    build:
+      context: ./services/_templates/_grafana
+      dockerfile: grafana.dockerfile
+      network: host
+    depends_on:
+      - db-local
     environment:
       - GF_DATABASE_TYPE=postgres
       - GF_DATABASE_URL=postgres://postgres:postgres@db-local:5432/grafana
-      # - GF_DATABASE_SSL_MODE=disable
+      - GF_DATABASE_SSL_MODE=disable
     volumes:
       - grafana-data:/var/lib/grafana
     ports:
