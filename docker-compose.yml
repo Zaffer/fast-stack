@@ -127,8 +127,8 @@ services:
     volumes:
       - grafana-data:/var/lib/grafana
     ports:
-      - 3000:3000
+      - 9000:8080
     # tty: true
-    command: "yarn start --host 0.0.0.0"
+    # command: "yarn start --host 0.0.0.0"
 
     

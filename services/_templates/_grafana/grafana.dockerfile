@@ -50,7 +50,7 @@ RUN yarn build
 
 
 # Stage 3: Final stage where you set up your actual container
-FROM grafana/grafana:latest
+FROM grafana/grafana:11.1.4
 USER root
 
 # Overwrite the default grafana.ini with your custom file
