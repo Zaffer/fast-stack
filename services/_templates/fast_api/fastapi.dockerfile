@@ -26,13 +26,13 @@ RUN apt-get -y update \
   && apt-get clean
 
 # use base-stage for build
-FROM base-stage as builder
+FROM base-stage as builder-stage
 
 # prevent poetry virtual environment
 ENV POETRY_VIRTUALENVS_CREATE false
 
-# copy in local packages for installation
-COPY ./local_package /app/local_package
+# # copy in local packages for installation
+# COPY ./local_package /app/local_package
 
 # install python dependencies
 RUN pip install --upgrade pip \
@@ -49,11 +49,11 @@ RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] || [ ${ENVIRONMENT} == 'proxy' ] ; \
 # RUN black .
 # RUN isort .
 
-# use base-stage for final image
-FROM base-stage as final
+# use base-stage for final-stage image
+FROM base-stage as final-stage
 
 # copy built venv folder
-COPY --from=builder /venv /venv
+COPY --from=builder-stage /venv /venv
 
 # copy src to app folder
 COPY ./src/app .

@@ -23,7 +23,7 @@ Roadmap:
 - [x] ~~Add Ionic service~~
 - [ ] iframe grafana oss into angular dashboard
 - [ ] fix github actions to pull secrets from Google Secret Manager
-- [ ] clean up ng templates to do the following only:
+- [x] clean up ng templates to do the following only:
   - Angular Ionic, Firebase Auth, Firestore, Cloud Functions
   - Angular, Material Design, Auth0, API
 
@@ -177,6 +177,8 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
     - Default settings:
     `glcoud confing list`
+    `cloud config set project PROJECT_ID`
+    `gcloud config set billing/quota_project`
     `gcloud config set compute/region europe-west-1`
     `gcloud config unset compute/region`
 

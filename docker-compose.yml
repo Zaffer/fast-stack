@@ -30,12 +30,10 @@ services:
     # tty: true
 
 
-  # TEMPORARY
-
-  temp_api: # Fastapi service for rapidly create robuse apis
-    container_name: temp_api_container
+  fast_api: # FastAPI for backend API services
+    container_name: fast_api_container
     build:
-      context: ./services/_templates/_fast_api
+      context: ./services/_templates/fast_api
       dockerfile: fastapi.dockerfile
       network: host
       args:
@@ -47,7 +45,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./services/_templates/_fast_api/src:/app
+      - ./services/_templates/fast_api/src:/app
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
     command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
     # tty: true
