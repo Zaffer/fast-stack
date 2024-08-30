@@ -1,7 +1,0 @@
-{
-  "name": "_ng_ion",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
