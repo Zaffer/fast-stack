@@ -2,6 +2,66 @@ services:
 
   # TEMPLATES
 
+  fast_api: # FastAPI for backend API services
+    container_name: fast_api_container
+    build:
+      context: ./services/_templates/fast_api
+      dockerfile: fastapi.dockerfile
+      network: host
+      args:
+        - ENVIRONMENT=${ENVIRONMENT-dev}
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project}
+      # - POSTGRES_DB=${POSTGRES_DB:-db}
+    ports:
+      - 8000:8000
+    volumes:
+      - ./services/_templates/fast_api/src:/app
+      - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
+    # tty: true
+
+
+  flask_dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
+    container_name: temp_dash_container
+    build:
+      context: ./services/_template/_flsk_dash
+      dockerfile: flask.dash.dockerfile
+    ports: # 8888 ports for kernel in jupytor notebooks
+      - 8888:8888
+    environment:
+      - FLASK_APP=app/main.py
+      - FLASK_ENV=development
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_name}
+    volumes:
+      - ./services/fleet_flask/src:/app
+      - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
+    command: flask run --host=0.0.0.0 --port=5002
+
+
+  grafana_oss: # Grafana Open Source for monitoring and analytics
+    container_name: grafana_oss_container
+    # image: grafana/grafana-oss
+    build:
+      context: ./services/_templates/grafana_os
+      dockerfile: grafana.dockerfile
+      network: host
+    depends_on:
+      - db-local
+    environment:
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_URL=postgres://postgres:postgres@db-local:5432/grafana
+      - GF_DATABASE_SSL_MODE=disable
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
+      - 9000:8080
+    # tty: true
+    # command: "yarn start --host 0.0.0.0"
+
+
   web_admin: # Angular frontend for management console, admin panel, dashboards, etc
     container_name: web_admin_container
     build:
@@ -29,104 +89,3 @@ services:
     command: ionic serve --external
     # tty: true
 
-
-  fast_api: # FastAPI for backend API services
-    container_name: fast_api_container
-    build:
-      context: ./services/_templates/fast_api
-      dockerfile: fastapi.dockerfile
-      network: host
-      args:
-        - ENVIRONMENT=${ENVIRONMENT-dev}
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project}
-      # - POSTGRES_DB=${POSTGRES_DB:-db}
-    ports:
-      - 8000:8000
-    volumes:
-      - ./services/_templates/fast_api/src:/app
-      - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
-    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
-    # tty: true
-
-
-  temp_web: # Angular service framework
-    container_name: temp_web_container
-    build:
-      context: ./services/_templates/_web
-      dockerfile: web.ngfb.dockerfile
-      network: host
-    ports:
-      - 4201:4200
-    volumes:
-      - ./services/_web/app:/home/node/app
-    command: "yarn start --host 0.0.0.0"
-    # tty: true
-
-
-  temp_web_srv: # Angular service that is designed to be a microservice to embed via iframe into other frameworks
-    container_name: web_srv_container
-    build:
-      context: ./services/_web_srv
-      dockerfile: web.srv.dockerfile
-      network: host
-    ports:
-      - 4202:4200
-    volumes:
-      - ./services/_web_srv/app:/home/node/app
-    command: "yarn start --host 0.0.0.0"
-    # command: sh -c "while true; do sleep 1; done"
-
-  
-  temp_admin_web: # Angular service for administration and settings management
-    container_name: admin_web_container
-    build:
-      context: ./services/admin_web
-      dockerfile: admin.web.dockerfile
-      network: host
-    ports:
-      - 4203:4200
-    volumes:
-      - ./services/admin_web/app:/home/node/app
-    command: "yarn start --host 0.0.0.0"
-    
-
-  temp_dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
-    container_name: temp_dash_container
-    build:
-      context: ./services/_template/_flsk_dash
-      dockerfile: flask.dash.dockerfile
-    ports: # 8888 ports for kernel in jupytor notebooks
-      - 8888:8888
-    environment:
-      - FLASK_APP=app/main.py
-      - FLASK_ENV=development
-      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
-      - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_name}
-    volumes:
-      - ./services/fleet_flask/src:/app
-      - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
-    command: flask run --host=0.0.0.0 --port=5002
-
-  grafana:
-    container_name: grafana_container
-    # image: grafana/grafana-oss
-    build:
-      context: ./services/_templates/_grafana
-      dockerfile: grafana.dockerfile
-      network: host
-    depends_on:
-      - db-local
-    environment:
-      - GF_DATABASE_TYPE=postgres
-      - GF_DATABASE_URL=postgres://postgres:postgres@db-local:5432/grafana
-      - GF_DATABASE_SSL_MODE=disable
-    volumes:
-      - grafana-data:/var/lib/grafana
-    ports:
-      - 9000:8080
-    # tty: true
-    # command: "yarn start --host 0.0.0.0"
-
-    

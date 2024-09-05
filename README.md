@@ -2,17 +2,17 @@
 ---------
 
 # Introduction
-FastAPI                 backend
-SQLModel                database ORM and API schemas
-Angular                 frontend
-Angular Material        admin dashboard
-Angular Ionic           web and native apps
+FastAPI                 backend API
+SQLModel                SQL database ORM and API schemas
+Angular                 frontend framework
+Angular Material        frontend admin dashboard
+Angular Ionic           frontend web and native apps
 Auth0                   authentication and authorisation
 Firestore               document database
 PostgreSQL              relational database
 Google Cloud Platform   cloud infrastructure
-Firebase                web app hosting
-Docker Compose          containerise everything
+Firebase                web hosting
+Docker Compose          containerisation
 
 
 Roadmap:
@@ -143,6 +143,26 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
       - Thunder Client
       - GitHub Copilot
     
+1. Google Cloud CLI
+    - https://cloud.google.com/sdk/docs/install
+      - `snap install google-cloud-cli --classic`
+    - add to bashrc: `source /snap/google-cloud-cli/current/completion.bash.inc`
+
+    - Create Service Account Key of signed in user for ADC
+      - `gcloud auth application-default login`
+      - `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
+      > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
+
+    - Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper): 
+      - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
+
+    - Default settings:
+    `glcoud config list`
+    `cloud config set project PROJECT_ID`
+    `gcloud config set billing/quota_project`
+    `gcloud config set compute/region europe-west-1`
+    `gcloud config unset compute/region`
+
 
 1. Docker
     - install Docker Desktop: https://www.docker.com/products/docker-desktop/
@@ -160,27 +180,6 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 1.  Poetry
     - https://python-poetry.org/
     - add to bashrc: `export PATH="$HOME/.local/bin:$PATH"`
-
-
-1. Google Cloud CLI
-    - https://cloud.google.com/sdk/docs/install
-      - `snap install google-cloud-cli --classic`
-    - add to bashrc: `source /snap/google-cloud-cli/current/completion.bash.inc`
-
-    - Create Service Account Key of signed in user for ADC
-      - `gcloud auth application-default login`
-      - `sudo chmod 644 ~/.config/gcloud/application_default_credentials.json`
-      > Remember to revoke when you no longer need access (`gcloud auth application-default revoke`)
-
-    - Authorise Docker Cred Helper (https://cloud.google.com/artifact-registry/docs/docker/authentication#gcloud-helper): 
-      - `gcloud auth configure-docker europe-west1-docker.pkg.dev`
-
-    - Default settings:
-    `glcoud confing list`
-    `cloud config set project PROJECT_ID`
-    `gcloud config set billing/quota_project`
-    `gcloud config set compute/region europe-west-1`
-    `gcloud config unset compute/region`
 
 
 1. Node
