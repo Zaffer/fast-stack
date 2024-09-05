@@ -3,7 +3,6 @@ from typing import Any, List
 from app import crud
 from app.api.deps import get_session
 
-# from app.integrations.invendis import itoc
 from app.core import session
 from app.core.config import settings
 from app.core.security.auth0 import Auth0, Auth0User
