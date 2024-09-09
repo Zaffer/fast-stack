@@ -52,6 +52,7 @@ settings = Settings()
 
 
 class Secrets(GoogleCloudSecretSettings):
+    logger.info("getting secrets...")
 
     POSTGRES_URL: str = "postgresql+psycopg2://postgres:postgres@db-local:5432/db"
 

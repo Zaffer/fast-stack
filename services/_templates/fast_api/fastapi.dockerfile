@@ -18,6 +18,9 @@ ENV VIRTUAL_ENV=/venv
 RUN python3 -m venv ${VIRTUAL_ENV}
 ENV PATH="${VIRTUAL_ENV}/bin:$PATH"
 
+# specify location out of app dir so no override on copy (playwright)
+ENV PLAYWRIGHT_BROWSERS_PATH=/temp/ms-playwright
+
 # install system dependencies
 RUN apt-get -y update \
   && apt-get -y upgrade \
@@ -57,6 +60,9 @@ COPY --from=builder-stage /venv /venv
 
 # copy src to app folder
 COPY ./src/app .
+
+# Install playwrite dependencies
+RUN playwright install --with-deps chromium
 
 # use a non-root user
 RUN addgroup --system school && adduser --system --ingroup school fish
