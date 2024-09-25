@@ -10,8 +10,10 @@ RUN npm install -g firebase-tools
 
 WORKDIR /home/node/app
 
-COPY --chown=node ./src .
+COPY --chown=node ./frontend .
 
+RUN corepack enable
+RUN corepack prepare yarn@stable --activate
 RUN yarn set version stable
 RUN yarn install
 

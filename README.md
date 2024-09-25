@@ -549,8 +549,14 @@ Emulater mode UI
 1. `compact vdisk`
 1. `detach vdisk`
 
+
+"EACCES issues of mkder for /.angular"
+
+
+
 ## Bonus
 
+### terminal tab completions
 add this to your .bashrc for tab completion in the terminal:
 
 ```
@@ -559,3 +565,6 @@ bind 'set show-all-if-ambiguous on'
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
 ```
+
+### terminal prompt
+https://starship.rs/

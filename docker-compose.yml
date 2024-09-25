@@ -71,7 +71,7 @@ services:
     ports:
       - 4200:4200
     volumes:
-      - ./services/_templates/web_admin/src:/home/node/app
+      - ./services/_templates/web_admin/frontend:/home/node/app
     command: "yarn start --host 0.0.0.0"
     # tty: true
 
