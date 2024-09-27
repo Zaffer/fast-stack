@@ -550,9 +550,12 @@ Emulater mode UI
 1. `detach vdisk`
 
 
-"EACCES issues of mkder for /.angular"
+> "EACCES issues of mkder for /.angular"
+You got some issue with the permissions of your directories. You need to figure it out.
 
-
+> "IsADirectoryError: [Errno 21] Is a directory: '/tmp/keys/application_default_credentials.json'"
+You did you not complete the glcoud app default login process correctly, and now taht json file is actuall a dir.
+You need to go to that dir, delete it, and do the gcloud login process again. Is must be a .json file, not a directory. 
 
 ## Bonus
 
