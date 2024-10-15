@@ -171,6 +171,9 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     - `git config --global user.name "YOUR USERNAME"`
     - `git config --global user.email "YOUR EMAIL"`
 
+1. Pip
+   - install pip 
+     - `sudo apt install python3-pip`
 
 1. Pyenv
     - (optional) https://github.com/pyenv/pyenv
