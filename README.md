@@ -1,7 +1,7 @@
 ⚡ Fast Stack
 ---------
 
-# Introduction
+# INTRODUCTION
 FastAPI                 backend API
 SQLModel                SQL database ORM and API schemas
 Angular                 frontend framework
@@ -46,7 +46,7 @@ Merge from template using this line to remove templates' histories:
 `git pull https://github.com/Zaffer/fast-stack master --ff --allow-unrelated-histories`
 
 
-# Application Services
+# SERVICES
 
 ## Web Admin
 - Angular
@@ -79,7 +79,7 @@ Flask
 Plotly Dash
 
 
-# Development Tools
+# TOOLS
 
 1. db-local
     - Local Postgres db for development
@@ -127,7 +127,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 ![Continuous Integration and Delivery]"(https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
 
 
-# Environment Setup
+# ENVIRONMENT
 1. Ubuntu on Windows using WSL2
     - https://learn.microsoft.com/en-us/windows/wsl/install-manual
 
@@ -246,7 +246,7 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
     bind '"\e[Z":menu-complete-backward'
     ```
 
-# Visual Studio Code Settings
+## Visual Studio Code Settings
 
   - paste into .vscode/settings.json
   > swap `{-api-QN8QTDzb-py3.10-}` with your venv name
@@ -342,7 +342,7 @@ sh scripts/deploy-prod.sh
 ```
 
 
-# COMMAND ALMANAC
+# COMMANDS
 
 ## Linux
 Update and upgrade Ubuntu packages
@@ -501,11 +501,6 @@ insert this into the file: `sdk.dir=/usr/lib/android-sdk`
 > test for signed apk
 `./gradlew assembleRelease`
 
-
-
-
-
-
 ## Firebase
 
 `firebase deploy -m "Deploying the best new feature ever."`
@@ -515,15 +510,13 @@ Emulater mode UI
 `firebase emulators:start --only auth`
 
 
-
-
 ## OpenAPI Generator
 1. Download openapi.json from API page
 2. Replace */openapi.json* file in root
 3. Run recreate_api.sh script
 
 
-## Troubshooting
+# TROUBLESHOOTING
 
 ### GCloud CLI:
 - if using linux and getting "open in browser error" then use `gcloud init --no-launch-browser` to login
@@ -534,7 +527,7 @@ Emulater mode UI
 - "OCI runtime exec failed: exec failed: unable to start container process: exec: "alembic": executable file not found in $PATH: unknown"
   - likely that your image running locally is the production version, rebuild your image for dev environment first then run start-dev.sh again.
 
-## WSL disk out of space
+### WSL disk out of space
 - Get the full path to your VHDX file.
 - Find by going to WSL2 instance package directory in: "C:\Users\james\AppData\Local\Packages\."
 - Followed by vendor name: ie. "CanonicalGroupLimited" for Ubuntu.
@@ -549,15 +542,18 @@ Emulater mode UI
 1. `compact vdisk`
 1. `detach vdisk`
 
-
+### EACCESS
 > "EACCES issues of mkder for /.angular"
+
 You got some issue with the permissions of your directories. You need to figure it out.
 
+### IsADirectoryError
 > "IsADirectoryError: [Errno 21] Is a directory: '/tmp/keys/application_default_credentials.json'"
+
 You did you not complete the glcoud app default login process correctly, and now taht json file is actuall a dir.
 You need to go to that dir, delete it, and do the gcloud login process again. Is must be a .json file, not a directory. 
 
-## Bonus
+# BONUS
 
 ### terminal tab completions
 add this to your .bashrc for tab completion in the terminal:
