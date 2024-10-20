@@ -546,9 +546,9 @@ Emulater mode UI
 1. `detach vdisk`
 
 ### EACCESS
-> "EACCES issues of mkder for /.angular"
-
-You got some issue with the permissions of your directories. You need to figure it out.
+> "EACCES issues with mkdir for /.angular"
+You got some issue with the permissions of your directories. Most likely caused be the docker container generating files in mounted directory. You need to delete those generated files yourself, or changes the permissions yourself.
+Fall back option is to clone the whole repo again, unless you have those generated files in your github. Then you need to do the above or start a new branch from master again.
 
 ### IsADirectoryError
 > "IsADirectoryError: [Errno 21] Is a directory: '/tmp/keys/application_default_credentials.json'"
