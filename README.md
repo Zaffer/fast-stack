@@ -186,11 +186,14 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
 
 
 1. Node
-   - install nvm (https://github.com/nvm-sh/nvm)
-     - `nvm install --lts`
-     - `nvm use --lts`
+   - install fnm ([https://github.com/nvm-sh/nvm](https://github.com/Schniz/fnm))
+     - `curl -fsSL https://fnm.vercel.app/install | bash`
+     - `source ~/.bashrc`
+     - `fnm use --install-if-missing 22`
+     - `node -v`
+     - `npm -v`
 
-   - global Angular CLI's:
+   - install global Angular CLI's:
      - `npm install -g @angular/cli`
      - `npm install -g firebase-tools`
      - `npm install -g @ionic/cli`
