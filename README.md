@@ -565,4 +565,6 @@ bind '"\e[Z":menu-complete-backward'
 ```
 
 ### terminal fancy appearance
-https://starship.rs/
+- https://starship.rs/
+- `starship preset no-nerd-font -o ~/.config/starship.toml`
+
