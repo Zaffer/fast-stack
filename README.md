@@ -1,9 +1,6 @@
 ⚡ Fast Stack
 ---------
 
-![Continuous Integration and Delivery]"(https://github.com/Zaffer/fast-stack/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
-
-
 # INTRODUCTION
 FastAPI                 backend API
 SQLModel                SQL database ORM and API schemas
@@ -278,6 +275,9 @@ To do this you remove the references to secrets and replace those environment va
 
 Workload Identity Federation (WIF) is a feature of Google Cloud Platform that allows you to access Google Cloud resources from on-premises or other cloud environments. With WIF, you can access Google Cloud resources from AWS, Azure, or any identity provider that supports OpenID Connect (OIDC).
 > more info: https://cloud.google.com/iam/docs/workload-identity-federation
+
+### Badge
+![Continuous Integration and Delivery]"(https://github.com/Zaffer/fast-stack/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
 
 
 # SCRIPTS
