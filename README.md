@@ -1,6 +1,9 @@
 ⚡ Fast Stack
 ---------
 
+![Continuous Integration and Delivery]"(https://github.com/Zaffer/fast-stack/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
+
+
 # INTRODUCTION
 FastAPI                 backend API
 SQLModel                SQL database ORM and API schemas
@@ -15,7 +18,7 @@ Firebase                web hosting
 Docker Compose          containerisation
 
 
-Roadmap:
+## Roadmap
 - [ ] full pnp for yarn (currently Anuglar has issues with Yarn pnp)
 - [x] ~~containerise Angular pgAdmin4~~
 - [x] ~~Add Grafana as service to visualise your data~~
@@ -24,36 +27,37 @@ Roadmap:
 - [ ] iframe grafana oss into angular dashboard
 - [ ] fix github actions to pull secrets from Google Secret Manager
 - [x] clean up ng templates to do the following only:
-  - Angular Ionic, Firebase Auth, Firestore, Cloud Functions
-  - Angular, Material Design, Auth0, API
+  - Angular, Ionic, Firebase Auth, Firestore, Cloud Functions.
+  - Angular, Material Design, Auth0, OpenAPI.
 
-    > The following is get pnp working once Angular supports it again.
-    `yarn add -D @types/node`
-    `yarn build`
-    `yarn start`
-    `yarn dlx @yarnpkg/sdks vscode`
-    > add paths to your app's .yarn file in workspace root .vscode/settings.json
-
-
-## Using this template repo
-
-Copy this repo as a template.
-> to pull in future updates of these template to your own repo
-Add this repo as a remote called "templates"
-Git fetch from all remotes.
-Merge from template using this line to remove templates' histories:
-`git merge template/master --strategy-option ours --squash`
-`git pull https://github.com/Zaffer/fast-stack master --ff --allow-unrelated-histories`
+The following is get pnp working once Angular supports it again.
+https://github.com/angular/angular-cli/issues/16980
+- `yarn add -D @types/node`
+- `yarn build`
+- `yarn start`
+- `yarn dlx @yarnpkg/sdks vscode`
+- add paths to your app's .yarn file in workspace root .vscode/settings.json
 
 
-# SERVICES
+## Usage
 
-## Web Admin
+Clone this repo as a template, then pull in future updates of to your own repo
+- Add this repo as a remote called "template"
+- Git fetch from all remotes.
+- Merge from template using this line to remove templates' histories:
+- `git merge template/master --strategy-option ours --squash`
+- `git pull https://github.com/Zaffer/fast-stack master --ff --allow-unrelated-histories`
+
+
+# TEMPLATES
+
+### Web Admin
 - Angular
 - Material Design
 - Auth0
+- OpenAPI
 
-## Web App
+### Web App
 - Angular
 - Ionic
 - Firebase Auth
@@ -64,19 +68,12 @@ Merge from template using this line to remove templates' histories:
 FastAPI
 SQLModel
 
-### _ng_mat
-Angular
-Firebase
-Material Design
-
-### _ng_ion
-Angular
-Firebase
-Ionic
-
 ### _flask_dash
 Flask
 Plotly Dash
+
+### Grafana
+Grafana OSS
 
 
 # TOOLS
@@ -106,25 +103,8 @@ Plotly Dash
     - for connecting to cloud db from your local environment
 
 
-1. grafana
-    - for viewing analytics
-    - Dockerfile builds a version that includes a custom branding and pre-installs plugins
-
-
-
-## Notes
-
-### Github Actions
-IMPORATANT NOTE: Github Actions secrets is only free from public repos, if you need a private or organisation repo you need to update the workflow to not use secrets.
-To do this you remove the references to secrets and replace those environment variables with your Google Cloud Project's WIF provider and service account.
-
-Workload Identity Federation (WIF) is a feature of Google Cloud Platform that allows you to access Google Cloud resources from on-premises or other cloud environments. With WIF, you can access Google Cloud resources from AWS, Azure, or any identity provider that supports OpenID Connect (OIDC).
-> more info: https://cloud.google.com/iam/docs/workload-identity-federation
-
-
-==============================
-
-![Continuous Integration and Delivery]"(https://github.com/your-firebase-project/workflows/Continuous%20Integration%20and%20Delivery/badge.svg?branch=master)"
+1. Firebase Emulators
+  - contrainer running the emulators for Firebase
 
 
 # ENVIRONMENT
@@ -290,6 +270,14 @@ Workload Identity Federation (WIF) is a feature of Google Cloud Platform that al
   }
   ```
 
+## CI/CD
+
+### Github Actions
+IMPORATANT NOTE: Github Actions secrets is only free from public repos, if you need a private or organisation repo you need to update the workflow to not use secrets.
+To do this you remove the references to secrets and replace those environment variables with your Google Cloud Project's WIF provider and service account.
+
+Workload Identity Federation (WIF) is a feature of Google Cloud Platform that allows you to access Google Cloud resources from on-premises or other cloud environments. With WIF, you can access Google Cloud resources from AWS, Azure, or any identity provider that supports OpenID Connect (OIDC).
+> more info: https://cloud.google.com/iam/docs/workload-identity-federation
 
 
 # SCRIPTS
@@ -402,8 +390,7 @@ jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://12
 
 
 ## GCloud
->Google Cloud Platform SDK commands 
-
+Google Cloud Platform SDK commands 
 ```
 gcloud config configurations list
 gcloud config configurations create <my-config>
@@ -458,7 +445,6 @@ yarn upgrade-interactive --latest
 ```
 
 
-
 ## Ionic
 `ionic serve`
 
@@ -481,7 +467,6 @@ Generate modules, pages, components, and services (add `--dry-run` to test first
 `ionic generate page /pages/thing --module=things`
 `ionic generate compenent /components/thing`
 `ionic generate service api/user`
-
 
 
 ### Build Android APK
@@ -507,13 +492,18 @@ insert this into the file: `sdk.dir=/usr/lib/android-sdk`
 > test for signed apk
 `./gradlew assembleRelease`
 
+
 ## Firebase
 
 `firebase deploy -m "Deploying the best new feature ever."`
 
-Emulater mode UI
+### Emulater mode UI
 `firebase emulators:start`
 `firebase emulators:start --only auth`
+
+### Cloud Functions
+When using Firebase emulators you will need to compile your Typescript to Javascript.
+Just run `yarn tsc` in the functions directiory, and it should hot reload.
 
 
 ## OpenAPI Generator
@@ -548,16 +538,19 @@ Emulater mode UI
 1. `compact vdisk`
 1. `detach vdisk`
 
+
 ### EACCESS
 > "EACCES issues with mkdir for /.angular"
 You got some issue with the permissions of your directories. Most likely caused be the docker container generating files in mounted directory. You need to delete those generated files yourself, or changes the permissions yourself.
 Fall back option is to clone the whole repo again, unless you have those generated files in your github. Then you need to do the above or start a new branch from master again.
+
 
 ### IsADirectoryError
 > "IsADirectoryError: [Errno 21] Is a directory: '/tmp/keys/application_default_credentials.json'"
 
 You did you not complete the glcoud app default login process correctly, and now taht json file is actuall a dir.
 You need to go to that dir, delete it, and do the gcloud login process again. Is must be a .json file, not a directory. 
+
 
 # BONUS
 
@@ -571,5 +564,5 @@ bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
 ```
 
-### terminal prompt
+### terminal fancy appearance
 https://starship.rs/
