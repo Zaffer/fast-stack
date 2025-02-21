@@ -2,17 +2,17 @@
 ---------
 
 # INTRODUCTION
-FastAPI                 backend API
-SQLModel                SQL database ORM and API schemas
-Angular                 frontend framework
-Angular Material        frontend admin dashboard
-Angular Ionic           frontend web and native apps
-Auth0                   authentication and authorisation
-Firestore               document database
-PostgreSQL              relational database
-Google Cloud Platform   cloud infrastructure
-Firebase                web hosting
-Docker Compose          containerisation
+- FastAPI                 backend API
+- SQLModel                SQL database ORM and API schemas
+- Angular                 frontend framework
+- Angular Material        frontend admin dashboard
+- Angular Ionic           frontend web and native apps
+- Auth0                   authentication and authorisation
+- Firestore               document database
+- PostgreSQL              relational database
+- Google Cloud Platform   cloud infrastructure
+- Firebase                web hosting
+- Docker Compose          containerisation
 
 
 ## Roadmap
