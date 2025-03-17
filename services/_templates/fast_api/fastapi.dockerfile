@@ -1,5 +1,5 @@
 # pull python image
-FROM python:3.12-slim as base-stage
+FROM python:3.12-slim AS base-stage
 
 # set working directory
 WORKDIR /app
@@ -29,13 +29,13 @@ RUN apt-get -y update \
   && apt-get clean
 
 # use base-stage for build
-FROM base-stage as builder-stage
+FROM base-stage AS builder-stage
 
 # prevent poetry virtual environment
 ENV POETRY_VIRTUALENVS_CREATE false
 
 # # copy in local packages for installation
-# COPY ./local_package /app/local_package
+COPY ./src/app /
 
 # install python dependencies
 RUN pip install --upgrade pip \
@@ -53,7 +53,7 @@ RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] || [ ${ENVIRONMENT} == 'proxy' ] ; \
 # RUN isort .
 
 # use base-stage for final-stage image
-FROM base-stage as final-stage
+FROM base-stage AS final-stage
 
 # copy built venv folder
 COPY --from=builder-stage /venv /venv
