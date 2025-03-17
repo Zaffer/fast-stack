@@ -7,9 +7,10 @@ from loguru import logger
 from pydantic import BaseSettings
 
 # Create the Secret Manager client.
-client = secretmanager.SecretManagerServiceClient.from_service_account_json(
-    "app/integrations/google/keys/service_account.json"
-)
+client = secretmanager.SecretManagerServiceClient()
+# client = secretmanager.SecretManagerServiceClient.from_service_account_json(
+#     "app/core/security/keys/service_account.json"
+# )
 
 
 class GoogleCloudSecretSettings(BaseSettings):
@@ -30,3 +31,14 @@ class GoogleCloudSecretSettings(BaseSettings):
             except (GoogleAuthError, GoogleAPIError) as e:
                 logger.error(f"Could not fetch ({cloud_key}) from GCS: {e}")
         return secrets
+
+    def get_secret(self, cloud_key) -> str | None:
+        if not isinstance(cloud_key, str):
+            raise TypeError(
+                f"Expecting a string as a value, but got: {type(cloud_key)}."
+            )
+        try:
+            response = client.access_secret_version(name=cloud_key)
+            return response.payload.data.decode("UTF-8")  # type: ignore
+        except (GoogleAuthError, GoogleAPIError) as e:
+            logger.error(f"Could not fetch ({cloud_key}) from GCS: {e}")
