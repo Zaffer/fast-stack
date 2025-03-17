@@ -22,17 +22,17 @@ ORIGINS = [
 class Settings(BaseSettings):
     ENVIRONMENT: str
     TESTING: int = 0
-    BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+    BASE_DIR: str = os.path.dirname(os.path.dirname(__file__))
 
-    TITLE: str = "Your Site API"
-    DESCRIPTION: str = """Your Site API ⚡"""
-    VERSION: str = "1.5.0"
-    TERMS_OF_SERVICE: str = "https://www.YourSite.co.za/termsandconditions.html"
-    CONTACT: dict = {"url": "https://www.YourSite.co.za/#contact"}
-    LICENSE_INFO: dict = {
-        "name": "All rights reserved.",
-        "url": "https://www.Your Site.co.za/privacypolicy.html",
-    }
+    TITLE: str = "API Service"
+    # DESCRIPTION: str = """⚡"""
+    # VERSION: str = "0.1.0"
+    # TERMS_OF_SERVICE: str = ""
+    # CONTACT: dict = {"url": ""}
+    # LICENSE_INFO: dict = {
+    #     "name": "Proprietary",
+    #     "url": "",
+    # }
 
     ORIGINS: List[AnyHttpUrl] = ORIGINS
 

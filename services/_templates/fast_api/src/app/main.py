@@ -13,11 +13,11 @@ from app.api.v1 import v1_router
 def create_application() -> FastAPI:
     application = FastAPI(
         title=settings.TITLE,
-        description=settings.DESCRIPTION,
-        version=settings.VERSION,
-        terms_of_service=settings.TERMS_OF_SERVICE,
-        contact=settings.CONTACT,
-        license=settings.LICENSE_INFO,
+        # description=settings.DESCRIPTION,
+        # version=settings.VERSION,
+        # terms_of_service=settings.TERMS_OF_SERVICE,
+        # contact=settings.CONTACT,
+        # license=settings.LICENSE_INFO,
     )
 
     application.add_middleware(

@@ -78,7 +78,7 @@ Grafana OSS
 1. db-local
     - Local Postgres db for development
 
-1.  pgAdmin
+1. pgAdmin
     - This is a GUI for postgresql. It is not required but it is very useful for development.
 
     `docker compose up pgadmin`
@@ -137,7 +137,6 @@ Grafana OSS
     `glcoud config list`
     `cloud config set project PROJECT_ID`
     `gcloud config set billing/quota_project`
-    `gcloud config set compute/region europe-west-1`
     `gcloud config unset compute/region`
 
 
@@ -403,6 +402,9 @@ gcloud config set project <project-name>
 
 gcloud config list
 ```
+
+Using application default credentials with extra scopes:
+`gcloud auth application-default login --scopes=https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/drive`
 
 
 ## Poetry
