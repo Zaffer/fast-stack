@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "YOUR SITE API"
 authors = ["You <you.com>"]
 license = "All Rights Reserved"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
