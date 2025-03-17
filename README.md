@@ -160,6 +160,8 @@ Grafana OSS
 1.  Poetry
     - https://python-poetry.org/
     - add to bashrc: `export PATH="$HOME/.local/bin:$PATH"`
+    - `poetry install`
+    - open a python file to select the python interpretor for you environment
 
 
 1. Node
