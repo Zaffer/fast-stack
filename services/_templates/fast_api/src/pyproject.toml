@@ -1,22 +1,24 @@
 [tool.poetry]
-name = "your-project-name"
-version = "0.1.0"
-description = "YOUR SITE API"
-authors = ["You <you.com>"]
+name = "project"
+version = "0.0.1"
+description = "project API"
+authors = ["user <site.com>"]
 license = "All Rights Reserved"
 package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.10"
-loguru = "^0.6.0"
-uvicorn = "^0.20.0"
-fastapi = "^0.88.0"
-sqlmodel = "^0.0.8"
+python = "^3.12"
+loguru = "^0.7.3"
+uvicorn = "^0.34.0"
+fastapi = "^0.115.11"
+sqlmodel = "^0.0.24"
 redis = "^4.4.0"
 oauthlib = "^3.2.2"
-requests-oauthlib = "^1.3.1"
-google-cloud-secret-manager = "^2.12.6"
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
+requests-oauthlib = "^2.0.0"
+google-cloud-secret-manager = "^2.23.1"
+python-jose = {extras = ["cryptography"], version = "^3.4.0"}
+pydantic-settings = "^2.8.1"
+google-api-python-client = "^2.164.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "^6.0.0"
