@@ -1,9 +1,6 @@
 from typing import Any, List
 
-from app.core import session
 from app.core.config import settings
-from app.core.security.auth0 import Auth0, Auth0User
-from app.schemas.plotly import plots
 from fastapi import APIRouter
 from loguru import logger
 from pydantic import BaseModel

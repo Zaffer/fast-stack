@@ -2,10 +2,11 @@ import os
 from typing import List
 
 from loguru import logger
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, validator
 from pydantic.networks import AnyHttpUrl
+from pydantic_settings import BaseSettings
 
-from app.core.security.secret_manager import GoogleCloudSecretSettings
+from app.integrations.google.secret_manager import GoogleCloudSecretSettings
 
 
 ORIGINS = [

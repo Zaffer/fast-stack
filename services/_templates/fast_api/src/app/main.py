@@ -7,7 +7,7 @@ from loguru import logger
 
 from app.core.config import settings
 from app.api.v0 import v0_router
-from app.api.v1 import v1_router
+# from app.api.v1 import v1_router
 
 
 def create_application() -> FastAPI:
@@ -29,7 +29,7 @@ def create_application() -> FastAPI:
     )
 
     application.include_router(v0_router)
-    application.include_router(v1_router)
+    # application.include_router(v1_router)
 
     return application
 
