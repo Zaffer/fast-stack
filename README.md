@@ -111,12 +111,9 @@ Grafana OSS
 1. Visual Studio Code
     - suggest extensions
       - Python
-      - Pylance
       - Docker
-      - Mypy Type Checker
-      - Black Formatter
       - Ruff
-      - Prettier - Code Formatter
+      - Prettier
       - Thunder Client
       - GitHub Copilot
     
