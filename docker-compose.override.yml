@@ -54,9 +54,9 @@ services:
       - 5000:5000 # hosting
     # environment:
     #   - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
-    #   - GENERATIVE_AI_PROVIDER=${GENERATIVE_AI_PROVIDER}
-    #   - OPENAI_API_KEY=${OPENAI_API_KEY}
-    #   - OPENAI_ASSISTANT_ID=${OPENAI_ASSISTANT_ID}
+    #   - GENERATIVE_AI_PROVIDER=${GENERATIVE_AI_PROVIDER:-openai}
+    #   - OPENAI_API_KEY=${OPENAI_API_KEY:-$(gcloud secrets versions access latest --secret="OPENAI_API_KEY")}
+    #   - OPENAI_ASSISTANT_ID=${OPENAI_ASSISTANT_ID:-openai_assistant_id}
     volumes:
       - firebase-data:/home/node/data/ # persistant local data store
       - ./services/${FAST_STACK_SERVICE}/src:/home/node/app # local app source code
