@@ -17,6 +17,18 @@
         "npm --prefix \"$RESOURCE_DIR\" run build"
       ],
       "useYarn": true
+    },
+    {
+      "source": "functions_python",
+      "codebase": "py-functions",
+      "runtime": "python312",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
     }
   ],
   "hosting": {
