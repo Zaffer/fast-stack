@@ -1,14 +1,15 @@
-# Use an official Node.js runtime as a parent image
-FROM node:lts-alpine
+FROM node:22.9-alpine
 
-# Set the working directory in the container
 WORKDIR /home/node/app
 
 # Install Java (needed for firestore emulator)
-RUN apk add --no-cache openjdk11
+RUN apk add --no-cache openjdk17
 
 # Install Firebase CLI
 RUN npm install -g firebase-tools
+
+# Install Python for Firebase functions using python
+RUN apk add --no-cache python3 py3-pip
 
 # Setup Firebase emulators
 # RUN firebase setup:emulators:ui
@@ -18,10 +19,6 @@ RUN npm install -g firebase-tools
 # RUN firebase setup:emulators:hosting
 # RUN firebase setup:emulators:extensions
 
-# # Copy the entrypoint script into the container
-# COPY entrypoint.sh /entrypoint.sh
-# RUN chmod +x /entrypoint.sh
-
 # # Copy the entire app directory
 # COPY --chown=node ./app .
 # # COPY ./app .
@@ -29,5 +26,9 @@ RUN npm install -g firebase-tools
 # # Switch to 'node' user
 # USER node
 
+# Copy the entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 # # Set the entrypoint script as the container's entrypoint
-# ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
