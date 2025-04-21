@@ -17,6 +17,7 @@
 
 ## Roadmap
 - [ ] full pnp for yarn (currently Anuglar has issues with Yarn pnp)
+- [ ] test replacing poetry with uv
 - [x] ~~containerise Angular pgAdmin4~~
 - [x] ~~Add Grafana as service to visualise your data~~
 - [x] ~~Make a single Mat Web service~~
