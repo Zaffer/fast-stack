@@ -13,28 +13,14 @@
 - Google Cloud Platform   cloud infrastructure
 - Firebase                web hosting
 - Docker Compose          containerisation
+- Playwright              browser automation
 
 
 ## Roadmap
-- [ ] full pnp for yarn (currently Anuglar has issues with Yarn pnp)
 - [ ] test replacing poetry with uv
-- [x] ~~containerise Angular pgAdmin4~~
-- [x] ~~Add Grafana as service to visualise your data~~
-- [x] ~~Make a single Mat Web service~~
-- [x] ~~Add Ionic service~~
 - [ ] iframe grafana oss into angular dashboard
 - [ ] fix github actions to pull secrets from Google Secret Manager
-- [x] clean up ng templates to do the following only:
-  - Angular, Ionic, Firebase Auth, Firestore, Cloud Functions.
-  - Angular, Material Design, Auth0, OpenAPI.
-
-The following is get pnp working once Angular supports it again.
-https://github.com/angular/angular-cli/issues/16980
-- `yarn add -D @types/node`
-- `yarn build`
-- `yarn start`
-- `yarn dlx @yarnpkg/sdks vscode`
-- add paths to your app's .yarn file in workspace root .vscode/settings.json
+- [ ] switch to bun or another js bundler that is not yarn
 
 
 ## Usage
