@@ -61,8 +61,8 @@ COPY --from=builder-stage /venv /venv
 # copy src to app folder
 COPY ./src/app .
 
-# Install playwrite dependencies
-RUN playwright install --with-deps chromium
+# # Install playwrite dependencies
+# RUN playwright install --with-deps chromium
 
 # use a non-root user
 RUN addgroup --system school && adduser --system --ingroup school fish
