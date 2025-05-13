@@ -59,6 +59,9 @@ Plotly Dash
 ### Grafana
 Grafana OSS
 
+### Playwright
+Microsoft Playwright
+
 
 # TOOLS
 

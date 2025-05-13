@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "fast-stack-playwright"
+version = "0.0.1"
+description = "🎭"
+authors = ["James Wiles"]
+license = "All Rights Reserved."
+
+[tool.poetry.dependencies]
+python = "^3.12"
+loguru = "^0.7.2"
+uvicorn = "^0.30.6"
+fastapi = "^0.112.2"
+oauthlib = "^3.2.2"
+requests-oauthlib = "^2.0.0"
+google-cloud-secret-manager = "^2.20.2"
+python-jose = "^3.3.0"
+pydantic-settings = "^2.4.0"
+pytest-playwright = "^0.5.2"
+httpx = "^0.27.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 119
+per-file-ignores = {"__init__.py" = ["F401"]}

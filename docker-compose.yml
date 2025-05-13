@@ -90,3 +90,23 @@ services:
     command: ionic serve --external
     # tty: true
 
+
+  playwright:
+    container_name: playwright_container
+    build:
+      context: ./services/_templates/playwright
+      dockerfile: playwright.dockerfile
+      network: host
+      args:
+        - ENVIRONMENT=${ENVIRONMENT-dev}
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
+      - GOOGLE_CLOUD_PROJECT=gcp-proj-playwright
+    ports:
+      - 8000:8000
+    volumes:
+      - ./services/_templates/playwright/screens:/tmp/screens
+      - ./services/_templates/playwright/src/app:/app
+      - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
+    command: uvicorn main:app --reload --workers 1 --host 0.0.0.0 --port ${PORT-8000} --log-level info
+    # tty: true
