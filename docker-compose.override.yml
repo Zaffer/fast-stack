@@ -60,7 +60,7 @@ services:
       - firebase-data:/home/node/data/
       - ./services/${FASTSTACK_SERVICE:-web_app}/src:/home/node/app # specify which service the emulator is for
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
-    command: firebase emulators:start --only auth,firestore,functions --import /home/node/data/firebase --export-on-exit"
+    command: "firebase emulators:start --only auth,firestore,functions --import /home/node/data/firebase --export-on-exit"
     # tty: true
 
 

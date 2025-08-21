@@ -26,7 +26,7 @@ services:
   flask_dash: # a plotly dash service that runs ontop of flask, for doing charts with just python
     container_name: temp_dash_container
     build:
-      context: ./services/_template/_flsk_dash
+      context: ./services/_templates/flask_dash
       dockerfile: flask.dash.dockerfile
     ports: # 8888 ports for kernel in jupytor notebooks
       - 8888:8888

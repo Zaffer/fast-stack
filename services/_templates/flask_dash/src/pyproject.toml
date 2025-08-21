@@ -33,7 +33,7 @@ dash-tabulator = "^0.4.2"
 dash-extensions = "^0.1.6"
 
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^6.2.5"
 black = "^22.3.0"
 
