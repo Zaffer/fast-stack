@@ -1,20 +1,22 @@
-FROM node:lts-alpine as base
+FROM oven/bun:alpine AS base
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+# Install global CLI tools
+# Installing Ionic CLI from GitHub to get angular-standalone support
+RUN bun add -g @angular/cli@latest @ionic/cli @ionic/angular@latest firebase-tools@latest
 
-ENV PATH=$PATH:/home/node/.npm-global/bin
+WORKDIR /app
 
-RUN npm install -g @ionic/cli
-RUN npm install -g @angular/cli
-RUN npm install -g firebase-tools
+# Copy package files first for better layer caching
+COPY ./web/package.json ./web/bun.lock* ./
 
-WORKDIR /home/node/app
+# Install dependencies
+RUN bun install --frozen-lockfile
 
-COPY --chown=node ./src .
+# Copy the rest of the application
+COPY ./web .
 
-RUN yarn set version stable
-RUN yarn install
+# Switch to non-root user for security
+USER bun
 
-USER node
-
-CMD yarn start --host 0.0.0.0
+# Start the application (using bun instead of yarn)
+# CMD ["bun", "run", "start", "--", "--host", "0.0.0.0"]

@@ -36,7 +36,7 @@ services:
       - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
       - GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT:-your_gcp_project_name}
     volumes:
-      - ./services/_templates/flask_dash/src:/app
+      - ./services/fleet_flask/src:/app
       - ~/.config/gcloud/application_default_credentials.json:${GOOGLE_APPLICATION_CREDENTIALS:-/tmp/keys/application_default_credentials.json}
     command: flask run --host=0.0.0.0 --port=5002
 
@@ -60,7 +60,7 @@ services:
     ports:
       - 9000:8080
     # tty: true
-    command: "yarn start --host 0.0.0.0"
+    command: "bun start --host 0.0.0.0"
 
 
   web_admin: # Angular frontend for management console, admin panel, dashboards, etc
@@ -73,7 +73,7 @@ services:
       - 4200:4200
     volumes:
       - ./services/_templates/web_admin/frontend:/home/node/app
-    command: "yarn start --host 0.0.0.0"
+    command: "bun start --host 0.0.0.0"
     # tty: true
 
 
@@ -86,8 +86,9 @@ services:
     ports:
       - 8100:8100
     volumes:
-      - ./services/_templates/web_app/src:/home/node/app
-    command: ionic serve --external
+      - ./services/_templates/web_app/web:/app
+    #command: "tail -f /dev/null"
+    command: bunx ionic serve --external
     # tty: true
 
 

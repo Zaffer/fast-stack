@@ -18,8 +18,8 @@ set -e
 ## MAIN SERVICES ##
 # sh services/_api/scripts/start-dev.sh ## backend
 # sh services/_templates/web_admin/scripts/start-dev.sh ## admin frontend
-# sh services/_templates/web_app/scripts/start-dev.sh ## user app frontend
-sh services/_templates/grafana/scripts/start.sh ## Grafana
+sh services/_templates/web_app/scripts/start-dev.sh ## user app frontend
+# sh services/_templates/grafana/scripts/start.sh ## Grafana
 
 
 ## LOGS ##
