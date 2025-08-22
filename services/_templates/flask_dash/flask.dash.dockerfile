@@ -40,7 +40,7 @@ RUN pip install --upgrade pip \
 COPY ./src/pyproject.toml ./src/poetry.lock ./
 RUN bash -c "if [ ${ENVIRONMENT} == 'dev' ] ; \
   then . /venv/bin/activate && poetry install --no-root --no-interaction; \
-  else . /venv/bin/activate && poetry install --no-root --no-interaction --no-ansi --no-dev; fi"
+  else . /venv/bin/activate && poetry install --no-root --no-interaction --no-ansi --without dev; fi"
 
 # lint and stop build if fail
 COPY . .
