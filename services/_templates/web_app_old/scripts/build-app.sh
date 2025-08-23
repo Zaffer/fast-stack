@@ -6,4 +6,4 @@ set -e
 
 cd services/_templates/web_app/src/
 
-bun run build
+yarn ng build

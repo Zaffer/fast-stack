@@ -1,20 +1,21 @@
 FROM node:lts-alpine as base
 
-ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+ENV PNPM_HOME=/home/node/.pnpm-global
+ENV PATH=$PNPM_HOME:$PATH
 
-ENV PATH=$PATH:/home/node/.npm-global/bin
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
 
-RUN npm install -g @ionic/cli
-RUN npm install -g @angular/cli
-RUN npm install -g firebase-tools
+RUN pnpm add -g @ionic/cli
+RUN pnpm add -g @angular/cli
+RUN pnpm add -g firebase-tools
 
 WORKDIR /home/node/app
 
-COPY --chown=node ./src .
+COPY --chown=node ./web .
 
-RUN yarn set version stable
-RUN yarn install
+RUN pnpm install
 
 USER node
 
-CMD yarn start --host 0.0.0.0
+CMD pnpm start --host 0.0.0.0

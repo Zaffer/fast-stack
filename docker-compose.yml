@@ -60,7 +60,7 @@ services:
     ports:
       - 9000:8080
     # tty: true
-    command: "yarn start --host 0.0.0.0"
+    command: "pnpm start --host 0.0.0.0"
 
 
   web_admin: # Angular frontend for management console, admin panel, dashboards, etc
@@ -73,7 +73,7 @@ services:
       - 4200:4200
     volumes:
       - ./services/_templates/web_admin/frontend:/home/node/app
-    command: "yarn start --host 0.0.0.0"
+    command: "pnpm start --host 0.0.0.0"
     # tty: true
 
 
@@ -86,8 +86,9 @@ services:
     ports:
       - 8100:8100
     volumes:
-      - ./services/_templates/web_app/src:/home/node/app
-    command: ionic serve --external
+      - ./services/_templates/web_app/web:/app
+    #command: "tail -f /dev/null"
+    command: pnpm ionic serve --external
     # tty: true
 
 
