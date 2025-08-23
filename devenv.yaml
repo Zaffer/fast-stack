@@ -1,0 +1,14 @@
+inputs:
+  nixpkgs:
+    url: github:cachix/devenv-nixpkgs/rolling
+  devenv:
+    url: github:cachix/devenv?dir=src/modules
+  mk-shell-bin:
+    url: github:rrbutani/nix-mk-shell-bin
+  nix2container:
+    url: github:nlewo/nix2container
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
+imports:
+  - ./services/_templates/web_app
