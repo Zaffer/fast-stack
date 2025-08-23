@@ -22,6 +22,35 @@
 - [ ] fix github actions to pull secrets from Google Secret Manager
 - [ ] switch to bun or another js bundler that is not yarn
 
+## Install Nix and Devenv
+ - [Determinate Nix Installer](https://github.com/DeterminateSystems/nix-installer)
+ - [Devenv.sh](https://devenv.sh/getting-started/)
+
+## Devenv Usage
+- All dependencies and tooling required for development and production should be declared inside `devenv.nix`. For example, this is used to declare a Node.js project with pnpm as the package manager.
+```nix
+  languages = {
+    javascript = {
+        enable = true;
+        pnpm.enable = true;
+        directory = "$DEVENV_ROOT/${path}";
+    };
+    typescript.enable = true;
+};
+```
+- Run `devenv shell` to enter an ephemeral shell with all dependencies and tooling made available. The available tools will dynamically change based on what service you are working on.
+- The development shell in this repository has some custom convenience scripts declared. For example, to start the Ionic/Angular app, run the commands `build_web` and `start_web`. To build and run in a docker image use `web_app_container`. The commands can be customized in `devenv.nix`.
+```nix
+scripts = {
+    "start_web".exec = config.processes."web_app".exec;
+    "build_web".exec = config.tasks."web_app:build".exec;
+    "install_web".exec = config.tasks."web_app:install".exec;
+    "web_app_container".exec = ''
+        cd ${path} && devenv container copy web_app
+        docker run -p 8100:8100 web_app
+    '';
+};
+```
 
 ## Usage
 
