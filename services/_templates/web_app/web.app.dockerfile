@@ -1,22 +1,21 @@
-FROM oven/bun:alpine AS base
+FROM node:lts-alpine as base
 
-# Install global CLI tools
-# Installing Ionic CLI from GitHub to get angular-standalone support
-RUN bun add -g @angular/cli@latest @ionic/cli @ionic/angular@latest firebase-tools@latest
+ENV PNPM_HOME=/home/node/.pnpm-global
+ENV PATH=$PNPM_HOME:$PATH
 
-WORKDIR /app
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
 
-# Copy package files first for better layer caching
-COPY ./web/package.json ./web/bun.lock* ./
+RUN pnpm add -g @ionic/cli
+RUN pnpm add -g @angular/cli
+RUN pnpm add -g firebase-tools
 
-# Install dependencies
-RUN bun install --frozen-lockfile
+WORKDIR /home/node/app
 
-# Copy the rest of the application
-COPY ./web .
+COPY --chown=node ./web .
 
-# Switch to non-root user for security
-USER bun
+RUN pnpm install
 
-# Start the application (using bun instead of yarn)
-# CMD ["bun", "run", "start", "--", "--host", "0.0.0.0"]
+USER node
+
+CMD pnpm start --host 0.0.0.0

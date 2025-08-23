@@ -88,7 +88,7 @@ services:
     volumes:
       - ./services/_templates/web_app/web:/app
     #command: "tail -f /dev/null"
-    command: bunx ionic serve --external
+    command: pnpm ionic serve --external
     # tty: true
 
 
