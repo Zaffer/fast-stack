@@ -28,7 +28,7 @@
 Clone this repo as a template, then pull in future updates of to your own repo
 - Add this repo as a remote called "template"
 - Git fetch from all remotes.
-- Merge from template using this line to remove templates' histories:
+- Merge from upstream template using this line to remove templates' histories:
 - `git merge template/master --strategy-option ours --squash`
 - `git pull https://github.com/Zaffer/fast-stack master --ff --allow-unrelated-histories`
 
