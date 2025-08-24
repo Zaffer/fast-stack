@@ -60,7 +60,7 @@ services:
     ports:
       - 9000:8080
     # tty: true
-    command: "yarn start --host 0.0.0.0"
+    command: "pnpm start --host 0.0.0.0"
 
 
   web_admin: # Angular frontend for management console, admin panel, dashboards, etc
@@ -73,21 +73,22 @@ services:
       - 4200:4200
     volumes:
       - ./services/_templates/web_admin/frontend:/home/node/app
-    command: "yarn start --host 0.0.0.0"
+    command: "pnpm start --host 0.0.0.0"
     # tty: true
 
 
-  web_app: # Angular Ionic frontend for user-facing cross-platform progresive web app
-    container_name: web_app_container
+  ionic_angular: # Angular Ionic frontend for user-facing cross-platform progresive web app
+    container_name: ionic_angular_container
     build:
-      context: ./services/_templates/web_app
-      dockerfile: web.app.dockerfile
+      context: ./services/_templates/ionic_angular
+      dockerfile: ionic.angular.dockerfile
       network: host
     ports:
       - 8100:8100
     volumes:
-      - ./services/_templates/web_app/src:/home/node/app
-    command: ionic serve --external
+      - ./services/_templates/ionic_angular/web:/home/node/app
+    #command: "tail -f /dev/null"
+    command: pnpm ionic serve --external
     # tty: true
 
 

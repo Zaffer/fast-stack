@@ -44,7 +44,7 @@ class Auth0JWTBearerTokenValidator(JWTBearerTokenValidator):
 
 
 validator = Auth0JWTBearerTokenValidator(
-    "fleet-analytics.eu.auth0.com", "RWP0zFUGWTkvvkgu8AHvPQ3nSoAGUcWr"
+    "your_app.eu.auth0.com", "audience_goes_here"
 )
 
 
