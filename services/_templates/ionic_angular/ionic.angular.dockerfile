@@ -12,12 +12,10 @@ RUN pnpm add -g firebase-tools
 
 WORKDIR /home/node/app
 
-COPY ./web .
-
-RUN chown -R node:node /home/node/app
-
-USER node
+COPY --chown=node ./web .
 
 RUN pnpm install
+
+USER node
 
 CMD pnpm start --host 0.0.0.0

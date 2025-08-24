@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title size="large">Chat Assistant</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    @for (message of messages; track message) {
+      <ion-item style="text-align: right;">
+        <ion-label>
+          {{ message.prompt }}
+        </ion-label>
+          <ion-note slot="end">
+            <p style="font-size: 1.5em;">🧑</p>
+          </ion-note>
+      </ion-item>
+      @if (message.response) {
+        <ion-item style="text-align: left;">
+          <ion-note slot="start">
+            <p style="font-size: 1.5em;">🤖</p>
+          </ion-note>
+          <ion-label>
+            {{ message.response }}
+          </ion-label>
+        </ion-item>
+      }
+    }
+    <!-- TODO: fix if statement to check for empty object -->
+    @if (currentMessage) {
+      <ion-item style="text-align: right;">
+        <ion-label>
+          {{ currentMessage.prompt }}
+        </ion-label>
+          <ion-note slot="end">
+            <p style="font-size: 1.5em;">🧑</p>
+          </ion-note>
+      </ion-item>
+      @if (currentMessage.response) {
+        <ion-item style="text-align: left;">
+          <ion-note slot="start">
+            <p class="robot-thinking" style="font-size: 1.5em;">🤖</p>
+          </ion-note>
+          <ion-label>
+            {{ currentMessage.response }}
+          </ion-label>
+        </ion-item>
+      }
+    }
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="9">
+        @if (processing) {
+          <ion-spinner name="dots"></ion-spinner>
+        } @else {
+          <ion-input
+            placeholder="Type your message..."
+            [(ngModel)]="userInput"
+          ></ion-input>
+        }
+      </ion-col>
+      <ion-col size="3">
+        <ion-button expand="block" (click)="sendMessage()">Send</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

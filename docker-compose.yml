@@ -86,7 +86,7 @@ services:
     ports:
       - 8100:8100
     volumes:
-      - ./services/_templates/ionic_angular/web:/app
+      - ./services/_templates/ionic_angular/web:/home/node/app
     #command: "tail -f /dev/null"
     command: pnpm ionic serve --external
     # tty: true
