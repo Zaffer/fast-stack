@@ -1,6 +1,6 @@
 # ⚡ Fast Stack
 ---------
-![DeepWiki](https://deepwiki.com/badge-maker?url=https%3A%2F%2Fdeepwiki.com%2FZaffer%2Ffast-stack)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/Zaffer/fast-stack)
 
 
 # INTRODUCTION
