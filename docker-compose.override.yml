@@ -50,15 +50,13 @@ services:
       - 9099:9099 # auth
       - 5001:5001 # functions
       - 8080:8080 # firestore
-      # NOTE hosting might not be needed in this context
-      - 5000:5000 # hosting
     env_file:
       - .env
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/tmp/keys/application_default_credentials.json
     volumes:
       - firebase-data:/home/node/data/
-      - ./services/${FASTSTACK_SERVICE:-web_app}/src:/home/node/app # specify which service the emulator is for
+      - ./services/${FASTSTACK_SERVICE:-web_app}/src:/home/node/app # specify web which service the emulator is for
       - ~/.config/gcloud/application_default_credentials.json:/tmp/keys/application_default_credentials.json
     command: "firebase emulators:start --only auth,firestore,functions --import /home/node/data/firebase --export-on-exit"
     # tty: true
