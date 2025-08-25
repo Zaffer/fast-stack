@@ -151,7 +151,7 @@ Microsoft Playwright
 
 
 1. Node
-   - install fnm ([https://github.com/nvm-sh/nvm](https://github.com/Schniz/fnm))
+   - install fnm (https://github.com/Schniz/fnm)
      - `curl -fsSL https://fnm.vercel.app/install | bash`
      - `source ~/.bashrc`
      - `fnm use --install-if-missing 22`
@@ -164,7 +164,7 @@ Microsoft Playwright
      - `npm install -g @ionic/cli`
 
 
-1. Yarn
+1. ~Yarn~
     - Install Yarn: https://yarnpkg.com/getting-started/install
       - `corepack enable`
 
@@ -175,6 +175,11 @@ Microsoft Playwright
 
     - Angular compatability:
       - add `nodeLinker: node-modules` to .yarnrc.yml
+
+1. PNPM
+   - https://pnpm.io/installation
+   - `npm install --global corepack@latest`
+   - `corepack enable pnpm`
 
 
 1. Angular
