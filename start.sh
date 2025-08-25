@@ -12,7 +12,7 @@ set -e
 # docker compose up db-local -d ## Postgres local database
 # docker compose up pgadmin -d ## PGAdmin
 # docker compose up cloudsql -d ## CloudSQL Proxy
-# sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
+sh services/_templates/web_app/scripts/start-emu.sh ## Firebase emulator suite
 
 
 ## MAIN SERVICES ##
